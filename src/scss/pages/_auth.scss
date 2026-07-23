@@ -23,6 +23,11 @@
     justify-content: center;
     margin-bottom: fn.rem-calc(32);
 
+    img {
+      max-height: fn.rem-calc(54);
+      width: auto;
+    }
+
     span {
       font-size: fn.rem-calc(28);
       font-weight: 700;

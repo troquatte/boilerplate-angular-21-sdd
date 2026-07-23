@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './reset-password.component.html',
 })
 export class ResetPasswordComponent {
+  readonly logoUrl = environment.MINIO.ASSETS + 'logo.png';
+
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);

@@ -1,5 +1,5 @@
 import { ApplicationConfig, DOCUMENT, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 import {
   provideClientHydration,
@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withEnabledBlockingInitialNavigation()),
+    provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideClientHydration(
       withHttpTransferCacheOptions({

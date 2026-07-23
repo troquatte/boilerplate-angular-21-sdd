@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './client-home.component.html',
 })
 export class ClientHomeComponent {
+  readonly logoUrl = environment.MINIO.ASSETS + 'logo.png';
+
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 

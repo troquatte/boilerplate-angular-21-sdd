@@ -1,6 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 import { AuthService, User } from '../../services/auth.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { AuthService, User } from '../../services/auth.service';
   templateUrl: './admin-dashboard.component.html',
 })
 export class AdminDashboardComponent implements OnInit {
+  readonly logoUrl = environment.MINIO.ASSETS + 'logo.png';
+
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);

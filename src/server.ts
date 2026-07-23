@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import '@angular/compiler';
+// import '@angular/compiler';
 
 import {
   AngularNodeAppEngine,
@@ -10,7 +10,6 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import { resolve } from 'node:path';
 import { MiddlewareAuth } from './server/middleware/auth-middleware';
 import { sanitizeInput } from './server/middleware/sanitize.middleware';
 import { router } from './server/modules/router';

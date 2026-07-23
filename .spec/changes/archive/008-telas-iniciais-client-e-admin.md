@@ -160,3 +160,23 @@ src/app/modules/
 - Guards bloqueando acesso de acordo com as permissões corretas.
 - Sessão de usuário mantida em recarregamentos de tela através do novo endpoint `/api/auth/me`.
 - visual dark moderno e responsivo alinhado com o design system do projeto.
+
+## Encerramento
+
+> ✅ 2026-07-23 16:52 — Spec revisada, validada e encerrada.
+
+### Validações finais
+
+- `npm run lint`: executado com sucesso.
+- `npx ng build`: executado com sucesso.
+- `teste manual`: F5 em rotas internas, guards reativos (`isSessionLoaded`) e desvio de rota raiz testados com 100% de sucesso.
+
+### Memória atualizada
+
+- `memory/produto.md`: adicionadas as telas de boas-vindas client e admin dashboard.
+- `memory/contexto-tecnico.md`: documentada a solução reativa com `isSessionLoaded` e `toObservable` para guards que rodam no browser após F5.
+- `memory/estrutura.md`: atualizada com os novos guards de acesso.
+
+### Observações
+
+- Nenhuma pendência conhecida dentro do escopo.

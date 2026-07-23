@@ -235,4 +235,20 @@ src/app/modules/
 
 ## Encerramento
 
-Esta spec termina apenas quando todos os itens estiverem marcados e com evidência registrada, no formato definido em [Como executar](../shared/como-executar.md).
+> ✅ 2026-07-23 16:52 — Spec revisada, validada e encerrada.
+
+### Validações finais
+
+- `npm run lint`: executado com sucesso.
+- `npx ng build`: executado com sucesso.
+- `teste manual`: fluxos de login, cadastro, forgot-password e reset-password testados e funcionando perfeitamente integrados ao backend.
+
+### Memória atualizada
+
+- `memory/produto.md`: atualizada com a listagem das novas telas de autenticação e seus respectivos fluxos funcionais.
+- `memory/contexto-tecnico.md`: nenhuma alteração necessária.
+- `memory/estrutura.md`: atualizada com os novos componentes e estrutura de autenticação.
+
+### Observações
+
+- Nenhuma pendência conhecida dentro do escopo.

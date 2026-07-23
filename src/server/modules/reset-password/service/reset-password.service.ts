@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { EStatusErrors } from '../../../enum/EStatusErros.enum';
 import { prisma } from '../../../prisma-conn';
+import { UtilsSendMail } from '../utils/send-mail.utils';
 
 class ResetPasswordService {
   public async validateUser(email: string) {
@@ -36,6 +37,15 @@ class ResetPasswordService {
         secret: true,
       },
     });
+
+    try {
+      await UtilsSendMail.send(email, Number(createdSecret.secret));
+    } catch (mailError: any) {
+      console.error(
+        '[Mail] Falha ao enviar e-mail de recuperação de senha:',
+        mailError.message,
+      );
+    }
 
     return { email, secret: createdSecret.secret };
   }

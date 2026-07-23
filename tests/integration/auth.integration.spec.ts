@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { app } from '../../server';
-import { prisma } from '../prisma-conn';
+import { app } from '../../src/server';
+import { prisma } from '../../src/server/prisma-conn';
 
 describe('Auth Integration Tests', () => {
   const testUser = {
