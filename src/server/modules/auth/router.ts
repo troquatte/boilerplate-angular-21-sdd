@@ -5,17 +5,20 @@ import { authController } from './controller/auth.controller';
 import { userController } from '../user/controller/user-controller';
 import { resetPasswordController } from '../reset-password/controller/reset-password.controller';
 
+// Middlewares
+import { authLimiter } from '../../middleware/rate-limiter.middleware';
+
 // Router
 const router = Router();
 const baseUrl = '/auth';
 
-router.post(`${baseUrl}/register`, userController.create);
-router.post(`${baseUrl}/login`, authController.login);
+router.post(`${baseUrl}/register`, authLimiter, userController.create);
+router.post(`${baseUrl}/login`, authLimiter, authController.login);
 router.post(`${baseUrl}/refresh`, authController.token);
 router.post(`${baseUrl}/logout`, authController.logout);
-router.post(`${baseUrl}/forgot-password`, resetPasswordController.validateUser);
+router.post(`${baseUrl}/forgot-password`, authLimiter, resetPasswordController.validateUser);
 router.post(`${baseUrl}/reset-password/validate`, resetPasswordController.validateSecurityCode);
-router.post(`${baseUrl}/reset-password`, resetPasswordController.resetPassword);
+router.post(`${baseUrl}/reset-password`, authLimiter, resetPasswordController.resetPassword);
 
 export const authRouter = router;
 

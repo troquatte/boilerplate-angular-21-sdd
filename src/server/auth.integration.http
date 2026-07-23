@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "name": "João da Silva",
-  "email": "joao.silva@example.com",
+  "email": "joao1.silva@example.com",
   "password": "senhaSegura123",
   "role": "CLIENT"
 }
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 {
   "name": "João da Silva",
-  "email": "joao.silva@example.com",
+  "email": "joao1.silva@example.com",
   "password": "outraSenha123",
   "role": "CLIENT"
 }
