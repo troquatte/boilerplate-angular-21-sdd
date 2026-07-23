@@ -1,0 +1,15 @@
+@use "@tools/rem-calc" as fn;
+
+:root {
+  .gap-7 {
+    gap: fn.rem-calc(7);
+  }
+
+  .gap-14 {
+    gap: fn.rem-calc(14);
+  }
+
+  .gap-21 {
+    gap: fn.rem-calc(21);
+  }
+}

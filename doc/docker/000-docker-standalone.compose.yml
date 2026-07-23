@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.5.3
+    container_name: traefik
+    restart: always
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+
+      - "--entrypoints.websecure.address=:443"
+
+      # TLS Challenge: 100% à prova de falhas na porta 443 (ignora o redirecionamento 80)
+      - "--certificatesresolvers.letsencryptresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencryptresolver.acme.storage=/acme/acme.json"
+      - "--certificatesresolvers.letsencryptresolver.acme.email=contato@vidafullstack.com.br"
+      - "--log.level=INFO"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik_acme:/acme" # NOVO NOME para forçar o Let'sEncrypt a deletar a memória de bugs antigos
+    networks:
+      - projetos-web
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "portainer_data:/data"
+    networks:
+      - projetos-web
+    labels:
+      - "traefik.enable=true"
+      # 👇 Regra pros 2 painéis do Portainer! Fique atento: é "portainer.seu-dominio", não "app-dev"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.vidafullstack.academy`) || Host(`portainer.guiadohospededigital.com.br`)"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.tls.certresolver=letsencryptresolver"
+      # 👇 Voltei essa linha aqui que você sem querer deletou (A porta do painel)
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      # Tempo de checagem. Aqui são 60 segundos. Troque se quiser que demore mais.
+      WATCHTOWER_POLL_INTERVAL: 60
+      # Apaga a imagem antiga para não entupir de memória
+      WATCHTOWER_CLEANUP: "true"
+      # Exigimos que uma Label específica exista no container para atualizar
+      WATCHTOWER_LABEL_ENABLE: "true"
+    networks:
+      - projetos-web
+
+volumes:
+  traefik_acme:
+    name: traefik_standalone_acme_new
+  portainer_data:
+    name: portainer_standalone_data
+
+networks:
+  projetos-web:
+    name: projetos-web

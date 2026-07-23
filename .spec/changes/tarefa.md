@@ -1,0 +1,6 @@
+- mude o projeto de projeto-vidafullstack-v2 para boilerplate-angular-versãodele-sdd
+- valide a pasta do angular ssr para ver se ta em bons padrões
+- preciso que você valide o projeto se está uma boa base para usar como boilerplate angular ssr
+- preciso que você crie um docker local para rodarmos a nossa aplicação local com: prisma, redis, minio
+- preciso que esse docker local fique dentro da pasta doc/docker/local
+- preciso que fique nos conformes para rodar local

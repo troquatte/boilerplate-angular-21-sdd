@@ -1,0 +1,22 @@
+@use "@tools/rem-calc" as fn;
+
+.text-danger {
+    color: red;
+    font-size: fn.rem-calc(12);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ex-mb-1 {
+    margin-bottom: fn.rem-calc(7);
+}
+
+.ex-mb-2 {
+    margin-bottom: fn.rem-calc(14);
+}
+
+.ex-mb-3 {
+    margin-bottom: fn.rem-calc(21);
+}

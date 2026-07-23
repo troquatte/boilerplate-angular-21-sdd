@@ -1,0 +1,51 @@
+version: "3.9"
+
+networks:
+  projetos-web:
+    external: true
+    name: projetos-web
+
+services:
+  vfs-app-ssr:
+    image: ghcr.io/troquatte/vfs-app-ssr-prod:latest
+    container_name: vfs-app-ssr-prod
+
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      HOST: 0.0.0.0
+      DATABASE_URL: ${DATABASE_URL}
+      MINIO_REGION: ${MINIO_REGION}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_ASSETS: ${MINIO_ASSETS}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY_ID}
+      MINIO_SECRET_ACCESS_KEY: ${MINIO_SECRET_ACCESS_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      JWT_REFRESH_TOKEN_SECRET: ${JWT_REFRESH_TOKEN_SECRET}
+      SEND_EMAIL: ${SEND_EMAIL}
+      SEND_EMAIL_PASSWORD: ${SEND_EMAIL_PASSWORD}
+    networks:
+      - projetos-web
+    labels:
+      - "traefik.enable=true"
+
+      # Habilita o Watchtower para procurar atualizações apenas nesse container
+      - "com.centurylinklabs.watchtower.enable=true"
+
+      # 🚦 Router Principal Ex: app.vidafullstack.academy
+      - "traefik.http.routers.vfs-prod.rule=Host(`app.vidafullstack.academy`)"
+      - "traefik.http.routers.vfs-prod.entrypoints=websecure"
+      - "traefik.http.routers.vfs-prod.tls=true"
+      - "traefik.http.routers.vfs-prod.tls.certresolver=letsencryptresolver"
+
+      # 🔌 Service (porta interna do container)
+      - "traefik.http.services.vfs-prod.loadbalancer.server.port=4000"
+
+      # 🛡️ Cabeçalhos e Segurança
+      - "traefik.http.middlewares.vfs-sec-prod.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.vfs-sec-prod.headers.customResponseHeaders.X-Content-Type-Options=nosniff"
+      - "traefik.http.middlewares.vfs-sec-prod.headers.customResponseHeaders.Referrer-Policy=strict-origin-when-cross-origin"
+      - "traefik.http.routers.vfs-prod.middlewares=vfs-sec-prod"

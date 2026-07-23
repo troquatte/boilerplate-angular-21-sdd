@@ -1,0 +1,33 @@
+@use "@tools/rem-calc" as fn;
+
+:root {
+  mat-slide-toggle {
+    margin-left: fn.rem-calc(7);
+  }
+
+  .mdc-switch__track::after,
+  .mdc-switch__track::before {
+    background-color: var(--white) !important;
+    border: none !important;
+  }
+
+  .mdc-switch--selected:enabled .mdc-switch__handle::after,
+  .mdc-switch--selected:enabled:hover:not(:focus):not(:active)
+    .mdc-switch__handle::after {
+    background: var(--green) !important;
+  }
+
+  .mdc-switch--selected .mdc-switch__icon {
+    fill: none !important;
+  }
+
+  .mdc-switch--unselected:enabled .mdc-switch__handle::after,
+  .mdc-switch--unselected:enabled:hover:not(:focus):not(:active)
+    .mdc-switch__handle::after {
+    background: var(--danger) !important;
+  }
+
+  .mdc-switch--unselected .mdc-switch__icon {
+    fill: none !important;
+  }
+}

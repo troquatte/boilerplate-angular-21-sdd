@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+  ## --------------------------- ORION --------------------------- ##
+
+  minio:
+    image: minio/minio:RELEASE.2025-02-03T21-03-04Z-cpuv1
+    command: server /data --console-address ":9001"
+
+    volumes:
+      - minio_data_prod:/data
+
+    networks:
+      - projetos-web
+
+    environment:
+      ## 🔑 Dados de acesso
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=@Pamonhapamonha191_
+
+      ## 🌐 URL do MinIO
+      - MINIO_BROWSER_REDIRECT_URL=https://minio.vidafullstack.academy
+      - MINIO_SERVER_URL=https://s3.vidafullstack.academy
+
+      ## 📍 Região
+      - MINIO_REGION_NAME=eu-south
+
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      ## API S3 (Port: 9000)
+      - "traefik.http.routers.minio_public_prod.rule=Host(`s3.vidafullstack.academy`)"
+      - "traefik.http.routers.minio_public_prod.entrypoints=websecure"
+      - "traefik.http.routers.minio_public_prod.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.minio_public_prod.loadbalancer.server.port=9000"
+      - "traefik.http.services.minio_public_prod.loadbalancer.passHostHeader=true"
+      - "traefik.http.routers.minio_public_prod.service=minio_public_prod"
+
+      ## Console (Port: 9001)
+      - "traefik.http.routers.minio_console_prod.rule=Host(`minio.vidafullstack.academy`)"
+      - "traefik.http.routers.minio_console_prod.entrypoints=websecure"
+      - "traefik.http.routers.minio_console_prod.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.minio_console_prod.loadbalancer.server.port=9001"
+      - "traefik.http.services.minio_console_prod.loadbalancer.passHostHeader=true"
+      - "traefik.http.routers.minio_console_prod.service=minio_console_prod"
+
+      # === CORS ===
+      - "traefik.http.middlewares.cors-allow-prod.headers.accessControlAllowOriginList=https://app.vidafullstack.academy,https://www.vidafullstack.academy"
+      - "traefik.http.middlewares.cors-allow-prod.headers.accessControlAllowMethods=GET,PUT,POST,DELETE,HEAD,OPTIONS"
+      - "traefik.http.middlewares.cors-allow-prod.headers.accessControlAllowHeaders=*"
+      - "traefik.http.middlewares.cors-allow-prod.headers.accessControlExposeHeaders=ETag,X-Amz-Request-Id,X-Minio-Deployment-Id,Content-Range"
+      - "traefik.http.middlewares.cors-allow-prod.headers.accessControlMaxAge=86400"
+      - "traefik.http.middlewares.cors-allow-prod.headers.addVaryHeader=true"
+
+## --------------------------- ORION --------------------------- ##
+
+volumes:
+  minio_data_prod:
+    name: minio_data_prod
+
+networks:
+  projetos-web:
+    external: true
+    name: projetos-web

@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  ## --------------------------- REDIS --------------------------- ##
+  redis:
+    image: redis:7-alpine
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes",
+        "--requirepass",
+        "@Pamonhapamonha191_",
+        "--maxmemory",
+        "512mb",
+        "--maxmemory-policy",
+        "allkeys-lru",
+      ]
+
+    volumes:
+      - redis_data_prod:/data
+    networks:
+      - projetos-web
+    restart: unless-stopped
+
+  ## --------------------------- REDISINSIGHT --------------------------- ##
+  redisinsight:
+    image: redis/redisinsight:latest
+    restart: unless-stopped
+    networks:
+      - projetos-web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redisinsight-prod.rule=Host(`insight.vidafullstack.academy`)"
+      - "traefik.http.routers.redisinsight-prod.entrypoints=websecure"
+      - "traefik.http.routers.redisinsight-prod.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.redisinsight-prod.service=redisinsight-prod"
+      - "traefik.http.services.redisinsight-prod.loadbalancer.server.port=5540"
+      - "traefik.http.services.redisinsight-prod.loadbalancer.passHostHeader=true"
+
+volumes:
+  redis_data_prod:
+    name: redis_data_prod
+
+networks:
+  projetos-web:
+    external: true
+    name: projetos-web
