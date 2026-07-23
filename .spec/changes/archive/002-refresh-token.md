@@ -61,4 +61,18 @@ Implementar o mecanismo de Refresh Token no backend integrado do Angular SSR v21
 
 ## Encerramento
 
-Esta spec termina apenas quando todos os itens estiverem marcados e com evidência registrada, no formato definido em [Como executar](../shared/como-executar.md).
+> ✅ 2026-07-23 18:26 — Spec encerrada sem execução direta. As funcionalidades planejadas nesta spec foram absorvidas e entregues integralmente pela spec `006-implementacao-e-seguranca-do-modulo-auth.md`, que unificou os escopos de 001 a 005 em uma única entrega implementada e validada.
+
+### Validações finais
+
+- Implementação consolidada via spec `006`: aprovada pelo `sdd-reviewer` com testes de integração passando e validação manual via REST Client.
+
+### Memória atualizada
+
+- `memory/produto.md`: nenhuma alteração necessária (entregue via spec 006).
+- `memory/contexto-tecnico.md`: nenhuma alteração necessária (entregue via spec 006).
+- `memory/estrutura.md`: nenhuma alteração necessária.
+
+### Observações
+
+- Esta spec foi substituída pela spec `006`, que a implementa em sua totalidade.

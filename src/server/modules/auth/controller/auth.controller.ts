@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { EZod } from '../../../enum/EZod.enum';
 import { ErrorHandlerHelper } from '../../../helpers/error-handler.helpers';
 import { authService } from '../service/auth.service';
+import { userService } from '../../user/service/user-service';
 
 class AuthController {
   public async login(req: Request, res: Response) {
@@ -89,6 +90,19 @@ class AuthController {
 
       return res.json({
         message: 'Logout realizado com sucesso.',
+      });
+    } catch (error: any) {
+      return ErrorHandlerHelper.handle(res, error);
+    }
+  }
+
+  public async me(req: Request, res: Response) {
+    const userId = (req as any).tokenUserId;
+
+    try {
+      const user = await userService.read(userId);
+      return res.json({
+        data: user,
       });
     } catch (error: any) {
       return ErrorHandlerHelper.handle(res, error);

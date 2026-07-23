@@ -7,6 +7,7 @@ import { resetPasswordController } from '../reset-password/controller/reset-pass
 
 // Middlewares
 import { authLimiter } from '../../middleware/rate-limiter.middleware';
+import { MiddlewareAuth } from '../../middleware/auth-middleware';
 
 // Router
 const router = Router();
@@ -16,6 +17,7 @@ router.post(`${baseUrl}/register`, authLimiter, userController.create);
 router.post(`${baseUrl}/login`, authLimiter, authController.login);
 router.post(`${baseUrl}/refresh`, authController.token);
 router.post(`${baseUrl}/logout`, authController.logout);
+router.get(`${baseUrl}/me`, MiddlewareAuth.authenticate, authController.me);
 router.post(`${baseUrl}/forgot-password`, authLimiter, resetPasswordController.validateUser);
 router.post(`${baseUrl}/reset-password/validate`, resetPasswordController.validateSecurityCode);
 router.post(`${baseUrl}/reset-password`, authLimiter, resetPasswordController.resetPassword);

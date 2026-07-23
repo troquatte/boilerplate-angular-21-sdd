@@ -222,3 +222,20 @@ Ao responder ou executar tarefas, siga esta ordem:
 7. economia de tokens.
 
 A economia de tokens nunca deve comprometer a correção ou ocultar informações importantes.
+
+## 11. Implementação de telas e componentes frontend
+
+Antes de criar ou alterar qualquer tela, componente visual ou arquivo SCSS, leia obrigatoriamente:
+
+- [`.spec/shared/diretrizes-de-frontend.md`](.spec/shared/diretrizes-de-frontend.md)
+
+Somente inicie a implementação após confirmar que:
+
+- o design system em `src/scss/` foi analisado;
+- as variáveis, mixins e tokens existentes foram verificados;
+- os componentes Angular existentes foram inspecionados;
+- os padrões de layout e nomenclatura já utilizados foram identificados.
+
+Não instale novas bibliotecas sem necessidade explícita documentada na spec.
+
+Não altere regras globais de estilos sem autorização.

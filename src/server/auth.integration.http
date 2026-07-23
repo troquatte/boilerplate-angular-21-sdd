@@ -86,3 +86,11 @@ Content-Type: application/json
   "secret": "123456",
   "newPassword": "novaSenhaSegura"
 }
+
+### 11. Obter Usuário Autenticado (Me)
+# Expected: 200 OK
+GET {{host}}/api/auth/me
+
+### 12. Listar Usuários - Acesso Admin (Sucesso se logado como ADMIN)
+# Expected: 200 OK
+GET {{host}}/api/admin/users

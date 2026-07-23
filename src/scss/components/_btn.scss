@@ -1,7 +1,7 @@
 @use "@tools/rem-calc" as fn;
 
 :root {
-  .vf-btn {
+  .theme-btn {
     font-size: fn.rem-calc(16);
     border: none;
     border-radius: fn.rem-calc(14);
@@ -11,24 +11,24 @@
     text-decoration: none;
     cursor: pointer;
 
-    &.vf-btn__danger-line {
+    &.theme-btn__danger-line {
       color: var(--danger);
       background-color: transparent;
 
       border: fn.rem-calc(1) solid var(--danger);
     }
 
-    &.vf-btn__danger {
+    &.theme-btn__danger {
       color: var(--white);
       background-color: var(--danger);
     }
 
-    &.vf-btn__green {
+    &.theme-btn__green {
       background-color: var(--green);
       color: var(--black);
     }
 
-    &.vf-btn__green-line {
+    &.theme-btn__green-line {
       color: var(--green);
       background-color: transparent;
 

@@ -8,6 +8,8 @@ export const createNodeRequestHandler = () => {
   };
 };
 
-export const writeResponseToNodeResponse = () => {};
+export const writeResponseToNodeResponse = () => {
+  // Mock do SSR
+};
 
 export const isMainModule = () => false;

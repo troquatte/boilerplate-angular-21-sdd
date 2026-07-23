@@ -1,7 +1,7 @@
 @use "@tools/rem-calc" as fn;
 
 :root {
-  .vf-card {
+  .theme-card {
     border-radius: fn.rem-calc(7);
 
     background-color: var(--black-010);
@@ -11,7 +11,7 @@
 
     margin-top: fn.rem-calc(24);
 
-    &.vf-card__black {
+    &.theme-card__black {
       background-color: var(--black);
       border-radius: fn.rem-calc(14);
     }

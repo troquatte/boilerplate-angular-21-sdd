@@ -1,0 +1,98 @@
+<header class="navbar navbar-expand-lg navbar-dark bg-dark px-4 py-3 border-bottom border-primary" style="border-width: 2px !important;">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand fs-4 fw-bold text-white m-0" href="/admin/dashboard">
+      Cadastro<span class="text-primary">Base</span> <small class="fs-6 text-muted font-monospace">ADMIN</small>
+    </a>
+    <div class="d-flex align-items-center gap-3">
+      <span class="text-light" id="admin-display-name">
+        Olá, Administrador <strong class="text-primary">{{ user()?.name }}</strong>
+      </span>
+      <button
+        id="btn-logout-admin"
+        class="btn btn-outline-danger btn-sm px-3 rounded-pill"
+        (click)="logout()"
+        aria-label="Sair da conta administrativa"
+      >
+        Sair
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container py-5 text-white">
+  <div class="row">
+    <!-- Sidebar / Quick Actions -->
+    <div class="col-lg-3 mb-4">
+      <div class="card bg-dark text-white border-secondary p-4 shadow rounded-3">
+        <h2 class="fs-4 fw-bold text-primary mb-3">Painel de Controle</h2>
+        <ul class="nav flex-column gap-2 small">
+          <li class="nav-item">
+            <a class="nav-link text-white bg-primary bg-opacity-10 border-start border-primary border-4 py-2 px-3 rounded-end d-block fw-bold" href="/admin/dashboard">
+              Listar Usuários
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted disabled py-2 px-3 d-block" href="#">
+              Configurações
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-lg-9">
+      <div class="card bg-dark text-white border-secondary p-4 shadow rounded-3 mb-4">
+        <h1 class="h3 fw-bold text-white mb-2">Usuários Cadastrados</h1>
+        <p class="text-muted small mb-4">Dados carregados diretamente da API administrativa restrita a administradores.</p>
+
+        @if (errorMessage()) {
+          <div class="alert alert-danger" role="alert">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        @if (isLoadingUsers()) {
+          <div class="d-flex justify-content-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Carregando...</span>
+            </div>
+          </div>
+        } @else {
+          <div class="table-responsive">
+            <table class="table table-dark table-hover border-secondary table-striped align-middle mb-0 text-white font-monospace small">
+              <thead>
+                <tr class="text-primary border-secondary">
+                  <th scope="col">ID</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">E-mail</th>
+                  <th scope="col">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (usr of usersList(); track usr.id) {
+                  <tr class="border-secondary">
+                    <td class="text-muted">{{ usr.id }}</td>
+                    <td class="fw-bold text-white">{{ usr.name }}</td>
+                    <td>{{ usr.email }}</td>
+                    <td>
+                      <span class="badge" [class.bg-primary]="usr.role === 'ADMIN'" [class.bg-secondary]="usr.role !== 'ADMIN'">
+                        {{ usr.role }}
+                      </span>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">
+                      Nenhum usuário cadastrado encontrado.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>

@@ -68,7 +68,9 @@ class AuthService {
       // Se não existir ou estiver expirado no banco
       if (!savedToken || savedToken.expiresAt < new Date()) {
         if (savedToken) {
-          await prisma.refreshToken.delete({ where: { token: refresherToken } }).catch(() => {});
+          await prisma.refreshToken.delete({ where: { token: refresherToken } }).catch(() => {
+            // Ignora erro caso o token já tenha sido deletado
+          });
         }
         throw new Error(EStatusErrors.E401);
       }

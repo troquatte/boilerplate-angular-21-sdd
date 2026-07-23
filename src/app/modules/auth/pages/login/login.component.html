@@ -1,0 +1,82 @@
+<main class="page-auth">
+  <div class="page-auth__container">
+
+    <div class="page-auth__logo">
+      <span>Cadastro<em>Base</em></span>
+    </div>
+
+    <div class="page-auth__card">
+      <h1 class="page-auth__title">Entrar</h1>
+      <p class="page-auth__subtitle">Acesse sua conta para continuar.</p>
+
+      @if (apiError()) {
+        <div class="page-auth__api-error" role="alert">
+          {{ apiError() }}
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+        <div class="page-auth__field">
+          <label for="login-email">E-mail</label>
+          <input
+            id="login-email"
+            type="email"
+            formControlName="email"
+            placeholder="seu@email.com"
+            autocomplete="email"
+            [class.is-invalid]="email.invalid && email.touched"
+            aria-describedby="login-email-error"
+          />
+          @if (email.invalid && email.touched) {
+            <span id="login-email-error" class="page-auth__error-msg">
+              @if (email.hasError('required')) { E-mail obrigatório. }
+              @else { E-mail inválido. }
+            </span>
+          }
+        </div>
+
+        <div class="page-auth__field">
+          <label for="login-password">Senha</label>
+          <input
+            id="login-password"
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            [class.is-invalid]="password.invalid && password.touched"
+            aria-describedby="login-password-error"
+          />
+          @if (password.invalid && password.touched) {
+            <span id="login-password-error" class="page-auth__error-msg">
+              @if (password.hasError('required')) { Senha obrigatória. }
+              @else { Mínimo de 6 caracteres. }
+            </span>
+          }
+        </div>
+
+        <button
+          id="login-submit"
+          type="submit"
+          class="page-auth__btn-primary"
+          [disabled]="form.invalid || isLoading()"
+          aria-label="Entrar na conta"
+        >
+          @if (isLoading()) {
+            <mat-spinner diameter="20" color="accent" />
+          } @else {
+            Entrar
+          }
+        </button>
+
+      </form>
+
+      <div class="page-auth__links">
+        <p>Não tem conta? <a routerLink="/auth/register">Cadastre-se</a></p>
+        <p style="margin-top: 8px">
+          <a routerLink="/auth/forgot-password">Esqueci minha senha</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</main>

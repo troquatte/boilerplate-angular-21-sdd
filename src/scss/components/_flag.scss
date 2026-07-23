@@ -1,7 +1,7 @@
 @use "@tools/rem-calc" as fn;
 
 :root {
-  .vf-flag {
+  .theme-flag {
     font-size: fn.rem-calc(13);
     font-weight: 400;
     line-height: 100%;
@@ -12,16 +12,16 @@
     background-color: var(--green);
     color: var(--black);
 
-    &.vf-flag__white {
+    &.theme-flag__white {
       background-color: var(--white);
     }
 
-    &.vf-flag__purple {
+    &.theme-flag__purple {
       background-color: var(--purple);
       color: var(--white);
     }
 
-    &.vf-flag__yellow {
+    &.theme-flag__yellow {
       background-color: var(--yellow);
     }
   }
