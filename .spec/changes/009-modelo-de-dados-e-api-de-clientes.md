@@ -40,7 +40,7 @@ Implementar a persistência da entidade `Customer` no banco de dados através do
 ## Critérios de Aceite
 
 - [ ] Dado um usuário autenticado com permissão administrativa, quando enviar um payload válido de cliente para `POST /api/customers`, então o cliente deve ser salvo no banco e retornar status `201`.
-- [ ] Dado o cadastro de um cliente, o campo `cpf` deve ser opcional.
+- [ ] Dado o cadastro de um cliente, os campos `cpf` e `name` (nome) devem ser opcionais na criação inicial, exigindo obrigatoriamente apenas o telefone (`phone`).
 - [ ] Dado um ID de cliente válido, quando for executado `GET /api/customers/:id`, então retorna os dados do cliente e status `200`.
 - [ ] Dado o ID de um cliente cadastrado, quando for executado `DELETE /api/customers/:id`, então o cliente deve ser marcado como `active: false` no banco e retornar status `200`.
 - [ ] Quando um usuário não-autenticado tentar acessar qualquer endpoint de `/api/customers`, então o backend deve retornar status `401`.
@@ -53,7 +53,7 @@ model Customer {
   id         String   @id @default(uuid())
   createdAt  DateTime @default(now())
   updateddAt DateTime @updatedAt
-  name       String
+  name       String?
   phone      String
   cpf        String?  @unique
   active     Boolean  @default(true)

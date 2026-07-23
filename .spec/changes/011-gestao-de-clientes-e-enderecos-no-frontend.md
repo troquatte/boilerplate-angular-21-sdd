@@ -26,7 +26,7 @@ Desenvolver as interfaces visuais de listagem, busca, criação e edição de cl
 - Criação das telas de Gestão de Clientes na área do Admin:
   - Rota `/admin/customers` protegida por `adminGuard`.
   - Página de listagem com tabela paginada, filtros de busca por nome/CPF/telefone, indicador de status (Ativo/Inativo) e ações de edição e desativação.
-  - Página de formulário unificado (criação e edição) de clientes com campos: Nome completo, Telefone e CPF (opcional).
+  - Página de formulário unificado (criação e edição) de clientes com campos: Nome completo (opcional), Telefone (obrigatório) e CPF (opcional).
   - Sub-seção no formulário para gerenciar múltiplos endereços dinamicamente (adicionar, listar, editar e remover endereços em tempo de execução no formulário).
   - Integração com API ViaCEP (via serviço no frontend) para preenchimento automático do endereço ao digitar o CEP.
 - Adicionar o item "Clientes" no menu lateral do dashboard do Admin.
@@ -38,6 +38,7 @@ Desenvolver as interfaces visuais de listagem, busca, criação e edição de cl
 ## Critérios de Aceite
 
 - [ ] Dado um administrador autenticado, quando acessar `/admin/customers`, então deve visualizar a lista de clientes cadastrados no sistema com paginação e busca por texto.
+- [ ] Dado o formulário de criação de cliente pelo administrador, então o sistema deve permitir salvar com sucesso o cliente fornecendo apenas o campo de Telefone (WhatsApp), deixando Nome e CPF como opcionais.
 - [ ] Dado o formulário de cliente, ao digitar um CEP válido no sub-formulário de endereços, as informações de logradouro, bairro, cidade (localidade) e UF devem ser preenchidas automaticamente via API de CEP.
 - [ ] Dado um formulário de edição de cliente, deve ser possível associar múltiplos endereços a ele e salvá-los com sucesso.
 - [ ] Um usuário sem a role `ADMIN` que tentar acessar `/admin/customers` deve ser bloqueado pelo guard de rota e redirecionado para a home.
