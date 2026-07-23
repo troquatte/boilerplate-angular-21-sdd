@@ -18,11 +18,11 @@ export const clientGuard: CanActivateFn = () => {
 
   const checkClient = () => {
     const user = authService.currentUser();
-    if (user && user.role === 'CLIENT') {
+    if (user && user.role !== 'ADMIN') {
       return true;
     }
     if (user) {
-      console.log('[DEBUG] clientGuard negou o acesso. Usuário não é CLIENT. Redirecionando para admin dashboard.');
+      console.log('[DEBUG] clientGuard negou o acesso. Usuário é ADMIN. Redirecionando para admin dashboard.');
       return router.createUrlTree(['/admin/dashboard']);
     }
     console.log('[DEBUG] clientGuard negou o acesso. Usuário não logado. Redirecionando para login.');
