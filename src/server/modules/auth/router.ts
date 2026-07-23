@@ -1,14 +1,21 @@
 import { Router } from 'express';
 
-// Controller
+// Controllers
 import { authController } from './controller/auth.controller';
+import { userController } from '../user/controller/user-controller';
+import { resetPasswordController } from '../reset-password/controller/reset-password.controller';
 
 // Router
 const router = Router();
 const baseUrl = '/auth';
 
+router.post(`${baseUrl}/register`, userController.create);
 router.post(`${baseUrl}/login`, authController.login);
-router.post(`${baseUrl}/token`, authController.token);
+router.post(`${baseUrl}/refresh`, authController.token);
+router.post(`${baseUrl}/logout`, authController.logout);
+router.post(`${baseUrl}/forgot-password`, resetPasswordController.validateUser);
+router.post(`${baseUrl}/reset-password/validate`, resetPasswordController.validateSecurityCode);
+router.post(`${baseUrl}/reset-password`, resetPasswordController.resetPassword);
 
 export const authRouter = router;
 

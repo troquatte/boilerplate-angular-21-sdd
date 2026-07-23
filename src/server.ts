@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import '@angular/compiler';
 
 import {
     AngularNodeAppEngine,
@@ -9,23 +10,22 @@ import {
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import cookieParser from 'cookie-parser';
+import rateLimit from 'express-rate-limit';
+import { resolve } from 'node:path';
 import { MiddlewareAuth } from './server/middleware/auth-middleware';
+import { sanitizeInput } from './server/middleware/sanitize.middleware';
 import { router } from './server/modules/router';
 import { authRouter } from './server/modules/router-auth';
 import { authAdmRouter } from './server/modules/router-auth-admin';
+import { getDistPaths, isMain } from './server/utils/ssr-compat';
 
-// Defina __dirname corretamente no escopo do módulo
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const { serverDistFolder, browserDistFolder } = getDistPaths();
 
-const serverDistFolder = __dirname; // Usa __dirname agora que foi definido
-const browserDistFolder = resolve(serverDistFolder, '../browser');
-
-const app = express();
+export const app = express();
 const angularApp = new AngularNodeAppEngine();
 
+app.use(cookieParser());
 app.use(cors());
 app.use(helmet({
   contentSecurityPolicy: false, // Ensure this doesn't block Angular's frontend features such as fonts/inlines unless explicitly configured later
@@ -44,6 +44,21 @@ app.use(helmet({
  * ```
  */
 app.use(express.json());
+app.use(sanitizeInput);
+
+// Limiter para as rotas de autenticação (máximo 5 requisições por IP a cada 15 minutos)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: {
+    error: 'Muitas tentativas de autenticação.',
+    message: 'Por favor, tente novamente após 15 minutos.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api/auth', authLimiter);
 
 // ##################################################
 if (router.length) app.use('/api', router);
@@ -83,7 +98,7 @@ app.use('/**', (req, res, next) => {
  * Start the server if this module is the main entry point.
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
-if (isMainModule(import.meta.url)) {
+if (isMain()) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { z } from 'zod';
 import { getEnv } from './../utils/get-env.utils';
+import { prisma } from '../prisma-conn';
 
 // Enums
 import { EStatusErrors } from '../enum/EStatusErros.enum';
@@ -12,29 +13,45 @@ interface AuthenticatedRequest extends Request {
 }
 
 export class MiddlewareAuth {
-  public static authenticate(
+  public static async authenticate(
     req: AuthenticatedRequest,
     res: Response,
     next: NextFunction,
-  ): Response | void {
+  ): Promise<Response | void> {
     try {
-      let token = MiddlewareAuth.#authorization(req);
-      token = token.replace('Bearer ', '');
+      const token = req.cookies?.['accessToken'];
+
+      if (!token) {
+        return res.status(401).json({
+          error: EStatusErrors.E401,
+          message: 'Token de acesso ausente.',
+        });
+      }
 
       const decoded = jwt.verify(
         token,
         getEnv('JWT_SECRET') || '',
       ) as JwtPayload;
 
-      const userId = decoded?.['payload']?.['id'] || decoded?.['id'];
+      const email = decoded?.['email'] || decoded?.['payload']?.['email'];
 
-      if (!userId) {
+      if (!email) {
         return res.status(401).json({
-          error: 'ID do usuário ausente no token.',
+          error: 'E-mail do usuário ausente no token.',
         });
       }
 
-      req.tokenUserId = userId;
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        return res.status(401).json({
+          error: 'Usuário não encontrado.',
+        });
+      }
+
+      req.tokenUserId = user.id;
       next();
     } catch (err) {
       return res.status(401).json({
@@ -44,31 +61,44 @@ export class MiddlewareAuth {
     }
   }
 
-  public static authenticateAdmin(
+  public static async authenticateAdmin(
     req: AuthenticatedRequest,
     res: Response,
     next: NextFunction,
-  ): Response | void {
+  ): Promise<Response | void> {
     try {
-      let token = MiddlewareAuth.#authorization(req);
-      token = token.replace('Bearer ', '');
+      const token = req.cookies?.['accessToken'];
+
+      if (!token) {
+        return res.status(401).json({
+          error: EStatusErrors.E401,
+          message: 'Token de acesso ausente.',
+        });
+      }
+
       const decoded = jwt.verify(
         token,
         getEnv('JWT_SECRET') || '',
       ) as JwtPayload;
 
-      const role = decoded?.['payload']?.['role'] || decoded?.['role'];
-      if (role !== 'ADMIN') {
-        return res.status(400).json({
+      const email = decoded?.['email'] || decoded?.['payload']?.['email'];
+      if (!email) {
+        return res.status(401).json({
+          error: 'E-mail do usuário ausente no token.',
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user || user.role !== 'ADMIN') {
+        return res.status(403).json({
           message: EStatusErrors.E403,
         });
       }
 
-      const userId = decoded?.['payload']?.['id'] || decoded?.['id'];
-      if (userId) {
-        req.tokenUserId = userId;
-      }
-
+      req.tokenUserId = user.id;
       next();
     } catch (err) {
       return res.status(401).json({
@@ -76,20 +106,5 @@ export class MiddlewareAuth {
         message: 'Token inválido ou expirado.',
       });
     }
-  }
-
-  static #authorization(req: AuthenticatedRequest): string {
-    const authHeader = req.headers['authorization'];
-
-    const ZAuthSchema = z
-      .string()
-      .min(25, { message: `Token ${EZod.REQUIRED}` });
-
-    const parsed = ZAuthSchema.safeParse(authHeader);
-    if (!parsed.success) {
-      throw new Error(EStatusErrors.E400);
-    }
-
-    return parsed.data;
   }
 }

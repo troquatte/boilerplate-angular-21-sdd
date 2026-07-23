@@ -2,8 +2,6 @@ import bcrypt from 'bcrypt';
 import { EStatusErrors } from '../../../enum/EStatusErros.enum';
 import { prisma } from '../../../prisma-conn';
 
-// Enum
-
 class ResetPasswordService {
   public async validateUser(email: string) {
     const findUser = await prisma.user.findUnique({
@@ -19,25 +17,27 @@ class ResetPasswordService {
       throw new Error(EStatusErrors.E404);
     }
 
-    if (!findUser.resetPasswordSecret) {
-      const genereteSecret = Date.now().toString().slice(-6);
+    const genereteSecret = Date.now().toString().slice(-6);
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hora de validade
 
-      const { secret } = await prisma.resetPasswordSecret.create({
-        data: {
-          secret: genereteSecret,
-          userId: findUser.id,
-        },
-        select: {
-          secret: true,
-        },
+    if (findUser.resetPasswordSecret) {
+      await prisma.resetPasswordSecret.delete({
+        where: { userId: findUser.id },
       });
-
-      // UtilsSendMail.send(email, secret);
-      return { email, secret };
     }
 
-    // UtilsSendMail.send(email, findUser.resetPasswordSecret.secret);
-    return { email, secret: findUser.resetPasswordSecret.secret };
+    const createdSecret = await prisma.resetPasswordSecret.create({
+      data: {
+        secret: genereteSecret,
+        userId: findUser.id,
+        expiresAt,
+      },
+      select: {
+        secret: true,
+      },
+    });
+
+    return { email, secret: createdSecret.secret };
   }
 
   public async validateSecurityCode(email: string, secret: string) {
@@ -53,7 +53,8 @@ class ResetPasswordService {
     if (
       !findUser ||
       !findUser.resetPasswordSecret ||
-      findUser.resetPasswordSecret.secret !== secret
+      findUser.resetPasswordSecret.secret !== secret ||
+      findUser.resetPasswordSecret.expiresAt < new Date()
     ) {
       throw new Error(EStatusErrors.E404);
     }
@@ -78,7 +79,8 @@ class ResetPasswordService {
     if (
       !findUser ||
       !findUser.resetPasswordSecret ||
-      findUser.resetPasswordSecret.secret !== secret
+      findUser.resetPasswordSecret.secret !== secret ||
+      findUser.resetPasswordSecret.expiresAt < new Date()
     ) {
       throw new Error(EStatusErrors.E404);
     }
@@ -91,12 +93,20 @@ class ResetPasswordService {
         password: bcrypt.hashSync(newPassword, 6),
       },
       select: {
+        id: true,
         name: true,
         email: true,
       },
     });
 
     await prisma.resetPasswordSecret.delete({
+      where: {
+        userId: findUser.id,
+      },
+    });
+
+    // Revoga todas as sessões ativas do usuário ao redefinir a senha com sucesso
+    await prisma.refreshToken.deleteMany({
       where: {
         userId: findUser.id,
       },

@@ -8,16 +8,16 @@ export class UtilsTokenAuth {
     email: string;
     password?: string;
   }) {
-    const payload = userPayload;
-    delete payload.password;
-
-    const acessToken = sign({ payload }, getEnv('JWT_SECRET'), {
-      expiresIn: getEnv('JWT_EXPIRES_IN') as any,
-    });
+    const acessToken = sign(
+      { email: userPayload.email },
+      getEnv('JWT_SECRET'),
+      { expiresIn: getEnv('JWT_EXPIRES_IN') as any }
+    );
 
     const refreshToken = sign(
-      { payload: { id: payload.id } },
+      { id: userPayload.id },
       getEnv('JWT_REFRESH_TOKEN_SECRET'),
+      { expiresIn: '7d' }
     );
 
     return { acessToken, refreshToken };

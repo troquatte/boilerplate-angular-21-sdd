@@ -1,0 +1,88 @@
+@host = http://localhost:4200
+
+### 1. Cadastro de Usuário (Sucesso)
+# Expected: 201 Created
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "email": "joao.silva@example.com",
+  "password": "senhaSegura123",
+  "role": "CLIENT"
+}
+
+### 2. Cadastro com E-mail Duplicado (Erro)
+# Expected: 409 Conflict
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "email": "joao.silva@example.com",
+  "password": "outraSenha123",
+  "role": "CLIENT"
+}
+
+### 3. Login com Sucesso (Cookies HttpOnly)
+# Expected: 200 OK (Verificar cabeçalho Set-Cookie na resposta contendo accessToken e refreshToken)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao.silva@example.com",
+  "password": "senhaSegura123"
+}
+
+### 4. Login com Senha Incorreta (Erro)
+# Expected: 401 Unauthorized
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao.silva@example.com",
+  "password": "senhaIncorreta"
+}
+
+### 5. Login com E-mail Inválido (Erro)
+# Expected: 400 Bad Request
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "email-invalido",
+  "password": "senhaSegura123"
+}
+
+### 6. Acesso à Rota Protegida (Sucesso se tiver Cookie ativo)
+# Expected: 200 OK
+GET {{host}}/api/protected/profile
+
+### 7. Renovação do Token (Sucesso se tiver Cookie refreshToken ativo)
+# Expected: 200 OK
+POST {{host}}/api/auth/refresh
+
+### 8. Logout (Sucesso)
+# Expected: 200 OK (Limpa cookies e invalida refreshToken no banco)
+POST {{host}}/api/auth/logout
+
+### 9. Solicitação de Recuperação de Senha (Forgot Password)
+# Expected: 200 OK
+POST {{host}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "joao.silva@example.com"
+}
+
+### 10. Redefinição de Senha (Reset Password)
+# Nota: substitua o "secret" pelo código de 6 dígitos exibido no console do servidor
+# Expected: 200 OK
+POST {{host}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "joao.silva@example.com",
+  "secret": "123456",
+  "newPassword": "novaSenhaSegura"
+}

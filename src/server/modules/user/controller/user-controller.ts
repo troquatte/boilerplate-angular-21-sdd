@@ -39,7 +39,7 @@ class UserController {
         role: payloadUserCreateAuth.role,
       });
 
-      return res.json({
+      return res.status(201).json({
         data: await userService.create(payload),
       });
     } catch (error: any) {
