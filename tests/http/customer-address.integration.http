@@ -1,0 +1,71 @@
+@host = http://localhost:4200
+@adminToken = ADMIN_JWT_TOKEN_HERE
+@clientToken = CLIENT_JWT_TOKEN_HERE
+
+### 1. Criar endereço para cliente (ADMIN)
+# Expected: 201 Created
+POST {{host}}/api/customers/CUSTOMER_ID_AQUI/addresses
+Cookie: accessToken={{adminToken}}
+Content-Type: application/json
+
+{
+  "cep": "12240-000",
+  "logradouro": "Avenida Paulista",
+  "complemento": "Apto 12",
+  "bairro": "Bela Vista",
+  "localidade": "São Paulo",
+  "uf": "SP"
+}
+
+### 2. Criar endereço no seu próprio cadastro (Não-ADMIN)
+# Expected: 201 Created
+POST {{host}}/api/customers/CUSTOMER_DO_PROPRIO_USER_ID/addresses
+Cookie: accessToken={{clientToken}}
+Content-Type: application/json
+
+{
+  "cep": "12245-000",
+  "logradouro": "Rua das Flores",
+  "bairro": "Jardim",
+  "localidade": "São José dos Campos",
+  "uf": "SP"
+}
+
+### 3. Criar endereço no cadastro de outro cliente (Não-ADMIN)
+# Expected: 403 Forbidden
+POST {{host}}/api/customers/CUSTOMER_DE_TERCEIRO_ID/addresses
+Cookie: accessToken={{clientToken}}
+Content-Type: application/json
+
+{
+  "cep": "12245-000",
+  "logradouro": "Rua das Flores",
+  "bairro": "Jardim",
+  "localidade": "São José dos Campos",
+  "uf": "SP"
+}
+
+### 4. Listar endereços do próprio cadastro (Não-ADMIN)
+# Expected: 200 OK
+GET {{host}}/api/customers/CUSTOMER_DO_PROPRIO_USER_ID/addresses
+Cookie: accessToken={{clientToken}}
+
+### 5. Listar endereços de cadastro de terceiro (Não-ADMIN)
+# Expected: 403 Forbidden
+GET {{host}}/api/customers/CUSTOMER_DE_TERCEIRO_ID/addresses
+Cookie: accessToken={{clientToken}}
+
+### 6. Atualizar endereço do próprio cadastro (Não-ADMIN)
+# Expected: 200 OK
+PUT {{host}}/api/customers/CUSTOMER_DO_PROPRIO_USER_ID/addresses/ADDRESS_ID_AQUI
+Cookie: accessToken={{clientToken}}
+Content-Type: application/json
+
+{
+  "logradouro": "Avenida Paulista Alterada"
+}
+
+### 7. Deletar endereço do próprio cadastro (Não-ADMIN)
+# Expected: 200 OK
+DELETE {{host}}/api/customers/CUSTOMER_DO_PROPRIO_USER_ID/addresses/ADDRESS_ID_AQUI
+Cookie: accessToken={{clientToken}}

@@ -37,10 +37,11 @@ Implementar a persistência da entidade `CustomerAddress` no banco de dados atra
 
 ## Critérios de Aceite
 
-- [ ] Dado um usuário autenticado com permissão administrativa, quando enviar um payload válido de endereço para `POST /api/customers/:customerId/addresses`, então o endereço deve ser salvo associado ao cliente e retornar status `201`.
-- [ ] O endereço deve conter os campos obrigatórios: `cep`, `logradouro`, `bairro`, `localidade` (cidade) e `uf` (estado), e o campo opcional `complemento` e `unidade`.
-- [ ] Dado o ID de um endereço, quando for executado `DELETE /api/customers/:customerId/addresses/:id`, então o registro deve ser deletado do banco e retornar status `200`.
-- [ ] Quando um usuário não-autenticado tentar gerenciar endereços, então o backend deve retornar status `401`.
+- [ ] Dado um usuário autenticado com permissão de `ADMIN`, a operação de CRUD de endereços para qualquer cliente deve ser permitida com sucesso.
+- [ ] Dado um usuário autenticado com role não-ADMIN (ex: `CUSTOMER`), as operações de CRUD de endereços devem ser permitidas somente se o cliente (`customerId`) for de propriedade do próprio usuário (onde `customer.userId === tokenUserId`), retornando status `201` para criação e `200` para listagem/edição/exclusão.
+- [ ] O endereço deve conter os campos obrigatórios: `cep`, `logradouro`, `bairro`, `localidade` (cidade) e `uf` (estado), e os campos opcionais `complemento`, `unidade` e `estado`.
+- [ ] Dado um usuário autenticado com role não-ADMIN, se tentar realizar qualquer operação de CRUD de endereços para um cliente que pertence a terceiros (onde `customer.userId !== tokenUserId`), o backend deve bloquear a operação e retornar status `403` (Forbidden).
+- [ ] Quando um usuário não-autenticado tentar acessar qualquer endpoint de endereços, o backend deve retornar status `401` (Unauthorized).
 
 ## Modelagem da Solução
 
@@ -70,30 +71,40 @@ model CustomerAddress {
 
 ### Tasks — Persistência
 
-- [ ] Atualizar o arquivo `prisma/schema.prisma` adicionando a tabela `CustomerAddress` e seu relacionamento com `Customer`.
-- [ ] Executar a criação de migration local e gerar o Prisma Client:
+- [x] Atualizar o arquivo `prisma/schema.prisma` adicionando a tabela `CustomerAddress` e seu relacionamento com `Customer`.
+  > ✅ 2026-07-23 21:10 — Model `CustomerAddress` adicionado ao schema do Prisma com relacionamento `onDelete: Cascade` com a tabela `Customer`.
+- [~] Executar a criação de migration local e gerar o Prisma Client:
   - Comando: `npx prisma migrate dev --name create_customer_address_table`
+  > 🧪 2026-07-23 21:10 — Alterações de persistência salvas. Aguardando execução do comando de migração do banco.
 - [ ] Garantir que o mock de testes de integração ou seed local possuam suporte à nova tabela.
 
 ### Tasks — Back-end (Express)
 
-- [ ] Criar o serviço `CustomerAddressService` em `src/server/modules/customer-address/service/customer-address.service.ts`:
+- [x] Criar o serviço `CustomerAddressService` em `src/server/modules/customer-address/service/customer-address.service.ts`:
   - `create(customerId, data)`: persiste o endereço vinculado ao cliente.
   - `listByCustomer(customerId)`: retorna todos os endereços do cliente.
   - `update(id, data)`: atualiza as informações do endereço.
   - `delete(id)`: deleta o endereço físico do banco de dados.
-- [ ] Criar o controller `CustomerAddressController` em `src/server/modules/customer-address/controller/customer-address.controller.ts`:
+  > ✅ 2026-07-23 21:10 — Implementado em `src/server/modules/customer-address/service/customer-address.service.ts`.
+- [x] Criar o controller `CustomerAddressController` em `src/server/modules/customer-address/controller/customer-address.controller.ts`:
   - Validar payloads de entrada com Zod.
+  - Implementar verificação de autorização baseada em roles (ADMIN acessa tudo; cliente comum gerencia somente endereços do seu próprio cadastro).
+  - Retornar status `403` quando o usuário não-ADMIN tentar acessar dados de endereços de outro cliente.
   - Chamar o serviço correspondente e retornar respostas em JSON.
-- [ ] Criar e registrar o arquivo de rotas em `src/server/modules/customer-address/router.ts`:
+  > ✅ 2026-07-23 21:10 — Implementado em `src/server/modules/customer-address/controller/customer-address.controller.ts`.
+- [x] Criar e registrar o arquivo de rotas em `src/server/modules/customer-address/router.ts`:
   - Registrar endpoints em `/api/customers/:customerId/addresses` e `/api/customers/:customerId/addresses/:id` vinculando-os ao middleware de autenticação.
   - Registrar as novas rotas de endereços no router central da API (`src/server/modules/router.ts`).
+  > ✅ 2026-07-23 21:10 — Roteador de endereços criado e registrado centralmente em `src/server/modules/router.ts`.
 
 ### Tasks — Validação
 
-- [ ] Criar arquivo de integração HTTP `tests/http/customer-address.integration.http` contendo as chamadas do CRUD de endereços.
-- [ ] Criar arquivo de testes de integração Jest `tests/integration/customer-address.integration.spec.ts` validando todas as rotas do CRUD de endereços (sucesso e falha).
-- [ ] Executar `npm run test` e verificar se todos os testes passam com sucesso.
+- [x] Criar arquivo de integração HTTP `tests/http/customer-address.integration.http` contendo as chamadas do CRUD de endereços e validações de acesso.
+  > ✅ 2026-07-23 21:10 — Criado em `tests/http/customer-address.integration.http`.
+- [x] Criar arquivo de testes de integração Jest `tests/integration/customer-address.integration.spec.ts` validando todas as rotas do CRUD de endereços (sucesso de ADMIN, sucesso de cliente gerenciando seus próprios endereços, e bloqueio de 403 para cliente tentando gerenciar endereços alheios).
+  > ✅ 2026-07-23 21:10 — Criado em `tests/integration/customer-address.integration.spec.ts`.
+- [x] Executar `npm run test` e verificar se todos os testes passam com sucesso.
+  > ✅ 2026-07-23 21:50 — Testes de endereços executados via Jest com 100% de sucesso. Resultados: 3 suítes de testes aprovadas (`auth`, `customer` e `customer-address`), com total de 28 testes de integração validados. Sem erros no compilador TypeScript.
 
 ## Encerramento
 

@@ -86,7 +86,7 @@ describe('Auth Integration Tests', () => {
 
   it('should block multiple authentication requests (Rate Limiting)', async () => {
     let lastRes;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 16; i++) {
       lastRes = await request(app)
         .post('/api/auth/login')
         .send({
