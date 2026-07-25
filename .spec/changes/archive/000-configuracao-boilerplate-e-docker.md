@@ -82,4 +82,20 @@ As tarefas desta especificação garantem a portabilidade do projeto como um boi
 
 ## Encerramento
 
-Esta spec termina apenas quando todos os itens estiverem marcados e com evidência registrada, no formato definido em [Como executar](../shared/como-executar.md).
+> ✅ 2026-07-23 13:40 — Spec revisada, validada e encerrada.
+
+### Validações finais
+
+- `npm run lint`: executado com sucesso e ESLint atualizado para Flat Config.
+- `npm run test`: nenhuma alteração necessária nesta especificação.
+- `npm run build`: executado com sucesso gerando os artefatos de build SSR.
+
+### Memória atualizada
+
+- `memory/produto.md`: nenhuma alteração necessária.
+- `memory/contexto-tecnico.md`: adicionada decisão arquitetural da stack local via Docker Compose (PostgreSQL, Redis, MinIO).
+- `memory/estrutura.md`: nenhuma alteração necessária.
+
+### Observações
+
+- Nenhuma pendência conhecida dentro do escopo.

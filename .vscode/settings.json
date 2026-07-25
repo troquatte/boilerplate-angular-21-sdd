@@ -17,5 +17,7 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.documentSelectors": ["**/*.ts", "**/*.html", "**/*.scss"]
+  "prettier.documentSelectors": ["**/*.ts", "**/*.html", "**/*.scss"],
+  "workbench.editor.openSideBySideDirection": "down",
+  "rest-client.previewColumn": "current"
 }

@@ -1,0 +1,95 @@
+<main class="page-auth">
+  <div class="page-auth__container">
+
+    <div class="page-auth__logo">
+      <img [src]="logoUrl" alt="Logo" />
+    </div>
+
+    <div class="page-auth__card">
+      <h1 class="page-auth__title">Criar conta</h1>
+      <p class="page-auth__subtitle">Preencha os dados para se cadastrar.</p>
+
+      @if (apiError()) {
+        <div class="page-auth__api-error" role="alert">
+          {{ apiError() }}
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+        <div class="page-auth__field">
+          <label for="register-name">Nome completo</label>
+          <input
+            id="register-name"
+            type="text"
+            formControlName="name"
+            placeholder="Seu nome"
+            autocomplete="name"
+            [class.is-invalid]="name.invalid && name.touched"
+            aria-describedby="register-name-error"
+          />
+          @if (name.invalid && name.touched) {
+            <span id="register-name-error" class="page-auth__error-msg">Nome obrigatório.</span>
+          }
+        </div>
+
+        <div class="page-auth__field">
+          <label for="register-email">E-mail</label>
+          <input
+            id="register-email"
+            type="email"
+            formControlName="email"
+            placeholder="seu@email.com"
+            autocomplete="email"
+            [class.is-invalid]="email.invalid && email.touched"
+            aria-describedby="register-email-error"
+          />
+          @if (email.invalid && email.touched) {
+            <span id="register-email-error" class="page-auth__error-msg">
+              @if (email.hasError('required')) { E-mail obrigatório. }
+              @else { E-mail inválido. }
+            </span>
+          }
+        </div>
+
+        <div class="page-auth__field">
+          <label for="register-password">Senha</label>
+          <input
+            id="register-password"
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="new-password"
+            [class.is-invalid]="password.invalid && password.touched"
+            aria-describedby="register-password-error"
+          />
+          @if (password.invalid && password.touched) {
+            <span id="register-password-error" class="page-auth__error-msg">
+              @if (password.hasError('required')) { Senha obrigatória. }
+              @else { Mínimo de 6 caracteres. }
+            </span>
+          }
+        </div>
+
+        <button
+          id="register-submit"
+          type="submit"
+          class="page-auth__btn-primary"
+          [disabled]="form.invalid || isLoading()"
+          aria-label="Criar conta"
+        >
+          @if (isLoading()) {
+            <mat-spinner diameter="20" color="accent" />
+          } @else {
+            Criar conta
+          }
+        </button>
+
+      </form>
+
+      <div class="page-auth__links">
+        <p>Já tem conta? <a routerLink="/auth/login">Entrar</a></p>
+      </div>
+    </div>
+  </div>
+</main>

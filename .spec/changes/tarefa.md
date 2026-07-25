@@ -1,6 +1,33 @@
-- mude o projeto de projeto-vidafullstack-v2 para boilerplate-angular-versãodele-sdd
-- valide a pasta do angular ssr para ver se ta em bons padrões
-- preciso que você valide o projeto se está uma boa base para usar como boilerplate angular ssr
-- preciso que você crie um docker local para rodarmos a nossa aplicação local com: prisma, redis, minio
-- preciso que esse docker local fique dentro da pasta doc/docker/local
-- preciso que fique nos conformes para rodar local
+Cadastro de clientes
+
+Objetivo: centralizar todas as informações comerciais e operacionais do cliente.
+
+Inclui:
+
+Criar cliente.
+Editar cliente.
+Buscar cliente.
+Listar clientes.
+Desativar cliente.
+
+Entidades:
+Customer
+CustomerAddress
+
+Customer: dados mínimos do cliente
+Nome completo
+Telefone
+CPF
+
+CustomerAddress: Cadastrar múltiplos endereços.
+"cep"
+"logradouro"
+"complemento"
+"unidade"
+"bairro"
+"localidade": "São José dos Campos",
+"uf"
+"estado"
+
+- Tem que ser relacionado com User no prisma,
+- Eu deixaria CPF opcionais inicialmente.

@@ -16,6 +16,8 @@
 - contratos e utilitários compartilhados concentrados em `packages/shared`
 - base compartilhada no servidor Express do Angular SSR com middlewares globais e tratamento centralizado de erro
 - evolução do produto por mudanças pequenas e rastreáveis (uma spec por entrega)
+- infraestrutura local automatizada via Docker Compose (PostgreSQL, Redis, MinIO) sob o diretório `doc/docker/local/`
+- a autenticação do sistema utiliza cookies seguros `HttpOnly` (`accessToken` e `refreshToken`) gerenciados no backend Express para proteção de sessões de usuário contra ataques XSS e CSRF.
 
 ## Restrições
 

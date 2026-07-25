@@ -6,6 +6,6 @@ export interface IUserEntity {
   password: string;
   email: string;
   deleteUser: boolean;
-  role: ERoles.ADMIN | ERoles.CLIENT;
+  role: ERoles;
   user_id: string;
 }

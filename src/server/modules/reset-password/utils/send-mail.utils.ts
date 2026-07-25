@@ -5,7 +5,9 @@ import { getEnv } from '../../../utils/get-env.utils';
 export class UtilsSendMail {
   public static async send(email: string, secret: number) {
     const transporter = nodemailer.createTransport({
-      service: 'Gmail',
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true,
       auth: {
         user: getEnv('SEND_EMAIL'),
         pass: getEnv('SEND_EMAIL_PASSWORD'),
