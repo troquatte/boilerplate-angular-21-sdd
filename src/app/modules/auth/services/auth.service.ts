@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
-import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  map,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 
 export interface User {
   id: string;
@@ -24,7 +32,11 @@ export class AuthService {
 
   login(email: string, password: string): Observable<User> {
     return this.http
-      .post<void>('/api/auth/login', { email, password }, { withCredentials: true })
+      .post<void>(
+        '/api/auth/login',
+        { email, password },
+        { withCredentials: true },
+      )
       .pipe(
         tap(() => this.isAuthenticated.set(true)),
         switchMap(() => this.getMe()),
@@ -57,7 +69,12 @@ export class AuthService {
       );
   }
 
-  register(name: string, email: string, password: string, role = 'CUSTOMER'): Observable<void> {
+  register(
+    name: string,
+    email: string,
+    password: string,
+    role = 'CUSTOMER',
+  ): Observable<void> {
     return this.http.post<void>(
       '/api/auth/register',
       { name, email, password, role },
@@ -84,20 +101,22 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<void> {
-    return this.http.post<void>('/api/auth/forgot-password', { email }, { withCredentials: true });
+    return this.http.post<void>(
+      '/api/auth/forgot-password',
+      { email },
+      { withCredentials: true },
+    );
   }
 
-  resetPassword(email: string, secret: string, password: string): Observable<void> {
+  resetPassword(
+    email: string,
+    secret: string,
+    password: string,
+  ): Observable<void> {
     return this.http.post<void>(
       '/api/auth/reset-password',
       { email, secret, password },
       { withCredentials: true },
     );
-  }
-
-  getUsers(): Observable<User[]> {
-    return this.http
-      .get<{ data: User[] }>('/api/admin/users', { withCredentials: true })
-      .pipe(map((res) => res.data));
   }
 }

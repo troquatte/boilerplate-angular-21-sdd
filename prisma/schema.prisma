@@ -24,7 +24,6 @@ model User {
   roleTeste           String?
   resetPasswordSecret ResetPasswordSecret?
   refreshTokens       RefreshToken[]
-  customer            Customer?
 }
 
 model ResetPasswordSecret {
@@ -44,41 +43,4 @@ model RefreshToken {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
-}
-
-model novaTabela {
-  id         String @id @default(uuid())
-  secret     String
-  novaTabela String
-}
-
-model Customer {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
-  name       String?
-  phone      String
-  cpf        String?  @unique
-  active     Boolean  @default(true)
-
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String   @unique
-  addresses  CustomerAddress[]
-}
-
-model CustomerAddress {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
-  cep        String
-  logradouro String
-  complemento String?
-  unidade    String?
-  bairro     String
-  localidade String   // Cidade
-  uf         String   // Estado
-  estado     String?  // Nome completo do estado (opcional)
-
-  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId String
 }

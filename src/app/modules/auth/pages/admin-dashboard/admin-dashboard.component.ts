@@ -1,13 +1,14 @@
 import { Component, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
 import { AuthService, User } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [],
+  imports: [MatProgressSpinnerModule],
   templateUrl: './admin-dashboard.component.html',
 })
 export class AdminDashboardComponent implements OnInit {
@@ -24,23 +25,7 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.loadUsers();
     }
-  }
-
-  loadUsers(): void {
-    this.isLoadingUsers.set(true);
-    this.errorMessage.set('');
-    this.authService.getUsers().subscribe({
-      next: (users) => {
-        this.usersList.set(users);
-        this.isLoadingUsers.set(false);
-      },
-      error: () => {
-        this.errorMessage.set('Erro ao carregar a lista de usuários.');
-        this.isLoadingUsers.set(false);
-      },
-    });
   }
 
   logout(): void {

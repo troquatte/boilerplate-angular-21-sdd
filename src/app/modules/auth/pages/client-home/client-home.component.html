@@ -1,53 +1,19 @@
-<header class="navbar navbar-expand-lg navbar-dark bg-dark px-4 py-3 border-bottom border-secondary" style="border-width: 2px !important;">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <a class="navbar-brand fs-4 fw-bold text-white m-0 d-flex align-items-center gap-2" href="/client/home">
-      <img [src]="logoUrl" alt="Logo" style="height: 32px; width: auto;" />
-      <small class="fs-6 text-muted font-monospace">CLIENT</small>
-    </a>
-    <div class="d-flex align-items-center gap-3">
-      <span class="text-light" id="user-display-name">
-        Olá, <strong class="text-warning">{{ user()?.name }}</strong>
-      </span>
-      <button
-        id="btn-logout"
-        class="btn btn-outline-danger btn-sm px-3 rounded-pill"
-        (click)="logout()"
-        aria-label="Sair da conta"
-      >
-        Sair
-      </button>
-    </div>
+<header class="layout-navbar layout-navbar--client">
+  <a class="layout-navbar__brand" href="/client/home">
+    <img [src]="logoUrl" alt="Logo" />
+    <span class="layout-navbar__brand-label">Client</span>
+  </a>
+  <div class="layout-navbar__actions">
+    <span class="layout-navbar__greeting" id="user-display-name">
+      Olá, <strong>{{ user()?.name }}</strong>
+    </span>
+    <button
+      id="btn-logout"
+      class="layout-navbar__btn-logout"
+      (click)="logout()"
+      aria-label="Sair da conta"
+    >
+      Sair
+    </button>
   </div>
 </header>
-
-<main class="container py-5 text-white">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card bg-dark text-white border-secondary p-5 shadow rounded-3">
-        <h1 class="display-5 fw-bold text-warning mb-3">Bem-vindo à sua Área Exclusiva</h1>
-        <p class="lead text-light mb-4">
-          Você está logado como <strong class="text-white">Cliente</strong>. Aqui você tem acesso simplificado às suas informações de cadastro e perfil de forma rápida e segura.
-        </p>
-        <hr class="border-secondary mb-4" />
-        <div class="row g-4">
-          <div class="col-sm-6">
-            <div class="p-3 bg-opacity-10 bg-warning border border-warning rounded-3 h-100">
-              <h3 class="fs-5 text-warning mb-2">Meus Dados</h3>
-              <p class="small text-light m-0">Visualização rápida de suas credenciais cadastradas no banco de dados.</p>
-              <ul class="list-unstyled mt-3 small text-light font-monospace">
-                <li>ID: {{ user()?.id }}</li>
-                <li>E-mail: {{ user()?.email }}</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="p-3 bg-opacity-10 bg-success border border-success rounded-3 h-100">
-              <h3 class="fs-5 text-success mb-2">Segurança Ativa</h3>
-              <p class="small text-light m-0">Sua sessão está protegida com criptografia e cookies HttpOnly contra ataques XSS e CSRF.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>

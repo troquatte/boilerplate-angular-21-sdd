@@ -1,172 +1,89 @@
 @use "@tools/rem-calc" as fn;
 
-// ============================================================
-// page: auth
-// Estilos das páginas de autenticação (login, cadastro, reset)
-// ============================================================
-
-.page-auth {
+.theme-page-auth {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--black);
-  padding: fn.rem-calc(24) fn.rem-calc(16);
+  padding: fn.rem-calc(32) fn.rem-calc(16);
+  background-color: var(--secondary);
 
   &__container {
     width: 100%;
-    max-width: fn.rem-calc(420);
+    max-width: fn.rem-calc(440);
   }
 
   &__logo {
     display: flex;
     justify-content: center;
-    margin-bottom: fn.rem-calc(32);
+    margin-bottom: fn.rem-calc(28);
 
     img {
-      max-height: fn.rem-calc(54);
+      max-height: fn.rem-calc(52);
       width: auto;
-    }
-
-    span {
-      font-size: fn.rem-calc(28);
-      font-weight: 700;
-      color: var(--white);
-
-      em {
-        color: var(--secondary);
-        font-style: normal;
-      }
+      object-fit: contain;
     }
   }
 
   &__card {
-    background-color: var(--black-05);
-    border: fn.rem-calc(1) solid rgba(255, 255, 255, 0.07);
-    border-radius: fn.rem-calc(14);
-    padding: fn.rem-calc(36) fn.rem-calc(32);
+    border: none;
+    border-radius: fn.rem-calc(20);
+    background: #ffffff;
+    box-shadow: 0 fn.rem-calc(20) fn.rem-calc(40) rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+  }
+
+  &__card-body {
+    padding: fn.rem-calc(40) fn.rem-calc(32);
+  }
+
+  &__header {
+    margin-bottom: fn.rem-calc(28);
+    text-align: center;
   }
 
   &__title {
-    font-size: fn.rem-calc(24);
+    font-size: fn.rem-calc(26);
     font-weight: 700;
-    color: var(--white);
+    color: var(--secondary);
     margin-bottom: fn.rem-calc(6);
+    letter-spacing: -0.02em;
   }
 
   &__subtitle {
     font-size: fn.rem-calc(14);
-    color: var(--gray-030);
-    margin-bottom: fn.rem-calc(28);
-    line-height: 1.5;
+    color: var(--gray-060, #6c757d);
+    margin: 0;
   }
 
-  &__field {
-    margin-bottom: fn.rem-calc(16);
-
-    label {
-      display: block;
-      font-size: fn.rem-calc(13);
-      font-weight: 600;
-      color: var(--gray);
-      margin-bottom: fn.rem-calc(6);
-    }
-
-    input {
-      width: 100%;
-      background-color: var(--black-010);
-      border: fn.rem-calc(1) solid rgba(255, 255, 255, 0.1);
-      border-radius: fn.rem-calc(8);
-      padding: fn.rem-calc(12) fn.rem-calc(14);
-      color: var(--white);
-      font-size: fn.rem-calc(15);
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-
-      &::placeholder {
-        color: var(--gray-030);
-      }
-
-      &:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 fn.rem-calc(3) rgba(90, 18, 38, 0.35);
-      }
-
-      &.is-invalid {
-        border-color: var(--danger);
-      }
-    }
-  }
-
-  &__error-msg {
-    font-size: fn.rem-calc(12);
-    color: var(--danger);
-    margin-top: fn.rem-calc(4);
-  }
-
-  &__api-error {
-    background-color: rgba(234, 34, 93, 0.1);
-    border: fn.rem-calc(1) solid rgba(234, 34, 93, 0.3);
-    border-radius: fn.rem-calc(8);
-    padding: fn.rem-calc(12) fn.rem-calc(14);
-    color: var(--danger);
-    font-size: fn.rem-calc(14);
-    margin-bottom: fn.rem-calc(16);
-  }
-
-  &__api-success {
-    background-color: rgba(40, 233, 129, 0.1);
-    border: fn.rem-calc(1) solid rgba(40, 233, 129, 0.3);
-    border-radius: fn.rem-calc(8);
-    padding: fn.rem-calc(12) fn.rem-calc(14);
-    color: var(--green);
-    font-size: fn.rem-calc(14);
-    margin-bottom: fn.rem-calc(16);
-  }
-
-  &__btn-primary {
-    width: 100%;
-    padding: fn.rem-calc(13) fn.rem-calc(16);
-    background-color: var(--primary);
-    color: var(--white);
-    font-size: fn.rem-calc(15);
-    font-weight: 700;
-    border: none;
-    border-radius: fn.rem-calc(8);
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  &__form {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: fn.rem-calc(8);
-    margin-top: fn.rem-calc(8);
-
-    &:hover:not(:disabled) {
-      background-color: var(--primary-010);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    flex-direction: column;
   }
 
   &__links {
+    margin-top: fn.rem-calc(24);
+    padding-top: fn.rem-calc(20);
+    border-top: fn.rem-calc(1) solid var(--gray-010, #f0f0f0);
     text-align: center;
-    margin-top: fn.rem-calc(20);
-    font-size: fn.rem-calc(14);
-    color: var(--gray-030);
+    display: flex;
+    flex-direction: column;
+    gap: fn.rem-calc(8);
+
+    p {
+      margin: 0;
+      font-size: fn.rem-calc(13);
+      color: var(--gray-060, #6c757d);
+    }
 
     a {
       color: var(--secondary);
-      text-decoration: none;
       font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
 
       &:hover {
         text-decoration: underline;
-        color: var(--secondary);
       }
     }
   }
