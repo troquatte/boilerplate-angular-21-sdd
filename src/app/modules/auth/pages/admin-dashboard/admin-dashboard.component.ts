@@ -3,7 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../environments/environment';
-import { AuthService, User } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { IUser } from '../../interface/IUser.interface';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,7 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly user = this.authService.currentUser;
-  readonly usersList = signal<User[]>([]);
+  readonly usersList = signal<IUser[]>([]);
   readonly isLoadingUsers = signal(true);
   readonly errorMessage = signal('');
 

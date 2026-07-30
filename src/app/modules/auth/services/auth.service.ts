@@ -10,27 +10,17 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
-
-export interface AuthState {
-  isAuthenticated: boolean;
-}
+import { IUser } from '../interface/IUser.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
 
   readonly isAuthenticated = signal<boolean>(false);
-  readonly currentUser = signal<User | null>(null);
+  readonly currentUser = signal<IUser | null>(null);
   readonly isSessionLoaded = signal<boolean>(false);
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<IUser> {
     return this.http
       .post<void>(
         '/api/auth/login',
@@ -45,24 +35,21 @@ export class AuthService {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  getMe(): Observable<User> {
+  getMe(): Observable<IUser> {
     if (isPlatformServer(this.platformId)) {
       this.isSessionLoaded.set(true);
-      return of({} as User);
+      return of({} as IUser);
     }
-    console.log('[DEBUG] AuthService.getMe() disparado no cliente');
     return this.http
-      .get<{ data: User }>('/api/auth/me', { withCredentials: true })
+      .get<{ data: IUser }>('/api/auth/me', { withCredentials: true })
       .pipe(
         map((res) => res.data),
         tap((user) => {
-          console.log('[DEBUG] AuthService.getMe() sucesso, populando:', user);
           this.currentUser.set(user);
           this.isAuthenticated.set(true);
           this.isSessionLoaded.set(true);
         }),
         catchError((err) => {
-          console.log('[DEBUG] AuthService.getMe() erro no cliente:', err);
           this.isSessionLoaded.set(true);
           return throwError(() => err);
         }),
