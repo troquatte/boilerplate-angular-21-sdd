@@ -1,0 +1,30 @@
+# Dependências
+node_modules/
+
+# Pastas de Build e Cache do Angular
+dist/
+.angular/
+coverage/
+tmp/
+out-tsc/
+bazel-out/
+
+# Arquivos de Lock (não é necessário a IA ler para entender o código)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Outros arquivos binários ou grandes
+*.map
+*.mp4
+*.pdf
+*.zip
+*.tar.gz
+*.iso

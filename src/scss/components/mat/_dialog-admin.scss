@@ -1,0 +1,30 @@
+@use '@tools/rem-calc' as fn;
+
+:host {
+  display: block;
+
+  padding: fn.rem-calc(28);
+  background-color: var(--white);
+  min-width: fn.rem-calc(500);
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h1 {
+      font-weight: bold;
+      font-size: fn.rem-calc(21);
+    }
+
+    button {
+      background: none;
+      border: none;
+    }
+  }
+
+  form {
+    p {
+      font-size: fn.rem-calc(14);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<header class="layout-navbar layout-navbar--client">
+  <a class="layout-navbar__brand" href="/client/home">
+    <img [src]="logoUrl" alt="Logo" />
+    <span class="layout-navbar__brand-label">Client</span>
+  </a>
+  <div class="layout-navbar__actions">
+    <span class="layout-navbar__greeting" id="user-display-name">
+      Olá, <strong>{{ user()?.name }}</strong>
+    </span>
+    <button
+      id="btn-logout"
+      class="layout-navbar__btn-logout"
+      (click)="logout()"
+      aria-label="Sair da conta"
+    >
+      Sair
+    </button>
+  </div>
+</header>

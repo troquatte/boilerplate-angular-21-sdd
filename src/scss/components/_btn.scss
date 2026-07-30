@@ -1,0 +1,61 @@
+@use "@tools/rem-calc" as fn;
+
+:root {
+  .theme-btn {
+    font-size: fn.rem-calc(16);
+    border: none;
+    border-radius: fn.rem-calc(14);
+    padding: fn.rem-calc(7) fn.rem-calc(14);
+    font-weight: 700;
+    min-width: fn.rem-calc(108);
+    text-decoration: none;
+    cursor: pointer;
+
+    &.theme-btn__primary {
+      background-color: var(--primary);
+      color: var(--white);
+
+      &:hover:not(:disabled) {
+        background-color: var(--primary-010);
+      }
+    }
+
+    &.theme-btn__secondary {
+      background-color: var(--secondary);
+      color: var(--white);
+
+      &:hover {
+        background-color: var(--secondary-010);
+      }
+    }
+
+    &.theme-btn__danger-line {
+      color: var(--danger);
+      background-color: transparent;
+
+      border: fn.rem-calc(1) solid var(--danger);
+    }
+
+    &.theme-btn__danger {
+      color: var(--white);
+      background-color: var(--danger);
+    }
+
+    &.theme-btn__green {
+      background-color: var(--green);
+      color: var(--black);
+    }
+
+    &.theme-btn__green-line {
+      color: var(--green);
+      background-color: transparent;
+
+      border: fn.rem-calc(1) solid var(--green);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}

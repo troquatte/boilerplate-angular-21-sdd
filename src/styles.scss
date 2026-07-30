@@ -1,0 +1,29 @@
+@use "scss/index" as *;
+@use "@variables/global-variables" as *;
+@use "@tools/rem-calc" as fn;
+
+html,
+body {
+  height: 100dvh;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  height: 100%;
+
+  background-color: var(--black);
+  background-image: url($background-url + "public/assets/bg-colors.png");
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@media (max-width: fn.rem-calc(800)) {
+  body {
+    background-attachment: fixed;
+    background-position: fn.rem-calc(-350) top;
+  }
+}

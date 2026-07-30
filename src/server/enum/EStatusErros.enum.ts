@@ -1,0 +1,15 @@
+export enum EStatusErrors {
+  E400 = 'Dados inválidos.',
+  E401 = 'Usuário não autorizado.',
+  E402 = 'Pagamento necessário.',
+  E403 = 'Acesso proibido.',
+  E404 = 'Dados não encontrados.',
+  E405 = 'Método não permitido.',
+  E408 = 'Tempo limite excedido.',
+  E409 = 'Dados já existentes.',
+  E413 = 'Payload muito grande.',
+  E422 = 'Erro de validação.',
+  E429 = 'Muitas requisições.',
+  E500 = 'Erro interno no servidor.',
+  E503 = 'Serviço indisponível.',
+}

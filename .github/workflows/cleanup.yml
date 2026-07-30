@@ -1,0 +1,28 @@
+name: clean-old-images
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # todo dia 1 do mês à meia-noite (UTC)
+  workflow_dispatch: # permite rodar manualmente também
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧹 Delete old GHCR images (DEV)
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: "vfs-app-ssr-dev"
+          package-type: "container"
+          min-versions-to-keep: 5
+
+      - name: 🧹 Delete old GHCR images (PROD)
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: "vfs-app-ssr-prod"
+          package-type: "container"
+          min-versions-to-keep: 5

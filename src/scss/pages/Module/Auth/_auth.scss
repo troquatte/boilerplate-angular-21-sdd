@@ -1,0 +1,90 @@
+@use "@tools/rem-calc" as fn;
+
+.theme-page-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: fn.rem-calc(32) fn.rem-calc(16);
+  background-color: var(--secondary);
+
+  &__container {
+    width: 100%;
+    max-width: fn.rem-calc(440);
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: fn.rem-calc(28);
+
+    img {
+      max-height: fn.rem-calc(52);
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  &__card {
+    border: none;
+    border-radius: fn.rem-calc(20);
+    background: #ffffff;
+    box-shadow: 0 fn.rem-calc(20) fn.rem-calc(40) rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+  }
+
+  &__card-body {
+    padding: fn.rem-calc(40) fn.rem-calc(32);
+  }
+
+  &__header {
+    margin-bottom: fn.rem-calc(28);
+    text-align: center;
+  }
+
+  &__title {
+    font-size: fn.rem-calc(26);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: fn.rem-calc(6);
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: fn.rem-calc(14);
+    color: var(--gray-060, #6c757d);
+    margin: 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__links {
+    margin-top: fn.rem-calc(24);
+    padding-top: fn.rem-calc(20);
+    border-top: fn.rem-calc(1) solid var(--gray-010, #f0f0f0);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: fn.rem-calc(8);
+
+    p {
+      margin: 0;
+      font-size: fn.rem-calc(13);
+      color: var(--gray-060, #6c757d);
+    }
+
+    a {
+      color: var(--secondary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

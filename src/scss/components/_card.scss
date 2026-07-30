@@ -1,0 +1,32 @@
+@use "@tools/rem-calc" as fn;
+
+:root {
+  .theme-card {
+    border-radius: fn.rem-calc(7);
+
+    background-color: var(--black-010);
+    color: var(--white);
+
+    padding: fn.rem-calc(21);
+
+    margin-top: fn.rem-calc(24);
+
+    &.theme-card__black {
+      background-color: var(--black);
+      border-radius: fn.rem-calc(14);
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: fn.rem-calc(21);
+      margin-bottom: fn.rem-calc(7);
+    }
+
+    p {
+      font-size: fn.rem-calc(16);
+      line-height: 120%;
+      letter-spacing: 0%;
+      margin-bottom: fn.rem-calc(21);
+    }
+  }
+}

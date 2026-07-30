@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  ## --------------------------- REDIS --------------------------- ##
+  redis:
+    image: redis:7-alpine
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes",
+        "--requirepass",
+        "@Pamonhapamonha191_",
+        "--maxmemory",
+        "512mb",
+        "--maxmemory-policy",
+        "allkeys-lru",
+      ]
+    ports:
+      - "16379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - projetos-web
+    restart: unless-stopped
+
+  ## --------------------------- REDISINSIGHT --------------------------- ##
+  # Configuração do Redis no RedisInsight
+  # User: default
+  # Pass: @Pamonhapamonha191_
+  # Database Alias*: redis-dev
+  # Host*: 72.60.50.81
+  # Port*: 16379
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    restart: unless-stopped
+    networks:
+      - projetos-web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redisinsight-dev.rule=Host(`insight-dev.vidafullstack.academy`)"
+      - "traefik.http.routers.redisinsight-dev.entrypoints=websecure"
+      - "traefik.http.routers.redisinsight-dev.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.redisinsight-dev.service=redisinsight-dev"
+      - "traefik.http.services.redisinsight-dev.loadbalancer.server.port=5540"
+      - "traefik.http.services.redisinsight-dev.loadbalancer.passHostHeader=true"
+
+volumes:
+  redis_data:
+    name: redis_data_dev
+
+networks:
+  projetos-web:
+    external: true
+    name: projetos-web

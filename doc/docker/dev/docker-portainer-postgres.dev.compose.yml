@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  postgres-dev:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: projetos_web_dev
+      POSTGRES_USER: ghd_user_dev
+      POSTGRES_PASSWORD: "Pamonhapamonha191_"
+      TZ: America/Sao_Paulo
+
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+
+    # ABERTO (host:15432 -> container:5432)
+    ports:
+      - "15432:5432"
+
+    command: >
+      postgres
+      -c listen_addresses='*'
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c work_mem=8MB
+      -c maintenance_work_mem=64MB
+      -c effective_cache_size=768MB
+      -c log_min_duration_statement=200
+
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ghd_user_dev -d projetos_web_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - projetos-web
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data_dev:
+    name: postgres_data_dev
+
+networks:
+  projetos-web:
+    external: true
+    name: projetos-web

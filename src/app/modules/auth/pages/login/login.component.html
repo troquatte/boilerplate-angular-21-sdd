@@ -1,0 +1,130 @@
+<main class="theme-page-auth">
+  <div class="theme-page-auth__container">
+    <div class="theme-page-auth__logo">
+      <img [src]="logoUrl" alt="Logo do sistema" />
+    </div>
+
+    <section class="card theme-page-auth__card" aria-labelledby="login-title">
+      <div class="card-body theme-page-auth__card-body">
+        <header class="theme-page-auth__header">
+          <h1 id="login-title" class="theme-page-auth__title">Entrar</h1>
+
+          <p class="theme-page-auth__subtitle">
+            Acesse sua conta para continuar.
+          </p>
+        </header>
+
+        @if (apiError()) {
+          <div class="alert theme-alert theme-alert__danger" role="alert">
+            {{ apiError() }}
+          </div>
+        }
+
+        <form
+          class="theme-page-auth__form"
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          novalidate
+        >
+          <!-- E-mail -->
+          <div class="theme-form-field">
+            <label for="login-email" class="form-label theme-form-field__label">
+              E-mail
+            </label>
+
+            <input
+              id="login-email"
+              class="form-control theme-form-field__input"
+              type="email"
+              formControlName="email"
+              placeholder="seu@email.com"
+              autocomplete="username"
+              [class.is-invalid]="email.invalid && email.touched"
+              [attr.aria-invalid]="email.invalid && email.touched"
+              [attr.aria-describedby]="
+                email.invalid && email.touched ? 'login-email-error' : null
+              "
+            />
+
+            @if (email.invalid && email.touched) {
+              <div id="login-email-error" class="theme-form-field__error">
+                @if (email.hasError("required")) {
+                  E-mail obrigatório.
+                } @else {
+                  Informe um e-mail válido.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Senha -->
+          <div class="theme-form-field">
+            <label
+              for="login-password"
+              class="form-label theme-form-field__label"
+            >
+              Senha
+            </label>
+
+            <input
+              id="login-password"
+              class="form-control theme-form-field__input"
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              [class.is-invalid]="password.invalid && password.touched"
+              [attr.aria-invalid]="password.invalid && password.touched"
+              [attr.aria-describedby]="
+                password.invalid && password.touched
+                  ? 'login-password-error'
+                  : null
+              "
+            />
+
+            @if (password.invalid && password.touched) {
+              <div id="login-password-error" class="theme-form-field__error">
+                @if (password.hasError("required")) {
+                  Senha obrigatória.
+                } @else {
+                  A senha deve possuir no mínimo 6 caracteres.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Botão Submit -->
+          <button
+            id="login-submit"
+            type="submit"
+            class="btn theme-btn theme-btn__secondary w-100"
+            [disabled]="form.invalid || isLoading()"
+            [attr.aria-busy]="isLoading()"
+          >
+            @if (isLoading()) {
+              <span
+                class="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+
+              <span>Entrando...</span>
+            } @else {
+              <span>Entrar</span>
+            }
+          </button>
+        </form>
+
+        <div class="theme-page-auth__links">
+          <p>
+            Não tem uma conta?
+            <a routerLink="/auth/register">Cadastre-se</a>
+          </p>
+
+          <p>
+            <a routerLink="/auth/forgot-password">Esqueci minha senha</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
