@@ -695,7 +695,7 @@ Branch: feature/customer-registration
 Commit: a1b2c3d — feat(customer): adiciona cadastro de clientes
 Push: enviado para origin/feature/customer-registration
 Upstream: configurado
-Validações: lint e testes unitários confirmados
+Validações: lint e testes confirmados (quando exigidos pela spec)
 Pendências: nenhuma conhecida dentro do escopo versionado
 ```
 

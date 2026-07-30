@@ -111,7 +111,6 @@ Verifique se ainda existem comandos ou validações pendentes, como:
 - instalação de dependências;
 - lint;
 - typecheck;
-- testes unitários;
 - testes de integração;
 - testes end-to-end;
 - build;

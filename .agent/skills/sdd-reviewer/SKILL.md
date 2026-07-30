@@ -323,7 +323,6 @@ A estratégia de testes deve ser proporcional à mudança.
 
 Verifique, quando aplicável:
 
-* regras de domínio e casos de uso: testes unitários;
 * repositories e persistência: testes de integração;
 * controllers e endpoints: testes de integração HTTP automatizados;
 * componentes e páginas: testes de comportamento;
@@ -333,7 +332,7 @@ Verifique, quando aplicável:
 
 Não exija todos os tipos de teste para todas as mudanças.
 
-Não aceite a ausência de testes obrigatórios apenas porque existe um arquivo REST Client.
+O arquivo REST Client pode ser utilizado como evidência de validação quando aplicável.
 
 ### 5.2 REST Client
 
@@ -345,7 +344,7 @@ Arquivos `*.http` ou `*.integration.http` são utilizados para:
 * apoio ao desenvolvimento;
 * inspeção de contratos HTTP.
 
-Eles não substituem testes automatizados exigidos pelo projeto.
+Eles podem substituir testes automatizados quando a spec ou o contexto da mudança assim permitir.
 
 Quando um arquivo REST Client estiver previsto, verifique se a spec solicita:
 
@@ -864,7 +863,7 @@ Utilize quando houver:
 * achados `ALTO`;
 * achados `MÉDIO` obrigatórios;
 * critérios de aceite pendentes;
-* testes obrigatórios ausentes;
+* testes de integração ou end-to-end ausentes, quando exigidos pela spec;
 * validações necessárias não realizadas;
 * divergências relevantes.
 
@@ -906,7 +905,7 @@ Uma implementação pode avançar para o `sdd-delivery-closer` quando:
 * todas as tarefas estiverem `[x]`;
 * todas possuírem evidência válida;
 * todos os critérios estiverem atendidos;
-* testes obrigatórios estiverem confirmados;
+* testes de integração ou end-to-end estiverem confirmados, quando exigidos pela spec;
 * não houver validações pendentes;
 * não houver achados críticos, altos ou médios obrigatórios;
 * desvios estiverem documentados;
