@@ -11,8 +11,15 @@
 
     margin-top: fn.rem-calc(24);
 
+    &.theme-card__white {
+      background-color: var(--white);
+      color: var(--black);
+      border-radius: fn.rem-calc(7);
+      border: fn.rem-calc(1) solid var(--gray-020);
+    }
+
     &.theme-card__black {
-      background-color: var(--black);
+      background-color: var(--secondary);
       border-radius: fn.rem-calc(14);
     }
 

@@ -14,6 +14,7 @@
 
     &.theme-flag__white {
       background-color: var(--white);
+      border: fn.rem-calc(1) solid var(--gray-020);
     }
 
     &.theme-flag__purple {

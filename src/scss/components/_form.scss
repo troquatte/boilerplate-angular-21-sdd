@@ -12,6 +12,7 @@
       font-size: fn.rem-calc(13);
       font-weight: 600;
       line-height: 1.4;
+      color: var(--secondary);
     }
 
     &__input.form-control {
@@ -21,14 +22,15 @@
       padding: fn.rem-calc(12) fn.rem-calc(14);
 
       border: fn.rem-calc(1) solid;
+      border-color: var(--secondary);
       border-radius: fn.rem-calc(8);
 
       font-size: fn.rem-calc(15);
+      color: var(--secondary);
 
       transition:
         background-color 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        border-color 0.2s ease;
 
       &::placeholder {
         color: var(--gray-030);
@@ -36,13 +38,10 @@
       }
 
       &:hover:not(:disabled):not(:focus) {
-        border-color: color-mix(in srgb, var(--white) 20%, transparent);
+        border-color: color-mix(in srgb, var(--secondary) 70%, transparent);
       }
 
       &:focus {
-        box-shadow: 0 0 0 fn.rem-calc(3)
-          color-mix(in srgb, var(--primary) 30%, transparent);
-
         outline: none;
       }
 
@@ -54,9 +53,6 @@
 
         &:focus {
           border-color: var(--danger);
-
-          box-shadow: 0 0 0 fn.rem-calc(3)
-            color-mix(in srgb, var(--danger) 25%, transparent);
         }
       }
 

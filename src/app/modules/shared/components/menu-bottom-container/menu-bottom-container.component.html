@@ -1,0 +1,43 @@
+<section
+  class="ex-menu-overlay"
+  [class.menu-open]="isMenuOpen()"
+  (click)="closeMenu()"
+  tabindex="0"
+  (keyup.enter)="closeMenu()"
+>
+  <nav
+    class="ex-menu-content"
+    (click)="onMenuContentClick($event)"
+    tabindex="0"
+    (keyup.enter)="$event.stopPropagation()"
+    (keyup.space)="$event.stopPropagation()"
+  >
+    <ng-content></ng-content>
+  </nav>
+</section>
+
+<footer class="ex-footer-mobile">
+  <nav>
+    <ul>
+      <li>
+        <a
+          [routerLink]="homeRouterLink()"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          title="Início"
+        >
+          <figure class="mb-0" [innerHTML]="icons.iconHouse"></figure>
+        </a>
+      </li>
+      <li>
+        <button
+          (click)="toggleMenu()"
+          (keyup.enter)="toggleMenu()"
+          (keyup.enter)="closeMenu()"
+          [innerHTML]="isMenuOpen() ? icons.iconClose : icons.iconHamburguer"
+          tabindex="0"
+        ></button>
+      </li>
+    </ul>
+  </nav>
+</footer>

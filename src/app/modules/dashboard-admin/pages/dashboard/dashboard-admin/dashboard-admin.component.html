@@ -1,0 +1,16 @@
+<header class="layout-navbar">
+  <a class="layout-navbar__brand" href="/admin/dashboard">
+    <img [src]="logoUrl" alt="Logo" />
+    <span class="layout-navbar__brand-label">Admin</span>
+  </a>
+  <div class="layout-navbar__actions">
+    <button
+      id="btn-logout-admin"
+      class="layout-navbar__btn-logout"
+      (click)="logout()"
+      aria-label="Sair da conta administrativa"
+    >
+      Sair
+    </button>
+  </div>
+</header>

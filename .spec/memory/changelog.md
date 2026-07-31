@@ -11,3 +11,7 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `004` | 2026-07-23 | Reset de Senha (absorvido pela spec 006) | troquatte / Antigravity |
 | `005` | 2026-07-23 | Segurança e Testes de Autenticação (absorvido pela spec 006) | troquatte / Antigravity |
 | `006` | 2026-07-23 | Implementação e Segurança do Módulo de Autenticação | troquatte / Antigravity |
+| `007` | 2026-07-23 | Telas de Autenticação | troquatte / Antigravity |
+| `008` | 2026-07-23 | Telas Iniciais Client e Admin | troquatte / Antigravity |
+| `009` | 2026-07-31 | Página de Documentação do Design System | troquatte / Devin |
+| `010` | 2026-07-31 | Ajustes no Design System e Documentação de Código | troquatte / Devin |
