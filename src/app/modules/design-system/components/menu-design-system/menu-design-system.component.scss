@@ -1,0 +1,51 @@
+@use '@tools/rem-calc' as fn;
+
+:host {
+  display: block;
+
+  .ex-show-on-mobile {
+    display: none;
+
+    ul {
+      li {
+        margin-bottom: fn.rem-calc(7);
+
+        a {
+          display: flex;
+          color: var(--black);
+          align-items: center;
+          text-decoration: none;
+          border-radius: fn.rem-calc(7);
+          padding: fn.rem-calc(14);
+
+          p {
+            margin-left: fn.rem-calc(7);
+            margin-bottom: 0;
+          }
+        }
+
+        a.active {
+          display: flex;
+          color: var(--black);
+          align-items: center;
+          text-decoration: none;
+          border-radius: fn.rem-calc(7);
+          padding: fn.rem-calc(14) fn.rem-calc(14);
+          background-color: var(--gray-010);
+        }
+      }
+    }
+  }
+  .ex-hide-on-mobile {
+    display: block;
+  }
+
+  @media (max-width: 845px) {
+    .ex-show-on-mobile {
+      display: block !important;
+    }
+    .ex-hide-on-mobile {
+      display: none !important;
+    }
+  }
+}

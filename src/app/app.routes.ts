@@ -11,17 +11,26 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.routes').then((m) => m.authRoutes),
   },
+
+  {
+    path: 'design-system',
+    canActivate: [authGuard, adminGuard],
+    loadChildren: () =>
+      import('./modules/design-system/design-system.routes').then(
+        (m) => m.designSystemRoutes,
+      ),
+  },
   {
     path: 'admin/dashboard',
     canActivate: [authGuard, adminGuard],
     loadComponent: () =>
       import(
-        './modules/auth/pages/admin-dashboard/admin-dashboard.component'
-      ).then((m) => m.AdminDashboardComponent),
+        './modules/dashboard-admin/pages/dashboard/dashboard-admin/dashboard-admin.component'
+      ).then((m) => m.DashboardAdminComponent),
   },
   {
     path: 'client/home',
-    canActivate: [authGuard, clientGuard],
+    canActivate: [clientGuard],
     loadComponent: () =>
       import('./modules/auth/pages/client-home/client-home.component').then(
         (m) => m.ClientHomeComponent,
