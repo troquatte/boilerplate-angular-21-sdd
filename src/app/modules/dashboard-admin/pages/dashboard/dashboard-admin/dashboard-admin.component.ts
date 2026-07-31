@@ -1,12 +1,13 @@
 import { Component, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, RouterOutlet],
   templateUrl: './dashboard-admin.component.html',
 })
 export class DashboardAdminComponent implements OnInit {

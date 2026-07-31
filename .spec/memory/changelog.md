@@ -15,3 +15,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `008` | 2026-07-23 | Telas Iniciais Client e Admin | troquatte / Antigravity |
 | `009` | 2026-07-31 | Página de Documentação do Design System | troquatte / Devin |
 | `010` | 2026-07-31 | Ajustes no Design System e Documentação de Código | troquatte / Devin |
+| `013` | 2026-07-31 | Preparar Infraestrutura de Rotas Filhas no Dashboard Admin | troquatte / Devin |

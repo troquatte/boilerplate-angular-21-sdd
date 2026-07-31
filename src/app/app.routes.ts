@@ -20,14 +20,16 @@ export const routes: Routes = [
         (m) => m.designSystemRoutes,
       ),
   },
+
   {
     path: 'admin/dashboard',
     canActivate: [authGuard, adminGuard],
-    loadComponent: () =>
-      import(
-        './modules/dashboard-admin/pages/dashboard/dashboard-admin/dashboard-admin.component'
-      ).then((m) => m.DashboardAdminComponent),
+    loadChildren: () =>
+      import('./modules/dashboard-admin/admin-dashboard.router').then(
+        (m) => m.adminDashboardRoutes,
+      ),
   },
+
   {
     path: 'client/home',
     canActivate: [clientGuard],
