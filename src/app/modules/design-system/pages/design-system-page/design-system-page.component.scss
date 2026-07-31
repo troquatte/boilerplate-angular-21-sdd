@@ -103,6 +103,19 @@
   color: var(--gray-030);
 }
 
+.ds-code {
+  background-color: var(--gray-010);
+  border: fn.rem-calc(1) solid var(--gray-020);
+  border-radius: fn.rem-calc(8);
+  padding: fn.rem-calc(14) fn.rem-calc(18);
+  font-size: fn.rem-calc(13);
+  font-family: 'Source Code Pro', 'Consolas', monospace;
+  color: var(--black);
+  overflow-x: auto;
+  line-height: 1.5;
+  margin-bottom: fn.rem-calc(28);
+}
+
 .ds-table {
   width: 100%;
   border-collapse: collapse;

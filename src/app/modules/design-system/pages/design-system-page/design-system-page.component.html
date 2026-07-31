@@ -231,6 +231,21 @@
         <span>Entrando...</span>
       </button>
     </div>
+
+    <h3 class="ds-section__subtitle">Exemplo de código</h3>
+    <pre class="ds-code"><code>&lt;button type="button" class="theme-btn theme-btn__primary"&gt;Primary&lt;/button&gt;
+&lt;button type="button" class="theme-btn theme-btn__secondary"&gt;Secondary&lt;/button&gt;
+&lt;button type="button" class="theme-btn theme-btn__danger"&gt;Danger&lt;/button&gt;
+&lt;button type="button" class="theme-btn theme-btn__danger-line"&gt;Danger Line&lt;/button&gt;
+&lt;button type="button" class="theme-btn theme-btn__green"&gt;Green&lt;/button&gt;
+&lt;button type="button" class="theme-btn theme-btn__green-line"&gt;Green Line&lt;/button&gt;
+
+&lt;button type="button" class="theme-btn theme-btn__primary" disabled&gt;Primary disabled&lt;/button&gt;
+
+&lt;button type="button" class="theme-btn theme-btn__secondary" disabled aria-busy="true"&gt;
+  &lt;span class="spinner-border spinner-border-sm" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;span&gt;Entrando...&lt;/span&gt;
+&lt;/button&gt;</code></pre>
   </section>
 
   <!-- Forms -->
@@ -297,6 +312,36 @@
       <label><input type="checkbox" /> Checkbox nativo</label>
       <label><input type="radio" name="demo-radio" /> Radio nativo</label>
     </div>
+
+    <h3 class="ds-section__subtitle">Exemplo de código</h3>
+    <pre class="ds-code"><code>&lt;div class="theme-form-field"&gt;
+  &lt;label for="email" class="theme-form-field__label"&gt;E-mail&lt;/label&gt;
+  &lt;input id="email" class="form-control theme-form-field__input" type="email" placeholder="seu@email.com" /&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-form-field"&gt;
+  &lt;label for="password" class="theme-form-field__label"&gt;Senha&lt;/label&gt;
+  &lt;input id="password" class="form-control theme-form-field__input" type="password" placeholder="••••••••" /&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-form-field"&gt;
+  &lt;label for="email-err" class="theme-form-field__label"&gt;E-mail&lt;/label&gt;
+  &lt;input id="email-err" class="form-control theme-form-field__input is-invalid" type="email" value="email-invalido" aria-invalid="true" /&gt;
+  &lt;div class="theme-form-field__error"&gt;Informe um e-mail válido.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-form-field"&gt;
+  &lt;label for="desc" class="theme-form-field__label"&gt;Descrição&lt;/label&gt;
+  &lt;textarea id="desc" class="form-control theme-form-field__input" rows="3" placeholder="Texto livre..."&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-form-field"&gt;
+  &lt;label for="opcao" class="theme-form-field__label"&gt;Opção&lt;/label&gt;
+  &lt;select id="opcao" class="form-control theme-form-field__input"&gt;
+    &lt;option&gt;Opção 1&lt;/option&gt;
+    &lt;option&gt;Opção 2&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
   </section>
 
   <!-- Cards -->
@@ -309,12 +354,36 @@
         <p>theme-card com fundo var(--black-010) e border-radius 7px.</p>
         <button class="theme-btn theme-btn__primary">Ação</button>
       </div>
+      <div class="theme-card theme-card__white" style="flex: 1 1 300px">
+        <h2>Card branco</h2>
+        <p>theme-card__white com fundo var(--white) e texto var(--black).</p>
+        <button class="theme-btn theme-btn__primary">Ação</button>
+      </div>
       <div class="theme-card theme-card__black" style="flex: 1 1 300px">
-        <h2>Card black</h2>
-        <p>theme-card__black com fundo var(--black) e border-radius 14px.</p>
+        <h2>Card secondary</h2>
+        <p>theme-card__black com fundo var(--secondary) e border-radius 14px.</p>
         <button class="theme-btn theme-btn__primary">Ação</button>
       </div>
     </div>
+
+    <h3 class="ds-section__subtitle">Exemplo de código</h3>
+    <pre class="ds-code"><code>&lt;div class="theme-card"&gt;
+  &lt;h2&gt;Card padrão&lt;/h2&gt;
+  &lt;p&gt;Conteúdo do card.&lt;/p&gt;
+  &lt;button class="theme-btn theme-btn__primary"&gt;Ação&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-card theme-card__white"&gt;
+  &lt;h2&gt;Card branco&lt;/h2&gt;
+  &lt;p&gt;Conteúdo do card em fundo claro.&lt;/p&gt;
+  &lt;button class="theme-btn theme-btn__primary"&gt;Ação&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="theme-card theme-card__black"&gt;
+  &lt;h2&gt;Card secondary&lt;/h2&gt;
+  &lt;p&gt;Conteúdo do card em fundo escuro.&lt;/p&gt;
+  &lt;button class="theme-btn theme-btn__primary"&gt;Ação&lt;/button&gt;
+&lt;/div&gt;</code></pre>
   </section>
 
   <!-- Tables -->
@@ -344,6 +413,24 @@
         </tr>
       </tbody>
     </table>
+
+    <h3 class="ds-section__subtitle">Exemplo de código</h3>
+    <pre class="ds-code"><code>&lt;table class="ds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Nome&lt;/th&gt;
+      &lt;th&gt;E-mail&lt;/th&gt;
+      &lt;th&gt;Perfil&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;João Silva&lt;/td&gt;
+      &lt;td&gt;joao@email.com&lt;/td&gt;
+      &lt;td&gt;Admin&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
   </section>
 
   <!-- Feedback -->
@@ -367,5 +454,19 @@
       <span class="theme-flag theme-flag__purple">Purple</span>
       <span class="theme-flag theme-flag__yellow">Yellow</span>
     </div>
+
+    <h3 class="ds-section__subtitle">Exemplo de código</h3>
+    <pre class="ds-code"><code>&lt;div class="alert theme-alert theme-alert__danger" role="alert"&gt;
+  Erro ao processar a solicitação.
+&lt;/div&gt;
+
+&lt;div class="alert theme-alert theme-alert__success" role="alert"&gt;
+  Operação concluída com sucesso.
+&lt;/div&gt;
+
+&lt;span class="theme-flag"&gt;Default&lt;/span&gt;
+&lt;span class="theme-flag theme-flag__white"&gt;White&lt;/span&gt;
+&lt;span class="theme-flag theme-flag__purple"&gt;Purple&lt;/span&gt;
+&lt;span class="theme-flag theme-flag__yellow"&gt;Yellow&lt;/span&gt;</code></pre>
   </section>
 </main>
