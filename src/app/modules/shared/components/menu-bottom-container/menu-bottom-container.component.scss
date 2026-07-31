@@ -1,0 +1,101 @@
+@use "@tools/rem-calc" as fn;
+
+:host {
+  display: block;
+
+  .ex-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: all 0.5s ease-in-out;
+
+    &.menu-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .ex-menu-content {
+      bottom: fn.rem-calc(120);
+      left: fn.rem-calc(16);
+      right: fn.rem-calc(16);
+      background: var(--white);
+      border-radius: fn.rem-calc(14);
+      padding: fn.rem-calc(32);
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow-y: auto;
+
+      transform: translateY(100%);
+      transition: transform 0.7s ease-out;
+    }
+
+    &.menu-open .ex-menu-content {
+      transform: translateY(0);
+    }
+  }
+
+  .ex-footer-mobile {
+    width: 90%;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: fn.rem-calc(21);
+
+    border-radius: fn.rem-calc(7);
+    background: var(--secondary);
+    box-shadow: #00000073 0 fn.rem-calc(25) fn.rem-calc(50) fn.rem-calc(-12);
+
+    z-index: 10000;
+    nav {
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: row;
+        height: fn.rem-calc(60);
+        margin-bottom: 0;
+
+        li {
+          font-size: fn.rem-calc(18);
+          letter-spacing: 0;
+
+          a,
+          button {
+            display: flex;
+            border: none;
+            background: none;
+            font-weight: 400;
+            font-size: fn.rem-calc(16);
+            padding: fn.rem-calc(7);
+            cursor: pointer;
+
+            ::ng-deep svg {
+              g {
+                path {
+                  fill: var(--white) !important;
+                }
+              }
+            }
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+
+          a.active {
+            background-color: var(--secondary-010);
+            border-radius: fn.rem-calc(7);
+          }
+        }
+      }
+    }
+  }
+}

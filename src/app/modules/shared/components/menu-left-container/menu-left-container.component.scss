@@ -1,0 +1,157 @@
+@use "@tools/rem-calc" as fn;
+
+:host {
+  display: block;
+  position: relative;
+
+  height: 100%;
+  background: #fff;
+  z-index: 999;
+
+  @media (max-width: fn.rem-calc(846)) {
+    position: fixed;
+  }
+
+  header {
+    height: 100vh;
+    height: 100dvh;
+    width: 290px;
+    section {
+      z-index: 9999;
+      position: fixed;
+      height: 100vh;
+      height: 100dvh;
+      width: 290px;
+
+      button.close-menu {
+        border: none;
+        position: absolute;
+        padding: fn.rem-calc(3) fn.rem-calc(5);
+        right: 0;
+        top: fn.rem-calc(14);
+        border-radius: fn.rem-calc(7) fn.rem-calc(0) fn.rem-calc(0)
+          fn.rem-calc(7);
+
+        transform-origin: center;
+        transition: transform 500ms ease-in-out;
+        z-index: 9999;
+      }
+
+      div {
+        position: relative;
+        overflow: hidden;
+
+        nav {
+          position: relative;
+          height: 100vh;
+          height: 100dvh;
+          display: flex;
+          flex-direction: column;
+
+          overflow: hidden;
+          background: var(--secondary);
+
+          padding: fn.rem-calc(28) fn.rem-calc(21);
+
+          ::ng-deep ul {
+            width: 100%;
+          }
+
+          ul li {
+            width: 100%;
+            & a {
+              width: 100%;
+            }
+          }
+          a {
+            width: fit-content;
+
+            figure {
+              margin: 0;
+              overflow: hidden;
+              margin-left: fn.rem-calc(7);
+            }
+          }
+
+          ::ng-deep button.close-menu-mobile {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            overflow-y: auto;
+            background: none;
+            border: none;
+            cursor: initial;
+            padding: 0;
+            margin: 0;
+            margin-top: fn.rem-calc(21);
+
+            ul {
+              li {
+                margin-bottom: fn.rem-calc(7);
+
+                a {
+                  padding: fn.rem-calc(14) fn.rem-calc(14);
+                  color: var(--white);
+                  text-decoration: none;
+                  display: flex;
+                  align-items: center;
+                  font-weight: bold;
+
+                  svg {
+                    g {
+                      path {
+                        fill: var(--white) !important;
+                      }
+                    }
+                  }
+                  span {
+                    margin-right: fn.rem-calc(7);
+                  }
+
+                  p {
+                    padding: 0;
+                    margin: 0;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    transform-origin: left;
+                    transition: transform 0.2s ease-in-out;
+                  }
+
+                  &:hover,
+                  &.active {
+                    background: var(--primary);
+                    color: var(--secondary) !important;
+
+                    border-radius: fn.rem-calc(7);
+
+                    svg {
+                      g {
+                        path {
+                          fill: var(--secondary) !important;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @media (max-width: 845px) {
+        &,
+        div,
+        nav {
+          width: 100%;
+          position: fixed;
+        }
+
+        button.close-menu {
+          top: fn.rem-calc(21) !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<header>
+  <section>
+    <div>
+      <nav>
+        <figure>
+          <img [src]="logoUrl" alt="Logo do sistema" />
+        </figure>
+
+        <button
+          aria-label="Grupo de botões do menu"
+          role="button"
+          class="close-menu-mobile"
+          (click)="closeMenu()"
+        >
+          <ng-content></ng-content>
+        </button>
+      </nav>
+    </div>
+  </section>
+</header>

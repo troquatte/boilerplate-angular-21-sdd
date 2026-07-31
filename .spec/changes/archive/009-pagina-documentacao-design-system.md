@@ -97,4 +97,36 @@ Stack local: Angular v21 + SSR, SCSS com SMACSS, Bootstrap Grid, tokens CSS cust
 
 ## Encerramento
 
-Esta spec termina apenas quando todos os critérios de aceite estiverem marcados e com evidência registrada, no formato definido em [Como executar](../shared/como-executar.md).
+> ✅ 2026-07-31 13:30 — Spec revisada, validada e encerrada.
+
+### Validações finais
+
+- `npx eslint src/app/modules/design-system/ src/app/app.component.ts src/app/app.component.html`: executado com sucesso (0 issues).
+- `npx ng build --configuration local`: executado com sucesso (0 erros, 0 warnings).
+
+### Memória atualizada
+
+- `memory/changelog.md`: adicionada entrada da spec 009.
+- `memory/produto.md`: nenhuma alteração necessária (página de documentação interna, não capacidade central do produto).
+- `memory/contexto-tecnico.md`: nenhuma alteração necessária (stack e arquitetura não alterados).
+- `memory/estrutura.md`: nenhuma alteração necessária (módulo de documentação interna, não módulo de negócio).
+
+### Observações
+
+- O módulo `design-system` é um módulo de documentação interna para desenvolvedores, reutilizando componentes e tokens existentes.
+- O menu lateral e inferior compartilhados (`app-menu-left-container`, `app-menu-bottom-container`) são reutilizados via `app-menu-design-system`, seguindo o padrão do `menu-dashboard-admin`.
+- Nenhum estilo novo foi criado; apenas tokens e componentes existentes foram utilizados.
+
+### Arquivos principais alterados
+
+- `src/app/app.component.html`
+- `src/app/app.component.ts`
+- `src/app/app.routes.ts`
+- `src/app/modules/design-system/design-system.routes.ts`
+- `src/app/modules/design-system/pages/design-system-page/design-system-page.component.ts`
+- `src/app/modules/design-system/pages/design-system-page/design-system-page.component.html`
+- `src/app/modules/design-system/pages/design-system-page/design-system-page.component.scss`
+- `src/app/modules/design-system/components/menu-design-system/menu-design-system.component.ts`
+- `src/app/modules/design-system/components/menu-design-system/menu-design-system.component.html`
+- `src/app/modules/design-system/components/menu-design-system/menu-design-system.component.scss`
+- `.spec/memory/changelog.md`
