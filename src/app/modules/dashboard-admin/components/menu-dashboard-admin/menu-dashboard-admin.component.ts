@@ -3,7 +3,6 @@ import {
   Component,
   inject,
   input,
-  OnInit,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -28,11 +27,9 @@ import MenuBottomContainerComponent from '../../../shared/components/menu-bottom
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export default class MenuDashboardAdminComponent implements OnInit {
+export default class MenuDashboardAdminComponent {
   public icons = inject(IconsSanitizerService);
   public ERouters = ERouters;
 
   public homeRouterLink = input<string[]>([ERouters.ADMIN, ERouters.DASHBOARD]);
-
-  ngOnInit(): void {}
 }

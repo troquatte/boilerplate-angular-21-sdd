@@ -11,4 +11,5 @@ export enum ERouters {
 
   // Dashboard
   DASHBOARD = 'dashboard',
+  CLIENTES = 'clientes',
 }

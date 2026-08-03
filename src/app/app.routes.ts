@@ -22,22 +22,14 @@ export const routes: Routes = [
   },
 
   {
-    path: 'admin/dashboard',
+    path: 'admin',
     canActivate: [authGuard, adminGuard],
     loadChildren: () =>
-      import('./modules/dashboard-admin/admin-dashboard.router').then(
-        (m) => m.adminDashboardRoutes,
+      import('./modules/dashboard-admin/admin.router').then(
+        (m) => m.adminRoutes,
       ),
   },
 
-  {
-    path: 'client/home',
-    canActivate: [clientGuard],
-    loadComponent: () =>
-      import('./modules/auth/pages/client-home/client-home.component').then(
-        (m) => m.ClientHomeComponent,
-      ),
-  },
   {
     path: '',
     redirectTo: () => {

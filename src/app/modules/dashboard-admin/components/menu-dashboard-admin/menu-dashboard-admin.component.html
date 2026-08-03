@@ -5,10 +5,21 @@
         <a
           [routerLink]="[ERouters.ADMIN, ERouters.DASHBOARD]"
           [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
           title="Estrutura"
         >
           <span [innerHTML]="icons.iconCoursesHome"></span>
           <p>Estrutura</p>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="[ERouters.ADMIN, ERouters.CLIENTES]"
+          [routerLinkActive]="'active'"
+          title="Clientes"
+        >
+          <span [innerHTML]="icons.iconCoursesHome"></span>
+          <p>Clientes</p>
         </a>
       </li>
     </ul>
@@ -38,6 +49,16 @@
         >
           <span [innerHTML]="icons.iconCoursesHome"></span>
           <p>Estrutura</p>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="[ERouters.ADMIN, ERouters.CLIENTES]"
+          [routerLinkActive]="'active'"
+          title="Clientes"
+        >
+          <span [innerHTML]="icons.iconCoursesHome"></span>
+          <p>Clientes</p>
         </a>
       </li>
     </ul>

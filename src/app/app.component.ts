@@ -6,11 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import {
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ERouters } from '@enums/routes';
 
 import { filter } from 'rxjs';
@@ -19,7 +15,11 @@ import MenuDesignSystemComponent from './modules/design-system/components/menu-d
 
 @Component({
   selector: 'app-root',
-  imports: [MenuDashboardAdminComponent, MenuDesignSystemComponent, RouterOutlet],
+  imports: [
+    MenuDashboardAdminComponent,
+    MenuDesignSystemComponent,
+    RouterOutlet,
+  ],
   templateUrl: 'app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   #ERouters = signal(ERouters);
 
   public routerPath = signal('');
-  public routerPathDashboardAdmin = `/${this.#ERouters().ADMIN}/${this.#ERouters().DASHBOARD}`;
+  public routerPathDashboardAdmin = `/${this.#ERouters().ADMIN}`;
 
   ngOnInit(): void {
     this.#router.events
