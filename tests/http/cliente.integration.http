@@ -1,8 +1,20 @@
 @host = http://localhost:4000
 
-### Listar clientes
-# Expected: 200 OK
+### Listar clientes (paginado default)
+# Expected: 200 OK, meta: { page: 1, pageSize: 10, total, totalPages }
 GET {{host}}/api/dashboard/clientes
+
+### Listar clientes página 2
+# Expected: 200 OK, retorna itens da página 2
+GET {{host}}/api/dashboard/clientes?page=2&pageSize=10
+
+### Buscar clientes por telefone
+# Expected: 200 OK, retorna apenas clientes que contenham "119" no phone
+GET {{host}}/api/dashboard/clientes?page=1&pageSize=10&search=119
+
+### Buscar clientes por CPF
+# Expected: 200 OK, retorna apenas clientes que contenham "123" no cpf
+GET {{host}}/api/dashboard/clientes?page=1&pageSize=10&search=123
 
 ### Criar cliente sem email (sem login)
 # Expected: 201 Created
