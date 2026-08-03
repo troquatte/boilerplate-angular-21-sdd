@@ -19,3 +19,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `012` | 2026-08-03 | Módulo Clientes no Dashboard Admin                           | troquatte / Devin       |
 | `013` | 2026-08-03 | Página de Listagem de Clientes                               | troquatte / Devin       |
 | `014` | 2026-08-03 | Backend de Cadastro de Clientes                              | troquatte / Devin       |
+| `015` | 2026-08-03 | Massa de Dados (Seed) para Desenvolvimento                   | troquatte / Devin       |

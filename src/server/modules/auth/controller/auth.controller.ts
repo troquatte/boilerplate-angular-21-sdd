@@ -24,14 +24,14 @@ class AuthController {
       res.cookie('accessToken', tokens.acessToken, {
         httpOnly: true,
         secure: process.env['NODE_ENV'] === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         path: '/',
       });
 
       res.cookie('refreshToken', tokens.refreshToken, {
         httpOnly: true,
         secure: process.env['NODE_ENV'] === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         path: '/',
       });
 
@@ -58,14 +58,14 @@ class AuthController {
       res.cookie('accessToken', newTokens.acessToken, {
         httpOnly: true,
         secure: process.env['NODE_ENV'] === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         path: '/',
       });
 
       res.cookie('refreshToken', newTokens.refreshToken, {
         httpOnly: true,
         secure: process.env['NODE_ENV'] === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         path: '/',
       });
 
@@ -85,8 +85,14 @@ class AuthController {
         await authService.logout(token);
       }
 
-      res.clearCookie('accessToken', { path: '/' });
-      res.clearCookie('refreshToken', { path: '/' });
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env['NODE_ENV'] === 'production',
+        sameSite: 'lax' as const,
+        path: '/',
+      };
+      res.clearCookie('accessToken', cookieOptions);
+      res.clearCookie('refreshToken', cookieOptions);
 
       return res.json({
         message: 'Logout realizado com sucesso.',
