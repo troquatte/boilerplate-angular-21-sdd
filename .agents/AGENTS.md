@@ -156,6 +156,43 @@ Execute novamente sem RTK quando:
 
 O RTK reduz o contexto, mas não substitui validações nem permite presumir que um comando foi executado com sucesso.
 
+## 6.1. Execução de validações (lint, build, test)
+
+Para economizar tokens, **não execute validações desnecessariamente**.
+
+### Quando executar
+
+| Tipo de mudança | Lint | Build | Test |
+|---|---|---|---|
+| HTML/CSS puro (markup, classes, estilos) | Não | Não | Não |
+| TypeScript lógica simples (condicional, loop, atribuição) | Sim | Não | Não |
+| Novo service/componente com imports | Sim | Sim | Não |
+| Alteração de arquitetura (routes, módulos, guards) | Sim | Sim | Não |
+| Mudança de contrato API (backend/frontend) | Sim | Sim | Não |
+| Correção de bug que afeta runtime | Sim | Sim | Sim |
+
+### Como executar (reduzir saída)
+
+Prefira sempre a saída mínima:
+
+```bash
+# Lint — use rtk ou redirecione
+npx eslint src/caminho/arquivo.ts --format compact 2>&1 | tail -10
+
+# Build — suprima saída intermediária, mostre apenas resultado
+npx ng build --configuration local 2>&1 | tail -5
+
+# Test — resumo apenas
+npx jest --passWithNoTests --silent 2>&1 | tail -5
+```
+
+**Nunca** reproduza a saída completa do build Angular (vários MB de logs de chunks) no chat. Mostre apenas:
+- `Application bundle generation complete.` ou `Failed`;
+- número de erros/warnings;
+- código de saída.
+
+Se o build passar sem erros, não detalhe cada chunk gerado.
+
 ## 7. Precisão e evidências
 
 Não declare que:
