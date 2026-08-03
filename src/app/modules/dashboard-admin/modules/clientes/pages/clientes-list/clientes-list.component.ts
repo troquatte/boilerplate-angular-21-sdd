@@ -1,7 +1,8 @@
-import { Component, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
+import { Component, PLATFORM_ID, OnInit, effect, inject, signal, untracked } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { IClientes } from '../../interfaces/clientes.interface';
 import { ClientesService } from '../../services/clientes.service';
@@ -21,41 +22,93 @@ export class ClientesListComponent implements OnInit {
   private readonly clientesService = inject(ClientesService);
   private readonly authService = inject(AuthService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   readonly pagination = inject(PaginationService);
 
   readonly clientes = signal<IClientes[]>([]);
-  readonly isLoading = signal(true);
+  readonly isLoading = signal(false);
   readonly searchInput = signal('');
 
   constructor() {
-    effect(() => {
-      if (
-        isPlatformBrowser(this.platformId) &&
-        this.authService.isSessionLoaded() &&
-        this.authService.isAuthenticated()
-      ) {
-        this.loadClientes();
-      }
+    // Inicializa state a partir da URL (única leitura)
+    this.route.queryParams.pipe(take(1)).subscribe((params) => {
+      const page = params['page'] ? Number(params['page']) : 1;
+      const pageSize = params['pageSize'] ? Number(params['pageSize']) : 10;
+      const search = params['search'] || '';
+
+      this.pagination.setPage(page);
+      this.pagination.setPageSize(pageSize);
+      this.pagination.setSearch(search);
+      this.searchInput.set(search);
     });
 
+    // Debounce do input de busca -> PaginationService.search
     toObservable(this.searchInput)
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
         this.pagination.setSearch(value);
       });
 
+    // Carrega dados quando page/search mudam (e sessão está pronta)
     effect(() => {
-      if (isPlatformBrowser(this.platformId)) {
-        this.pagination.page();
-        this.pagination.search();
+      const isBrowser = isPlatformBrowser(this.platformId);
+      const isLoaded = this.authService.isSessionLoaded();
+      const isAuth = this.authService.isAuthenticated();
+      const page = this.pagination.page();
+      const search = this.pagination.search();
+
+      if (isBrowser && isLoaded && isAuth) {
         this.loadClientes();
+      }
+    });
+
+    // Sincroniza URL quando page/search mudam (não reage a URL)
+    effect(() => {
+      const page = this.pagination.page();
+      const pageSize = this.pagination.pageSize();
+      const search = this.pagination.search();
+
+      // untracked: não reage a mudanças de URL (evita loop)
+      const currentParams = untracked(() => this.route.snapshot.queryParams);
+      const currentPage = currentParams['page'] || '1';
+      const currentPageSize = currentParams['pageSize'] || '10';
+      const currentSearch = currentParams['search'] || '';
+
+      if (
+        String(page) !== String(currentPage) ||
+        String(pageSize) !== String(currentPageSize) ||
+        search !== currentSearch
+      ) {
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            page: String(page),
+            pageSize: String(pageSize),
+            search: search || undefined,
+          },
+          replaceUrl: true,
+        });
       }
     });
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadClientes();
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const params = this.route.snapshot.queryParams;
+    const hasParams = params['page'] !== undefined || params['pageSize'] !== undefined || params['search'] !== undefined;
+
+    if (!hasParams) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          page: String(this.pagination.page()),
+          pageSize: String(this.pagination.pageSize()),
+          search: this.pagination.search() || undefined,
+        },
+        replaceUrl: true,
+      });
     }
   }
 
@@ -67,10 +120,15 @@ export class ClientesListComponent implements OnInit {
         pageSize: this.pagination.pageSize(),
         search: this.pagination.search() || undefined,
       })
-      .subscribe((response) => {
-        this.clientes.set(response.data);
-        this.pagination.setTotalPages(response.meta.totalPages);
-        this.isLoading.set(false);
+      .subscribe({
+        next: (response) => {
+          this.clientes.set(response.data);
+          this.pagination.setTotalPages(response.meta.totalPages);
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.isLoading.set(false);
+        },
       });
   }
 

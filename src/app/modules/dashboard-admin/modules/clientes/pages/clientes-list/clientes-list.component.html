@@ -6,10 +6,10 @@
       class="theme-form-field__input form-control"
       type="text"
       placeholder="Busque por Telefone ou CPF"
+      [value]="searchInput()"
       (input)="onSearchInput($event)"
     />
   </div>
-  <button class="theme-btn theme-btn__secondary-line">Filtrar</button>
   <button class="theme-btn theme-btn__secondary">Novo cliente</button>
 </div>
 
