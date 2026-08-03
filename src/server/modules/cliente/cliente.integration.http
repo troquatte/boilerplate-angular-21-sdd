@@ -1,0 +1,54 @@
+@host = http://localhost:4000
+
+### Listar clientes
+# Expected: 200 OK
+GET {{host}}/api/dashboard/clientes
+
+### Criar cliente sem email (sem login)
+# Expected: 201 Created
+POST {{host}}/api/dashboard/clientes
+Content-Type: application/json
+
+{
+  "phone": "11987654321",
+  "cpf": "12345678901",
+  "fullName": "Ana Carolina Silva",
+  "tipo": "PF"
+}
+
+### Criar cliente com email (gera User)
+# Expected: 201 Created
+POST {{host}}/api/dashboard/clientes
+Content-Type: application/json
+
+{
+  "phone": "21976543210",
+  "cpf": "23456789012",
+  "fullName": "Bruno Oliveira",
+  "email": "bruno@example.com",
+  "tipo": "PF"
+}
+
+### Criar cliente com email sem CPF (erro)
+# Expected: 400 Bad Request
+POST {{host}}/api/dashboard/clientes
+Content-Type: application/json
+
+{
+  "phone": "31965432109",
+  "fullName": "Carla Souza",
+  "email": "carla@example.com"
+}
+
+### Atualizar cliente
+# Expected: 200 OK
+PATCH {{host}}/api/dashboard/clientes/UUID_AQUI
+Content-Type: application/json
+
+{
+  "phone": "11999999999"
+}
+
+### Deletar cliente
+# Expected: 204 No Content
+DELETE {{host}}/api/dashboard/clientes/UUID_AQUI

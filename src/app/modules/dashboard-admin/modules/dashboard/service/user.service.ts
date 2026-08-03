@@ -51,11 +51,7 @@ export class UserAdminService {
 
   public list$(
     email: string | undefined = undefined,
-    role:
-      | ERoles.ADMIN
-      | ERoles.STUDENT
-      | ERoles.TEACHER
-      | undefined = undefined,
+    role: ERoles.ADMIN | undefined = undefined,
   ): Observable<{
     items: Array<IUserEntity>;
   }> {

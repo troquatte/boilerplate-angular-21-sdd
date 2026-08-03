@@ -4,4 +4,7 @@ export interface IClientes {
   phone: string;
   cpf: string;
   cep: string;
+  email?: string;
+  birthDate?: string;
+  tipo?: string;
 }

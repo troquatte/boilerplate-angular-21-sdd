@@ -16,8 +16,8 @@ export class ClientesListComponent implements OnInit {
   readonly clientes = signal<IClientes[]>([]);
 
   ngOnInit(): void {
-    this.clientesService.getClientes().subscribe((data) => {
-      this.clientes.set(data);
+    this.clientesService.getClientes().subscribe((response) => {
+      this.clientes.set(response.data);
     });
   }
 
