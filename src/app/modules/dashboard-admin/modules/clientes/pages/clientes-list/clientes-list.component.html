@@ -11,44 +11,48 @@
   <button class="theme-btn theme-btn__secondary">Novo cliente</button>
 </div>
 
-<table class="theme-table">
-  <thead>
-    <tr>
-      <th>Nome completo</th>
-      <th>Telefone</th>
-      <th>CPF</th>
-      <th>CEP</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (cliente of clientes(); track cliente.id) {
+@if (isLoading()) {
+  <div class="clientes-list__loading">Carregando...</div>
+} @else {
+  <table class="theme-table">
+    <thead>
       <tr>
-        <td>{{ cliente.fullName }}</td>
-        <td>{{ cliente.phone }}</td>
-        <td>{{ cliente.cpf }}</td>
-        <td>{{ cliente.cep }}</td>
-        <td class="theme-table__actions">
-          <button
-            class="theme-btn theme-btn__secondary"
-            (click)="onEdit(cliente)"
-            title="Editar"
-          >
-            Editar
-          </button>
-          <button
-            class="theme-btn theme-btn__danger-line"
-            (click)="onDelete(cliente)"
-            title="Deletar"
-          >
-            Deletar
-          </button>
-        </td>
+        <th>Nome completo</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th>CEP</th>
+        <th>Ações</th>
       </tr>
-    } @empty {
-      <tr>
-        <td colspan="5" class="theme-table__empty">Nenhum cliente encontrado.</td>
-      </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (cliente of clientes(); track cliente.id) {
+        <tr>
+          <td>{{ cliente.fullName }}</td>
+          <td>{{ cliente.phone }}</td>
+          <td>{{ cliente.cpf }}</td>
+          <td>{{ cliente.cep }}</td>
+          <td class="theme-table__actions">
+            <button
+              class="theme-btn theme-btn__secondary"
+              (click)="onEdit(cliente)"
+              title="Editar"
+            >
+              Editar
+            </button>
+            <button
+              class="theme-btn theme-btn__danger-line"
+              (click)="onDelete(cliente)"
+              title="Deletar"
+            >
+              Deletar
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="theme-table__empty">Nenhum cliente encontrado.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
