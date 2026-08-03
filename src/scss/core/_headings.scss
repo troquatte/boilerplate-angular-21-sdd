@@ -1,0 +1,30 @@
+@use "@tools/rem-calc" as fn;
+
+:root {
+  h1 {
+    font-size: fn.rem-calc(32);
+    font-weight: 700;
+    color: var(--secondary);
+    line-height: 1.2;
+    margin-top: fn.rem-calc(21);
+    margin-bottom: fn.rem-calc(21);
+  }
+
+  h2 {
+    font-size: fn.rem-calc(24);
+    font-weight: 700;
+    color: var(--secondary);
+    line-height: 1.2;
+    margin-top: fn.rem-calc(21);
+    margin-bottom: fn.rem-calc(21);
+  }
+
+  h3 {
+    font-size: fn.rem-calc(20);
+    font-weight: 600;
+    color: var(--secondary);
+    line-height: 1.2;
+    margin-top: fn.rem-calc(21);
+    margin-bottom: fn.rem-calc(21);
+  }
+}

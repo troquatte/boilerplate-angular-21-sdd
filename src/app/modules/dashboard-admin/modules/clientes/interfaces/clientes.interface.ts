@@ -1,5 +1,7 @@
 export interface IClientes {
   id: string;
-  name: string;
-  email: string;
+  fullName: string;
+  phone: string;
+  cpf: string;
+  cep: string;
 }

@@ -1,0 +1,30 @@
+<div class="theme-pagination">
+  <div class="theme-pagination__info">
+    <span>Items per page:</span>
+    <select [value]="pageSize()" (change)="onPageSizeChange($event)">
+      @for (size of pageSizes; track size) {
+        <option [value]="size">{{ size }}</option>
+      }
+    </select>
+    <span class="theme-pagination__range">{{ startItem() }} - {{ endItem() }} of {{ totalItems() }}</span>
+  </div>
+
+  <div class="theme-pagination__nav">
+    <button
+      class="theme-btn theme-btn__secondary"
+      [disabled]="!hasPrevious()"
+      (click)="previousPage()"
+      aria-label="Página anterior"
+    >
+      <
+    </button>
+    <button
+      class="theme-btn theme-btn__secondary"
+      [disabled]="!hasNext()"
+      (click)="nextPage()"
+      aria-label="Próxima página"
+    >
+      >
+    </button>
+  </div>
+</div>

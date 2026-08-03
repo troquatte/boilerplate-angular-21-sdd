@@ -1,14 +1,8 @@
-Dentro de adminDashboardRoutes src\app\modules\dashboard-admin\admin-dashboard.router.ts
+na image.png temos a tela a ser construida ( ela ta mais para um wireframe, desconsidere o menu )
+Temos que criar essa página usando o nosso design system
 
-import { Routes } from '@angular/router';
-import { DashboardAdminComponent } from './pages/dashboard/dashboard-admin/dashboard-admin.component';
-
-export const adminDashboardRoutes: Routes = [
-{
-path: '',
-component: DashboardAdminComponent,
-},
-];
-
-Precisamos criar modulos filhos para dentro dele adminDashboardRoutes hoje já temos a path: '',
-Precisamos criar outra path: 'clientes' e criar pasta modulos dentro de dashboard-admin pois vai criar o modulo clientes dentro teremos, componentes, pages, services .router etc. ( seguindo padrão de projeto que temos hoje )
+1 - temos h1 chamado cliente
+2 - input com busca e um botão novo cliente
+3 - Temos uma tabela com os dados, nome completo, telefone, cpf, cep e Tem que ter na tabela tbm botão de editar, deletar
+4 - no botão de deletar temos que usar o sweetalert2 para confirmar a deleçao
+5 - Temos que ter paginação

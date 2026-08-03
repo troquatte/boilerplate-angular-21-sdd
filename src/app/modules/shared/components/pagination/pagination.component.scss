@@ -1,0 +1,38 @@
+.theme-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.75rem 0;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-030);
+
+    select {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--gray-020);
+      border-radius: 0.25rem;
+      background: var(--white);
+      font-size: 0.875rem;
+    }
+  }
+
+  &__range {
+    margin-left: 0.5rem;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 0.5rem;
+
+    .theme-btn {
+      min-width: 2.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+    }
+  }
+}
