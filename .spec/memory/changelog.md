@@ -21,3 +21,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `014` | 2026-08-03 | Backend de Cadastro de Clientes                              | troquatte / Devin       |
 | `015` | 2026-08-03 | Massa de Dados (Seed) para Desenvolvimento                   | troquatte / Devin       |
 | `016` | 2026-08-03 | Correção SSR: Tela em Branco ao Acessar /admin/clientes      | troquatte / Devin       |
+| `017` | 2026-08-03 | Paginação de Clientes (Front e Back)                         | troquatte / Devin       |

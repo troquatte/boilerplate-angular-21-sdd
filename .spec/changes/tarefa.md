@@ -1,8 +1,15 @@
-Correção de bug
-Quando estou logado e entro em http://localhost:4200/admin/clientes ele buga deixando a tela em branco
+Criação da paginação front e back
 
-Mas quando acesso http://localhost:4200/admin/dashboard funciona normal.
+No front precisamos criar uma paginação:
+1 - Precisamos criar um componente e uma service que sirva para todos os outros modulos que vão páginar
+2 - Comunicação via service + api
 
-A solução é entrar armazenar a rota em algum lugar "localstorage" ou outro melhor, assim que a aplicação carregar envia para rota do acesso /admin/clientes
+No back precisamos que CLIENTE seja paginado e o campo de busca funcione para cpf ou telefone
 
-O erro pode aparecer se eu recarrego a pagina ou se eu abro outra aba com a url especifica
+contrato:
+// Contrato para todas outras que tenham paginação
+page=1 ( default 1 )
+pageSize=10 ( default 10 )
+
+// Esse search telefone ou cpf apenas para CLIENT
+search= ( telefone ou cpf )

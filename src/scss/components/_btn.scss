@@ -20,6 +20,13 @@
       }
     }
 
+    &.theme-btn__primary-line {
+      color: var(--primary);
+      background-color: transparent;
+
+      border: fn.rem-calc(1) solid var(--primary);
+    }
+
     &.theme-btn__secondary {
       background-color: var(--secondary);
       color: var(--white);
@@ -27,6 +34,13 @@
       &:hover {
         background-color: var(--secondary-010);
       }
+    }
+
+    &.theme-btn__secondary-line {
+      color: var(--secondary);
+      background-color: transparent;
+
+      border: fn.rem-calc(1) solid var(--secondary);
     }
 
     &.theme-btn__danger-line {

@@ -5,8 +5,12 @@ import { clienteService } from '../service/cliente.service';
 class ClienteController {
   public async list(req: Request, res: Response) {
     try {
-      const data = await clienteService.list();
-      return res.json({ data });
+      const page = req.query['page'] ? parseInt(req.query['page'] as string, 10) : undefined;
+      const pageSize = req.query['pageSize'] ? parseInt(req.query['pageSize'] as string, 10) : undefined;
+      const search = req.query['search'] as string | undefined;
+
+      const result = await clienteService.list({ page, pageSize, search });
+      return res.json(result);
     } catch (error: any) {
       return ErrorHandlerHelper.handle(res, error);
     }

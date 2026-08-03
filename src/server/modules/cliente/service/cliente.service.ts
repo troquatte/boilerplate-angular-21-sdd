@@ -3,11 +3,34 @@ import { prisma } from '../../../prisma-conn';
 import { EStatusErrors } from '../../../enum/EStatusErros.enum';
 
 class ClienteService {
-  public async list() {
+  public async list(params: { page?: number; pageSize?: number; search?: string }) {
     try {
-      return await prisma.cliente.findMany({
-        orderBy: { createdAt: 'desc' },
-      });
+      const page = Math.max(1, params.page || 1);
+      const pageSize = Math.max(1, params.pageSize || 10);
+      const skip = (page - 1) * pageSize;
+
+      const where = params.search
+        ? {
+            OR: [
+              { cpf: { contains: params.search, mode: 'insensitive' as const } },
+              { phone: { contains: params.search, mode: 'insensitive' as const } },
+            ],
+          }
+        : undefined;
+
+      const [data, total] = await Promise.all([
+        prisma.cliente.findMany({
+          where,
+          orderBy: { createdAt: 'desc' },
+          skip,
+          take: pageSize,
+        }),
+        prisma.cliente.count({ where }),
+      ]);
+
+      const totalPages = Math.ceil(total / pageSize);
+
+      return { data, meta: { page, pageSize, total, totalPages } };
     } catch (error: any) {
       throw new Error(error.message);
     }
