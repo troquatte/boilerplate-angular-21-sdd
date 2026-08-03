@@ -1,4 +1,14 @@
-@host = http://localhost:4000
+@host = http://localhost:4200
+
+### Login admin (obter cookie de sessao)
+# Expected: 200 OK - cookie accessToken sera guardado automaticamente
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "dener@vidafullstack.com.br",
+  "password": "dener@vidafullstack.com.br"
+}
 
 ### Listar clientes (paginado default)
 # Expected: 200 OK, meta: { page: 1, pageSize: 10, total, totalPages }
