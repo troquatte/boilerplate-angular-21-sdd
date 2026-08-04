@@ -39,7 +39,31 @@ model Cliente {
   tipo        String?
 
   userId      String?   @unique
-  user        User?     @relation(fields: [userId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  enderecos   Endereco[]
+}
+
+model Endereco {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cep         String
+  logradouro  String
+  numero      String
+  complemento String?
+  bairro      String
+  cidade      String
+  estado      String
+
+  principal   Boolean  @default(false)
+
+  clienteId   String
+  cliente     Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+
+  @@index([clienteId])
+  @@map("enderecos")
 }
 
 model ResetPasswordSecret {

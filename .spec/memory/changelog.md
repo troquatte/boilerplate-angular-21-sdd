@@ -25,3 +25,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `018` | 2026-08-04 | Formulário de Criação de Cliente (Front)                     | troquatte / Devin       |
 | `019` | 2026-08-04 | Formulário de Edição de Cliente (Front + Backend findById) | troquatte / Devin       |
 | `020` | 2026-08-04 | Integração CRUD Clientes (Create, Update, Delete)        | troquatte / Devin       |
+| `021` | 2026-08-04 | Modelo Endereço no Prisma (Relacionamento Cascade)     | troquatte / Devin       |
