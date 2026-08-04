@@ -27,3 +27,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `020` | 2026-08-04 | Integração CRUD Clientes (Create, Update, Delete)        | troquatte / Devin       |
 | `021` | 2026-08-04 | Modelo Endereço no Prisma (Relacionamento Cascade)     | troquatte / Devin       |
 | `022` | 2026-08-04 | Refactor Seed e Adicionar Endereços                      | troquatte / Devin       |
+| `023` | 2026-08-04 | Backend CRUD Endereços (Service, Controller, Router, Tests) | troquatte / Devin       |
