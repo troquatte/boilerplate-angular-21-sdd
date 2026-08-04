@@ -26,6 +26,10 @@ GET {{host}}/api/dashboard/clientes?page=1&pageSize=10&search=119
 # Expected: 200 OK, retorna apenas clientes que contenham "123" no cpf
 GET {{host}}/api/dashboard/clientes?page=1&pageSize=10&search=123
 
+### Obter cliente por ID
+# Expected: 200 OK, birthDate em dd/mm/aaaa
+GET {{host}}/api/dashboard/clientes/UUID_AQUI
+
 ### Criar cliente sem email (sem login)
 # Expected: 201 Created
 POST {{host}}/api/dashboard/clientes
@@ -35,7 +39,8 @@ Content-Type: application/json
   "phone": "11987654321",
   "cpf": "12345678901",
   "fullName": "Ana Carolina Silva",
-  "tipo": "PF"
+  "birthDate": "15/05/1990",
+  "tipo": "Primeira Compra"
 }
 
 ### Criar cliente com email (gera User)
@@ -48,7 +53,8 @@ Content-Type: application/json
   "cpf": "23456789012",
   "fullName": "Bruno Oliveira",
   "email": "bruno@example.com",
-  "tipo": "PF"
+  "birthDate": "22/08/1985",
+  "tipo": "Nova Compra"
 }
 
 ### Criar cliente com email sem CPF (erro)
@@ -68,7 +74,9 @@ PATCH {{host}}/api/dashboard/clientes/UUID_AQUI
 Content-Type: application/json
 
 {
-  "phone": "11999999999"
+  "phone": "11999999999",
+  "birthDate": "10/10/2000",
+  "tipo": "Cliente VIP"
 }
 
 ### Deletar cliente
