@@ -16,6 +16,15 @@ class ClienteController {
     }
   }
 
+  public async findById(req: Request, res: Response) {
+    try {
+      const data = await clienteService.findById(req.params['id']);
+      return res.json({ data });
+    } catch (error: any) {
+      return ErrorHandlerHelper.handle(res, error);
+    }
+  }
+
   public async create(req: Request, res: Response) {
     try {
       const data = await clienteService.create(req.body);

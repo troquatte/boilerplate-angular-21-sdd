@@ -31,4 +31,8 @@ export class ClientesService {
     const url = `${this.apiUrl}?${query.toString()}`;
     return this.http.get<IClientesResponse>(url);
   }
+
+  getClienteById(id: string): Observable<{ data: IClientes }> {
+    return this.http.get<{ data: IClientes }>(`${this.apiUrl}/${id}`);
+  }
 }

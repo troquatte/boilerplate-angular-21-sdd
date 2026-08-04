@@ -42,7 +42,7 @@ async function main() {
       phone: '11987654321',
       cpf: '12345678901',
       email: 'ana@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1990-05-15'),
     },
     {
@@ -50,7 +50,7 @@ async function main() {
       phone: '21976543210',
       cpf: '23456789012',
       email: 'bruno@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1985-08-22'),
     },
     {
@@ -58,7 +58,7 @@ async function main() {
       phone: '31965432109',
       cpf: '34567890123',
       email: 'carla@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1992-11-03'),
     },
     {
@@ -66,7 +66,7 @@ async function main() {
       phone: '41954321098',
       cpf: '45678901234',
       email: 'daniel@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1988-02-14'),
     },
     {
@@ -74,7 +74,7 @@ async function main() {
       phone: '51943210987',
       cpf: '56789012345',
       email: 'eduarda@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1995-07-30'),
     },
     {
@@ -82,7 +82,7 @@ async function main() {
       phone: '61932109876',
       cpf: '67890123456',
       email: 'felipe@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1983-12-09'),
     },
     {
@@ -90,7 +90,7 @@ async function main() {
       phone: '71921098765',
       cpf: '78901234567',
       email: 'gabriela@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1991-04-18'),
     },
     {
@@ -98,7 +98,7 @@ async function main() {
       phone: '81910987654',
       cpf: '89012345678',
       email: 'henrique@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1987-09-25'),
     },
     {
@@ -106,7 +106,7 @@ async function main() {
       phone: '91909876543',
       cpf: '90123456789',
       email: 'isabela@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1993-01-07'),
     },
     {
@@ -114,7 +114,7 @@ async function main() {
       phone: '11998765432',
       cpf: '01234567890',
       email: 'joao@example.com',
-      tipo: 'PF',
+      tipo: 'Primeira Compra',
       birthDate: new Date('1989-06-12'),
     },
   ];

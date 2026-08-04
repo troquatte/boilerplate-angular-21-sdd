@@ -155,6 +155,6 @@ export class ClientesListComponent implements OnInit {
   }
 
   onEdit(cliente: IClientes): void {
-    console.log('Editar cliente:', cliente.id);
+    this.router.navigate(['/admin/clientes', cliente.id]);
   }
 }
