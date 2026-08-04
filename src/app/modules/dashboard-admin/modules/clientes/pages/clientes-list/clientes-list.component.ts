@@ -1,6 +1,6 @@
 import { Component, PLATFORM_ID, OnInit, effect, inject, signal, untracked } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ import { PaginationComponent } from '../../../../../../shared/components/paginat
 @Component({
   selector: 'app-clientes-list',
   standalone: true,
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, RouterLink],
   providers: [PaginationService],
   templateUrl: './clientes-list.component.html',
   styleUrl: './clientes-list.component.scss',

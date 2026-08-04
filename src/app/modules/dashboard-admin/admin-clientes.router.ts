@@ -6,4 +6,11 @@ export const adminClientesRoutes: Routes = [
     path: '',
     component: ClientesListComponent,
   },
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./modules/clientes/pages/clientes-create/clientes-create.component').then(
+        (m) => m.ClientesCreateComponent,
+      ),
+  },
 ];

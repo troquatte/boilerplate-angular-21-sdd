@@ -1,15 +1,17 @@
-Criação da paginação front e back
+Tarefa: C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\app\modules\dashboard-admin\modules\clientes
 
-No front precisamos criar uma paginação:
-1 - Precisamos criar um componente e uma service que sirva para todos os outros modulos que vão páginar
-2 - Comunicação via service + api
+Criar pages/create-or-update
 
-No back precisamos que CLIENTE seja paginado e o campo de busca funcione para cpf ou telefone
+De acordo com a image.png
+Vamos construir o front [CREATE]
 
-contrato:
-// Contrato para todas outras que tenham paginação
-page=1 ( default 1 )
-pageSize=10 ( default 10 )
+h1: Dados do cliente
+inputs: Telefone com mascara usando ngx-mask xx x xxxx-xxxx ( exp.: 11 9 6736-5966 )[col-md-4]
+inputs: CPF com mascara usando ngx-mask xxx.xxx.xxx-xx ( exp.: 381.574.778-32 ) [col-md-8]
+inputs: Nome completo [col-md-12]
+inputs: E-mail[col-md-12]
+inputs: Data de Nascimento com mascara usando ngx-mask xx/xx/xxxx ( exp.: 20/12/1991 ) [col-md-4]
+inputs selected: Tipo de cliente ( Tag ) Primeira Compra ( default selected ), Mais de uma compra, Cliente VIP, Influenciador [col-md-8]
 
-// Esse search telefone ou cpf apenas para CLIENT
-search= ( telefone ou cpf )
+Não integrar nessa tarefa com backend
+Crie outra tarefa para integração [Create e Update] - caso tenha essas features em Clientes C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\server\modules\cliente

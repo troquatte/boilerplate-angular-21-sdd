@@ -1,0 +1,137 @@
+<div class="container">
+  <h1>Dados do cliente</h1>
+
+  <form
+    class="clientes-form"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+  >
+    <div class="row">
+      <div class="col-md-4">
+        <div class="theme-form-field">
+          <label for="phone" class="form-label theme-form-field__label"
+            >Telefone</label
+          >
+          <input
+            id="phone"
+            class="form-control theme-form-field__input"
+            type="text"
+            formControlName="phone"
+            mask="00 0 0000-0000"
+            placeholder="11 9 6736-5966"
+          />
+          @if (phone.touched && phone.invalid) {
+            <span class="theme-form-field__error">Telefone é obrigatório.</span>
+          }
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="theme-form-field">
+          <label for="cpf" class="form-label theme-form-field__label"
+            >CPF</label
+          >
+          <input
+            id="cpf"
+            class="form-control theme-form-field__input"
+            type="text"
+            formControlName="cpf"
+            mask="000.000.000-00"
+            placeholder="381.574.778-32"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="theme-form-field">
+          <label for="fullName" class="form-label theme-form-field__label"
+            >Nome completo</label
+          >
+          <input
+            id="fullName"
+            class="form-control theme-form-field__input"
+            type="text"
+            formControlName="fullName"
+            placeholder="Nome completo do cliente"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="theme-form-field">
+          <label for="email" class="form-label theme-form-field__label"
+            >E-mail</label
+          >
+          <input
+            id="email"
+            class="form-control theme-form-field__input"
+            type="email"
+            formControlName="email"
+            placeholder="email@exemplo.com"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="theme-form-field">
+          <label for="birthDate" class="form-label theme-form-field__label"
+            >Data de Nascimento</label
+          >
+          <input
+            id="birthDate"
+            class="form-control theme-form-field__input"
+            type="text"
+            formControlName="birthDate"
+            mask="00/00/0000"
+            placeholder="20/12/1991"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="theme-form-field">
+          <label for="tipo" class="form-label theme-form-field__label"
+            >Tipo de cliente</label
+          >
+          <select
+            id="tipo"
+            class="form-control theme-form-field__input"
+            formControlName="tipo"
+          >
+            @for (t of tipos; track t) {
+              <option [value]="t">{{ t }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="clientes-form__actions">
+      <button
+        type="button"
+        class="theme-btn theme-btn__secondary-line"
+        (click)="back()"
+      >
+        Voltar
+      </button>
+      <button
+        type="submit"
+        class="theme-btn theme-btn__primary"
+        [disabled]="form.invalid || isLoading()"
+      >
+        @if (isLoading()) {
+          Carregando...
+        } @else {
+          Salvar
+        }
+      </button>
+    </div>
+  </form>
+</div>
