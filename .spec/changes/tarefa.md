@@ -1,19 +1,10 @@
-Tarefa: C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\app\modules\dashboard-admin\modules\clientes
+Tarefa
 
-Criar pages/create-or-update
+Em: C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\app\modules\dashboard-admin\modules\clientes
+clientes-create-or-update: Construimos o front [CREATE / UPDATE]
+Agora precisamos de fato persistir os dados no backend precisamos integrar em [CLIENTES]
 
-De acordo com a image.png
-Vamos construir o front [UPDATE]
-
-h1: Dados do cliente
-inputs: Telefone com mascara usando ngx-mask xx x xxxx-xxxx ( exp.: 11 9 6736-5966 )[col-md-4]
-inputs: CPF com mascara usando ngx-mask xxx.xxx.xxx-xx ( exp.: 381.574.778-32 ) [col-md-8]
-inputs: Nome completo [col-md-12]
-inputs: E-mail[col-md-12]
-inputs: Data de Nascimento com mascara usando ngx-mask xx/xx/xxxx ( exp.: 20/12/1991 ) [col-md-4]
-inputs selected: Tipo de cliente ( Tag ) Primeira Compra ( default selected ), Mais de uma compra, Cliente VIP, Influenciador [col-md-8]
-
-Os dados devem ser carregados diretamente do backend caso tenha getById, se não tiver crie e integre
-
-Não integrar nessa tarefa com backend
-Crie outra tarefa para integração [Create e Update] - caso tenha essas features em Clientes C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\server\modules\cliente
+Em: C:\Users\Troquatte\Documents\Projetos\boilerplate-angular-21-sdd\src\app\modules\dashboard-admin\modules\clientes
+clientes-list:
+1 - Construimos a tela de listagem e ela ta listando os dados do backend, falta apenas agora fazer o delete integrado [CLIENTES]
+2 - O editar tem que ser "a" com routerLink ( se n me engano ) e não click do botão com javascript

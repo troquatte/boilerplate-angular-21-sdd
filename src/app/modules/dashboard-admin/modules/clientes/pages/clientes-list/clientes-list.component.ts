@@ -149,12 +149,28 @@ export class ClientesListComponent implements OnInit {
       cancelButtonColor: 'var(--gray-030)',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('Deletar cliente:', cliente.id);
+        this.clientesService.deleteCliente(cliente.id).subscribe({
+          next: () => {
+            this.loadClientes();
+            Swal.fire({
+              title: 'Sucesso',
+              text: 'Cliente deletado com sucesso.',
+              icon: 'success',
+              confirmButtonColor: 'var(--primary)',
+            });
+          },
+          error: (err) => {
+            const message = err?.error?.message || 'Ocorreu um erro ao deletar o cliente.';
+            Swal.fire({
+              title: 'Erro',
+              text: message,
+              icon: 'error',
+              confirmButtonColor: 'var(--primary)',
+            });
+          },
+        });
       }
     });
   }
 
-  onEdit(cliente: IClientes): void {
-    this.router.navigate(['/admin/clientes', cliente.id]);
-  }
 }

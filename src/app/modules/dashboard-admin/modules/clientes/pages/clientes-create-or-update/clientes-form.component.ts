@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import Swal from 'sweetalert2';
 import { ClientesService } from '../../services/clientes.service';
+import { IClientes } from '../../interfaces/clientes.interface';
 
 @Component({
   selector: 'app-clientes-form',
@@ -91,20 +92,34 @@ export class ClientesFormComponent implements OnInit {
     this.isLoading.set(true);
 
     const id = this.clienteId();
-    if (id) {
-      console.log('_submitUpdate', { id, ...this.form.value });
-    } else {
-      console.log('_submitCreate', this.form.value);
-    }
+    const payload = this.form.value as Omit<IClientes, 'id' | 'createdAt' | 'updatedAt'>;
 
-    Swal.fire({
-      title: 'Sucesso!',
-      text: id ? 'Cliente atualizado com sucesso (mock).' : 'Cliente cadastrado com sucesso (mock).',
-      icon: 'success',
-      confirmButtonColor: 'var(--primary)',
-    }).then(() => {
-      this.isLoading.set(false);
-      this.router.navigate(['/admin/clientes']);
+    const request$ = id
+      ? this.clientesService.updateCliente(id, payload)
+      : this.clientesService.createCliente(payload);
+
+    request$.subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        Swal.fire({
+          title: 'Sucesso!',
+          text: id ? 'Cliente atualizado com sucesso.' : 'Cliente cadastrado com sucesso.',
+          icon: 'success',
+          confirmButtonColor: 'var(--primary)',
+        }).then(() => {
+          this.router.navigate(['/admin/clientes']);
+        });
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        const message = err?.error?.message || 'Ocorreu um erro ao salvar o cliente.';
+        Swal.fire({
+          title: 'Erro',
+          text: message,
+          icon: 'error',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
     });
   }
 

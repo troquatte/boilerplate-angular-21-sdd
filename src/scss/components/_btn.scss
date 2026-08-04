@@ -10,6 +10,9 @@
     min-width: fn.rem-calc(108);
     text-decoration: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.theme-btn__primary {
       background-color: var(--primary);

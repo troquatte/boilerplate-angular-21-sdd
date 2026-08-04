@@ -34,13 +34,13 @@
           <td>{{ cliente.cpf }}</td>
           <td>{{ cliente.cep }}</td>
           <td class="theme-table__actions">
-            <button
+            <a
               class="theme-btn theme-btn__secondary"
-              (click)="onEdit(cliente)"
+              [routerLink]="['/admin/clientes', cliente.id]"
               title="Editar"
             >
               Editar
-            </button>
+            </a>
             <button
               class="theme-btn theme-btn__danger-line"
               (click)="onDelete(cliente)"

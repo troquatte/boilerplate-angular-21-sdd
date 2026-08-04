@@ -35,4 +35,16 @@ export class ClientesService {
   getClienteById(id: string): Observable<{ data: IClientes }> {
     return this.http.get<{ data: IClientes }>(`${this.apiUrl}/${id}`);
   }
+
+  createCliente(payload: Omit<IClientes, 'id' | 'createdAt' | 'updatedAt'>): Observable<{ data: IClientes }> {
+    return this.http.post<{ data: IClientes }>(this.apiUrl, payload);
+  }
+
+  updateCliente(id: string, payload: Partial<Omit<IClientes, 'id' | 'createdAt' | 'updatedAt'>>): Observable<{ data: IClientes }> {
+    return this.http.patch<{ data: IClientes }>(`${this.apiUrl}/${id}`, payload);
+  }
+
+  deleteCliente(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
