@@ -276,3 +276,18 @@ Somente inicie a implementação após confirmar que:
 Não instale novas bibliotecas sem necessidade explícita documentada na spec.
 
 Não altere regras globais de estilos sem autorização.
+
+## 12. Branching por Spec (Git)
+
+Cada spec deve ter sua própria branch. **Antes de iniciar a execução de qualquer spec**, crie uma nova branch:
+
+```bash
+git checkout -b feature/XXX-nome-da-spec
+```
+
+Padrão de nomenclatura:
+- `feature/XXX-nome-da-spec` para novas funcionalidades
+- `fix/XXX-nome-da-spec` para correções
+- `refactor/XXX-nome-da-spec` para refatorações
+
+Nunca execute uma spec na branch de outra spec. Commits e push devem ser feitos na branch correta da spec atual.
