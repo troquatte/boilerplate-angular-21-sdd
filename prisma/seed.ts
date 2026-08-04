@@ -13,7 +13,7 @@ import { seedEndereco } from './seeds/seed-endereco';
 
 async function main() {
   // Limpar dados existentes (ordem importa por FK)
-  await prisma.endereco.deleteMany();
+  await prisma.enderecos.deleteMany();
   await prisma.cliente.deleteMany();
   await prisma.refreshToken.deleteMany();
   await prisma.resetPasswordSecret.deleteMany();

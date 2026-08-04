@@ -113,7 +113,7 @@ export async function seedEndereco(
     const cliente = clientes[i];
     const endereco = enderecosPorCliente[i % enderecosPorCliente.length];
 
-    await prisma.endereco.create({
+    await prisma.enderecos.create({
       data: {
         ...endereco,
         clienteId: cliente.id,
@@ -124,7 +124,7 @@ export async function seedEndereco(
     // Adicionar endereço secundário para metade dos clientes
     if (i % 2 === 0) {
       const enderecoSecundario = enderecosPorCliente[(i + 1) % enderecosPorCliente.length];
-      await prisma.endereco.create({
+      await prisma.enderecos.create({
         data: {
           ...enderecoSecundario,
           principal: false,
