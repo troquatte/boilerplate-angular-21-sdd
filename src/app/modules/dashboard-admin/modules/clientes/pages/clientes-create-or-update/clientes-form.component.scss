@@ -24,4 +24,9 @@
   &__selecionar-btn-principal {
     margin-right: fn.rem-calc(14);
   }
+
+  &__endereco-card--principal {
+    background-color: var(--primary) !important;
+    color: var(--secondary) !important;
+  }
 }

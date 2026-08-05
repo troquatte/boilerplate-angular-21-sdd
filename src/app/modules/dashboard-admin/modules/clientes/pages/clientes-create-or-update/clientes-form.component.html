@@ -121,53 +121,127 @@
         <div
           class="theme-card"
           [class.theme-card__white]="!endereco.principal"
-          [class.theme-card__black]="endereco.principal"
+          [class.clientes-form__endereco-card--principal]="endereco.principal"
         >
-          <div class="row">
-            <div class="col-md-12">
-              <h4>
-                <strong>
-                  {{
-                    endereco.principal ? "✓ Endereço selecionado" : "Endereço"
-                  }}
-                </strong>
-              </h4>
+          @if (enderecoEditandoId() === endereco.id) {
+            <div [formGroup]="formEnderecoEdit">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">CEP</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="cep" mask="00000-000" placeholder="07055-210" />
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Logradouro</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="logradouro" placeholder="Praça da Sé" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Número</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="numero" placeholder="100" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Bairro</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="bairro" placeholder="Sé" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Cidade</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="cidade" placeholder="São Paulo" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Estado</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="estado" placeholder="SP" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="theme-form-field">
+                    <label class="form-label theme-form-field__label">Complemento</label>
+                    <input class="form-control theme-form-field__input" type="text" formControlName="complemento" placeholder="Apto 12" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 d-flex gap-2">
+                  <button class="theme-btn theme-btn__secondary clientes-form__selecionar-btn-principal" type="button" (click)="saveEdit(endereco.id)" [disabled]="formEnderecoEdit.invalid || isLoadingEndereco()">
+                    @if (isLoadingEndereco()) {
+                      Carregando...
+                    } @else {
+                      Salvar
+                    }
+                  </button>
+                  <button class="theme-btn theme-btn__secondary-line" type="button" (click)="cancelEdit()">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <strong>{{ endereco.logradouro }}, {{ endereco.numero }}</strong>
-              @if (endereco.complemento) {
-                <span> — {{ endereco.complemento }}</span>
-              }
+          } @else {
+            <div class="row">
+              <div class="col-md-12">
+                <h4>
+                  <strong>
+                    {{ endereco.principal ? "✓ Endereço selecionado" : "Endereço" }}
+                  </strong>
+                </h4>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              {{ endereco.bairro }} — {{ endereco.cidade }} /
-              {{ endereco.estado }} — CEP: {{ endereco.cep }}
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ endereco.logradouro }}, {{ endereco.numero }}</strong>
+                @if (endereco.complemento) {
+                  <span> — {{ endereco.complemento }}</span>
+                }
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 d-flex gap-2">
-              @if (!endereco.principal) {
-                <button
-                  class="theme-btn theme-btn__secondary-line clientes-form__selecionar-btn clientes-form__selecionar-btn-principal"
-                  type="button"
-                  (click)="selectPrincipal(endereco.id)"
-                >
-                  Selecionar
-                </button>
-              }
-              <button
-                class="theme-btn theme-btn__danger clientes-form__selecionar-btn"
-                type="button"
-                (click)="deleteEndereco(endereco.id)"
-              >
-                Deletar
-              </button>
+            <div class="row">
+              <div class="col-md-12">
+                {{ endereco.bairro }} — {{ endereco.cidade }} /
+                {{ endereco.estado }} — CEP: {{ endereco.cep }}
+              </div>
             </div>
-          </div>
+            @if (!enderecoEditandoId()) {
+              <div class="row">
+                <div class="col-md-12 d-flex gap-2">
+                  <button
+                    class="theme-btn theme-btn__secondary clientes-form__selecionar-btn clientes-form__selecionar-btn-principal"
+                    type="button"
+                    (click)="startEdit(endereco)"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    class="theme-btn theme-btn__danger clientes-form__selecionar-btn clientes-form__selecionar-btn-principal"
+                    type="button"
+                    (click)="deleteEndereco(endereco.id)"
+                  >
+                    Deletar
+                  </button>
+                  @if (!endereco.principal) {
+                    <button
+                      class="theme-btn theme-btn__secondary-line clientes-form__selecionar-btn clientes-form__selecionar-btn-principal"
+                      type="button"
+                      (click)="selectPrincipal(endereco.id)"
+                    >
+                      Selecionar
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          }
         </div>
       }
 

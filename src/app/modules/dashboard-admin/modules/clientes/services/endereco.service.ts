@@ -36,6 +36,14 @@ export class EnderecoService {
     return this.http.patch<IEnderecoSingleResponse>(`${this.apiUrl(clienteId)}/${enderecoId}/select`, {});
   }
 
+  updateEndereco(
+    clienteId: string,
+    enderecoId: string,
+    payload: Partial<Omit<IEndereco, 'id' | 'createdAt' | 'updatedAt' | 'clienteId'>>,
+  ): Observable<IEnderecoSingleResponse> {
+    return this.http.patch<IEnderecoSingleResponse>(`${this.apiUrl(clienteId)}/${enderecoId}`, payload);
+  }
+
   deleteEndereco(clienteId: string, enderecoId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl(clienteId)}/${enderecoId}`);
   }

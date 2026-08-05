@@ -31,6 +31,7 @@ export class ClientesFormComponent implements OnInit {
     const list = this.enderecos();
     return [...list].sort((a, b) => (b.principal ? 1 : 0) - (a.principal ? 1 : 0));
   });
+  readonly enderecoEditandoId = signal<string | null>(null);
   readonly isLoadingEndereco = signal(false);
 
   readonly form = this.fb.group({
@@ -43,6 +44,16 @@ export class ClientesFormComponent implements OnInit {
   });
 
   readonly formEndereco = this.fb.group({
+    cep: ['', [Validators.required]],
+    logradouro: ['', [Validators.required]],
+    numero: ['', [Validators.required]],
+    complemento: [''],
+    bairro: ['', [Validators.required]],
+    cidade: ['', [Validators.required]],
+    estado: ['', [Validators.required]],
+  });
+
+  readonly formEnderecoEdit = this.fb.group({
     cep: ['', [Validators.required]],
     logradouro: ['', [Validators.required]],
     numero: ['', [Validators.required]],
@@ -231,6 +242,59 @@ export class ClientesFormComponent implements OnInit {
           });
         },
       });
+    });
+  }
+
+  startEdit(endereco: IEndereco): void {
+    this.enderecoEditandoId.set(endereco.id);
+    this.formEnderecoEdit.patchValue({
+      cep: endereco.cep,
+      logradouro: endereco.logradouro,
+      numero: endereco.numero,
+      complemento: endereco.complemento || '',
+      bairro: endereco.bairro,
+      cidade: endereco.cidade,
+      estado: endereco.estado,
+    });
+  }
+
+  cancelEdit(): void {
+    this.enderecoEditandoId.set(null);
+    this.formEnderecoEdit.reset();
+  }
+
+  saveEdit(enderecoId: string): void {
+    if (this.formEnderecoEdit.invalid || this.isLoadingEndereco()) return;
+
+    const id = this.clienteId();
+    if (!id) return;
+
+    this.isLoadingEndereco.set(true);
+    const payload = this.formEnderecoEdit.value as Omit<IEndereco, 'id' | 'createdAt' | 'updatedAt' | 'clienteId' | 'principal'>;
+
+    this.enderecoService.updateEndereco(id, enderecoId, payload).subscribe({
+      next: () => {
+        this.isLoadingEndereco.set(false);
+        this.enderecoEditandoId.set(null);
+        this.formEnderecoEdit.reset();
+        this.loadEnderecos(id);
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Endereço atualizado com sucesso.',
+          icon: 'success',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
+      error: (err) => {
+        this.isLoadingEndereco.set(false);
+        const message = err?.error?.message || 'Ocorreu um erro ao atualizar o endereço.';
+        Swal.fire({
+          title: 'Erro',
+          text: message,
+          icon: 'error',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
     });
   }
 
