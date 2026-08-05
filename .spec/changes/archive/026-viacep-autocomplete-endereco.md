@@ -89,24 +89,46 @@ GET https://viacep.com.br/ws/01001000/json/
 
 ## Critérios de Aceite
 
-- [ ] **AC-01 — Serviço ViaCEP:** `ViaCepService` criado com método `buscarCep` e interface `ViaCepResponse`.
-- [ ] **AC-02 — Autocomplete criação:** Ao digitar CEP válido no `formEndereco`, logradouro, bairro, cidade, estado são preenchidos automaticamente.
-- [ ] **AC-03 — Autocomplete edição:** Ao digitar CEP válido no `formEnderecoEdit`, mesmo comportamento.
-- [ ] **AC-04 — Debounce:** Consulta à API acontece apenas após 500ms de inatividade no campo CEP.
-- [ ] **AC-05 — CEP inválido:** CEPs inválidos não preenchem os campos e não geram erro visível.
-- [ ] **AC-06 — CEP incompleto:** CEPs com menos de 8 dígitos não disparam a consulta.
-- [ ] **AC-07 — Build aprovado:** Build sem erros.
-- [ ] **AC-08 — Lint aprovado:** Lint sem erros.
+- [x] **AC-01 — Serviço ViaCEP:** `ViaCepService` criado com método `buscarCep` e interface `ViaCepResponse`.
+- [x] **AC-02 — Autocomplete criação:** Ao digitar CEP válido no `formEndereco`, logradouro, bairro, cidade, estado são preenchidos automaticamente.
+- [x] **AC-03 — Autocomplete edição:** Ao digitar CEP válido no `formEnderecoEdit`, mesmo comportamento.
+- [x] **AC-04 — Debounce:** Consulta à API acontece apenas após 500ms de inatividade no campo CEP.
+- [x] **AC-05 — CEP inválido:** CEPs inválidos não preenchem os campos e não geram erro visível.
+- [x] **AC-06 — CEP incompleto:** CEPs com menos de 8 dígitos não disparam a consulta.
+- [x] **AC-07 — Build aprovado:** Build sem erros.
+- [x] **AC-08 — Lint aprovado:** Lint sem erros.
 
 ## Tasks
 
-- [ ] **Task 1 — ViaCepService:** Criar serviço e interface para consultar ViaCEP.
-- [ ] **Task 2 — Autocomplete criação:** Integrar no `formEndereco` do `ClientesFormComponent`.
-- [ ] **Task 3 — Autocomplete edição:** Integrar no `formEnderecoEdit` do `ClientesFormComponent`.
-- [ ] **Task 4 — Build e lint:** Validações.
+- [x] **Task 1 — ViaCepService:** Criar serviço e interface para consultar ViaCEP.
+  > ✅ 2026-08-05 — Serviço criado com `fetch` nativo (evita CORS com interceptor de auth). Interface `ViaCepResponse` com todos os campos. Trata `erro: true`.
+- [x] **Task 2 — Autocomplete criação:** Integrar no `formEndereco` do `ClientesFormComponent`.
+  > ✅ 2026-08-05 — `setupCepAutocomplete` aplicado ao `formEndereco`. Debounce 500ms, filtro 8 dígitos, preenche logradouro, bairro, cidade, estado.
+- [x] **Task 3 — Autocomplete edição:** Integrar no `formEnderecoEdit` do `ClientesFormComponent`.
+  > ✅ 2026-08-05 — `setupCepAutocomplete` aplicado ao `formEnderecoEdit` com mesmo comportamento.
+- [x] **Task 4 — Build e lint:** Validações.
+  > ✅ 2026-08-05 — Build e lint aprovados. CEP 07055210 testado manualmente, autocomplete funcionou.
+
+## Desvios e Decisões
+
+- **fetch nativo em vez de HttpClient:** O `authInterceptor` força `withCredentials: true` em todas as requisições do `HttpClient`. O ViaCEP retorna `Access-Control-Allow-Origin: *`, que o browser bloqueia quando credentials estão ativos. Substituiu-se `HttpClient` por `fetch` nativo no `ViaCepService` para evitar o interceptor.
 
 ## Resultado Esperado
 - Usuário digita CEP no campo, aguarda 500ms, e os campos logradouro, bairro, cidade, estado são preenchidos automaticamente
 
 ## Encerramento
-Esta spec termina quando o autocomplete de CEP funcionar nos formulários de criação e edição de endereço, e build/lint aprovados.
+
+> ✅ 2026-08-05 15:35 — Spec revisada, validada e encerrada.
+
+### Validações finais
+
+- `npx ng build --configuration local`: executado com sucesso.
+- `npx eslint`: executado com sucesso.
+- Teste manual com CEP 07055210: funcionou, preencheu logradouro, bairro, cidade, estado.
+
+### Memória atualizada
+
+- `memory/changelog.md`: adicionada entrada `026`.
+- `memory/contexto-tecnico.md`: nenhuma alteração necessária.
+- `memory/produto.md`: nenhuma alteração necessária.
+- `memory/estrutura.md`: nenhuma alteração necessária.

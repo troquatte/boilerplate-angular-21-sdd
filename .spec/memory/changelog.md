@@ -30,3 +30,4 @@ Este arquivo registra cronologicamente todas as especificações (Specs) conclu�
 | `023` | 2026-08-04 | Backend CRUD Endereços (Service, Controller, Router, Tests) | troquatte / Devin       |
 | `024` | 2026-08-05 | Endereço e Histórico de Pedidos no Formulário de Cliente (Front) | troquatte / Devin       |
 | `025` | 2026-08-05 | Integração Endereços Frontend-Backend (CRUD + Selecionar Principal) | troquatte / Devin       |
+| `026` | 2026-08-05 | Autocomplete de Endereço via ViaCEP (API Pública)          | troquatte / Devin       |
