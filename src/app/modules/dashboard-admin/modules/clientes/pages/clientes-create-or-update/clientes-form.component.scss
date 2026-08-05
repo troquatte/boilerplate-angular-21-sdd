@@ -1,9 +1,12 @@
+@use "@tools/rem-calc" as fn;
+
 .clientes-form {
   &__actions {
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
     margin-top: 2rem;
+    margin-bottom: fn.rem-calc(21);
   }
 
   &__historico-vazio {
@@ -12,5 +15,13 @@
     padding: 1rem;
     border-radius: 0.5rem;
     text-align: left;
+  }
+
+  &__selecionar-btn {
+    margin-top: fn.rem-calc(14);
+  }
+
+  &__selecionar-btn-principal {
+    margin-right: fn.rem-calc(14);
   }
 }

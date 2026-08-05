@@ -1,11 +1,13 @@
-import { Component, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import Swal from 'sweetalert2';
 import { ClientesService } from '../../services/clientes.service';
+import { EnderecoService } from '../../services/endereco.service';
 import { IClientes } from '../../interfaces/clientes.interface';
+import { IEndereco } from '../../interfaces/endereco.interface';
 
 @Component({
   selector: 'app-clientes-form',
@@ -19,10 +21,17 @@ export class ClientesFormComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly clientesService = inject(ClientesService);
+  private readonly enderecoService = inject(EnderecoService);
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly isLoading = signal(false);
   readonly clienteId = signal<string | null>(null);
+  readonly enderecos = signal<IEndereco[]>([]);
+  readonly enderecosOrdenados = computed(() => {
+    const list = this.enderecos();
+    return [...list].sort((a, b) => (b.principal ? 1 : 0) - (a.principal ? 1 : 0));
+  });
+  readonly isLoadingEndereco = signal(false);
 
   readonly form = this.fb.group({
     phone: ['', [Validators.required]],
@@ -31,6 +40,16 @@ export class ClientesFormComponent implements OnInit {
     email: [''],
     birthDate: [''],
     tipo: ['Primeira Compra'],
+  });
+
+  readonly formEndereco = this.fb.group({
+    cep: ['', [Validators.required]],
+    logradouro: ['', [Validators.required]],
+    numero: ['', [Validators.required]],
+    complemento: [''],
+    bairro: ['', [Validators.required]],
+    cidade: ['', [Validators.required]],
+    estado: ['', [Validators.required]],
   });
 
   get phone() { return this.form.controls.phone; }
@@ -71,6 +90,7 @@ export class ClientesFormComponent implements OnInit {
           tipo: cliente.tipo || 'Primeira Compra',
         });
         this.isLoading.set(false);
+        this.loadEnderecos(id);
       },
       error: () => {
         this.isLoading.set(false);
@@ -86,9 +106,171 @@ export class ClientesFormComponent implements OnInit {
     });
   }
 
+  private loadEnderecos(clienteId: string): void {
+    this.enderecoService.getEnderecos(clienteId).subscribe({
+      next: (response) => {
+        this.enderecos.set(response.data);
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Não foi possível carregar os endereços do cliente.',
+          icon: 'error',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
+    });
+  }
+
+  addEndereco(): void {
+    if (this.formEndereco.invalid || this.isLoadingEndereco()) return;
+
+    const id = this.clienteId();
+    if (!id) return;
+
+    this.isLoadingEndereco.set(true);
+    const payload = this.formEndereco.value as Omit<IEndereco, 'id' | 'createdAt' | 'updatedAt' | 'clienteId' | 'principal'>;
+
+    this.enderecoService.createEndereco(id, payload).subscribe({
+      next: () => {
+        this.isLoadingEndereco.set(false);
+        this.formEndereco.reset();
+        this.loadEnderecos(id);
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Endereço adicionado com sucesso.',
+          icon: 'success',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
+      error: (err) => {
+        this.isLoadingEndereco.set(false);
+        const message = err?.error?.message || 'Ocorreu um erro ao adicionar o endereço.';
+        Swal.fire({
+          title: 'Erro',
+          text: message,
+          icon: 'error',
+          confirmButtonColor: 'var(--primary)',
+        });
+      },
+    });
+  }
+
+  selectPrincipal(enderecoId: string): void {
+    const id = this.clienteId();
+    if (!id) return;
+
+    Swal.fire({
+      title: 'Selecionar endereço?',
+      text: 'Deseja definir este endereço como principal?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--gray-020)',
+      confirmButtonText: 'Sim, selecionar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.enderecoService.selectPrincipal(id, enderecoId).subscribe({
+        next: () => {
+          this.loadEnderecos(id);
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Endereço principal selecionado com sucesso.',
+            icon: 'success',
+            confirmButtonColor: 'var(--primary)',
+          });
+        },
+        error: (err) => {
+          const message = err?.error?.message || 'Ocorreu um erro ao selecionar o endereço principal.';
+          Swal.fire({
+            title: 'Erro',
+            text: message,
+            icon: 'error',
+            confirmButtonColor: 'var(--primary)',
+          });
+        },
+      });
+    });
+  }
+
+  deleteEndereco(enderecoId: string): void {
+    const id = this.clienteId();
+    if (!id) return;
+
+    Swal.fire({
+      title: 'Deletar endereço?',
+      text: 'Deseja remover este endereço? Esta ação não pode ser desfeita.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--gray-020)',
+      confirmButtonText: 'Sim, deletar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.enderecoService.deleteEndereco(id, enderecoId).subscribe({
+        next: () => {
+          this.loadEnderecos(id);
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Endereço removido com sucesso.',
+            icon: 'success',
+            confirmButtonColor: 'var(--primary)',
+          });
+        },
+        error: (err) => {
+          const message = err?.error?.message || 'Ocorreu um erro ao remover o endereço.';
+          Swal.fire({
+            title: 'Erro',
+            text: message,
+            icon: 'error',
+            confirmButtonColor: 'var(--primary)',
+          });
+        },
+      });
+    });
+  }
+
+  salvarECriarPedido(): void {
+    if (this.form.invalid || this.isLoading()) return;
+
+    Swal.fire({
+      title: 'Salvar e criar pedido?',
+      text: 'Deseja salvar as alterações e criar um novo pedido para este cliente?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--gray-020)',
+      confirmButtonText: 'Sim, salvar e criar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this._doSubmit(true);
+    });
+  }
+
   submit(): void {
     if (this.form.invalid || this.isLoading()) return;
 
+    Swal.fire({
+      title: 'Salvar alterações?',
+      text: 'Deseja salvar as alterações do cliente?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--gray-020)',
+      confirmButtonText: 'Sim, salvar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this._doSubmit(false);
+    });
+  }
+
+  private _doSubmit(criarPedido: boolean): void {
     this.isLoading.set(true);
 
     const id = this.clienteId();
@@ -101,14 +283,25 @@ export class ClientesFormComponent implements OnInit {
     request$.subscribe({
       next: () => {
         this.isLoading.set(false);
-        Swal.fire({
-          title: 'Sucesso!',
-          text: id ? 'Cliente atualizado com sucesso.' : 'Cliente cadastrado com sucesso.',
-          icon: 'success',
-          confirmButtonColor: 'var(--primary)',
-        }).then(() => {
-          this.router.navigate(['/admin/clientes']);
-        });
+        if (criarPedido) {
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Cliente salvo. Agora você será redirecionado para criar o pedido.',
+            icon: 'success',
+            confirmButtonColor: 'var(--primary)',
+          }).then(() => {
+            this.router.navigate(['/admin/pedidos/create']);
+          });
+        } else {
+          Swal.fire({
+            title: 'Sucesso!',
+            text: id ? 'Cliente atualizado com sucesso.' : 'Cliente cadastrado com sucesso.',
+            icon: 'success',
+            confirmButtonColor: 'var(--primary)',
+          }).then(() => {
+            this.router.navigate(['/admin/clientes']);
+          });
+        }
       },
       error: (err) => {
         this.isLoading.set(false);

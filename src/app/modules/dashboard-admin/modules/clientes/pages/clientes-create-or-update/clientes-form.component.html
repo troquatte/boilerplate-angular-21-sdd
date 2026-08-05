@@ -115,52 +115,183 @@
     </div>
 
     @if (clienteId()) {
-      <h2>Endereço</h2>
+      <h2>Endereços</h2>
 
-      <div class="row">
+      @for (endereco of enderecosOrdenados(); track endereco.id) {
+        <div
+          class="theme-card"
+          [class.theme-card__white]="!endereco.principal"
+          [class.theme-card__black]="endereco.principal"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <h4>
+                <strong>
+                  {{
+                    endereco.principal ? "✓ Endereço selecionado" : "Endereço"
+                  }}
+                </strong>
+              </h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <strong>{{ endereco.logradouro }}, {{ endereco.numero }}</strong>
+              @if (endereco.complemento) {
+                <span> — {{ endereco.complemento }}</span>
+              }
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              {{ endereco.bairro }} — {{ endereco.cidade }} /
+              {{ endereco.estado }} — CEP: {{ endereco.cep }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 d-flex gap-2">
+              @if (!endereco.principal) {
+                <button
+                  class="theme-btn theme-btn__secondary-line clientes-form__selecionar-btn clientes-form__selecionar-btn-principal"
+                  type="button"
+                  (click)="selectPrincipal(endereco.id)"
+                >
+                  Selecionar
+                </button>
+              }
+              <button
+                class="theme-btn theme-btn__danger clientes-form__selecionar-btn"
+                type="button"
+                (click)="deleteEndereco(endereco.id)"
+              >
+                Deletar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <h3>Adicionar novo endereço</h3>
+
+      <div class="row" [formGroup]="formEndereco">
         <div class="col-md-4">
           <div class="theme-form-field">
-            <label for="cep" class="form-label theme-form-field__label">CEP</label>
-            <input id="cep" class="form-control theme-form-field__input" type="text" mask="00000-000" placeholder="07055-210" />
+            <label for="cep" class="form-label theme-form-field__label"
+              >CEP</label
+            >
+            <input
+              id="cep"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="cep"
+              mask="00000-000"
+              placeholder="07055-210"
+            />
           </div>
         </div>
         <div class="col-md-5">
           <div class="theme-form-field">
-            <label for="logradouro" class="form-label theme-form-field__label">Logradouro</label>
-            <input id="logradouro" class="form-control theme-form-field__input" type="text" placeholder="Praça da Sé" />
+            <label for="logradouro" class="form-label theme-form-field__label"
+              >Logradouro</label
+            >
+            <input
+              id="logradouro"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="logradouro"
+              placeholder="Praça da Sé"
+            />
           </div>
         </div>
         <div class="col-md-3">
           <div class="theme-form-field">
-            <label for="numero" class="form-label theme-form-field__label">Número</label>
-            <input id="numero" class="form-control theme-form-field__input" type="text" placeholder="100" />
+            <label for="numero" class="form-label theme-form-field__label"
+              >Número</label
+            >
+            <input
+              id="numero"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="numero"
+              placeholder="100"
+            />
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" [formGroup]="formEndereco">
         <div class="col-md-4">
           <div class="theme-form-field">
-            <label for="bairro" class="form-label theme-form-field__label">Bairro</label>
-            <input id="bairro" class="form-control theme-form-field__input" type="text" placeholder="Sé" />
+            <label for="bairro" class="form-label theme-form-field__label"
+              >Bairro</label
+            >
+            <input
+              id="bairro"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="bairro"
+              placeholder="Sé"
+            />
           </div>
         </div>
         <div class="col-md-4">
           <div class="theme-form-field">
-            <label for="cidade" class="form-label theme-form-field__label">Cidade</label>
-            <input id="cidade" class="form-control theme-form-field__input" type="text" placeholder="São Paulo" />
+            <label for="cidade" class="form-label theme-form-field__label"
+              >Cidade</label
+            >
+            <input
+              id="cidade"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="cidade"
+              placeholder="São Paulo"
+            />
           </div>
         </div>
         <div class="col-md-4">
           <div class="theme-form-field">
-            <label for="estado" class="form-label theme-form-field__label">Estado</label>
-            <input id="estado" class="form-control theme-form-field__input" type="text" placeholder="SP" />
+            <label for="estado" class="form-label theme-form-field__label"
+              >Estado</label
+            >
+            <input
+              id="estado"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="estado"
+              placeholder="SP"
+            />
           </div>
         </div>
       </div>
 
-      <button class="theme-btn theme-btn__secondary" type="button">
-        Adicionar novo endereço
+      <div class="row" [formGroup]="formEndereco">
+        <div class="col-md-12">
+          <div class="theme-form-field">
+            <label for="complemento" class="form-label theme-form-field__label"
+              >Complemento</label
+            >
+            <input
+              id="complemento"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="complemento"
+              placeholder="Apto 12"
+            />
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="theme-btn theme-btn__secondary"
+        type="button"
+        (click)="addEndereco()"
+        [disabled]="formEndereco.invalid || isLoadingEndereco()"
+      >
+        @if (isLoadingEndereco()) {
+          Carregando...
+        } @else {
+          Adicionar novo endereço
+        }
       </button>
 
       <h2>Histórico de Pedidos</h2>
@@ -189,7 +320,12 @@
           Salvar
         }
       </button>
-      <button class="theme-btn theme-btn__secondary" type="button" [disabled]="form.invalid || isLoading()">
+      <button
+        class="theme-btn theme-btn__secondary"
+        type="button"
+        (click)="salvarECriarPedido()"
+        [disabled]="form.invalid || isLoading()"
+      >
         Salvar e criar pedido
       </button>
     </div>

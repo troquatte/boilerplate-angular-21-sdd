@@ -47,6 +47,15 @@ class EnderecoController {
       return ErrorHandlerHelper.handle(res, error);
     }
   }
+
+  public async selectPrincipal(req: Request, res: Response) {
+    try {
+      const data = await enderecoService.selectPrincipal(req.params['clienteId'], req.params['id']);
+      return res.json({ data });
+    } catch (error: any) {
+      return ErrorHandlerHelper.handle(res, error);
+    }
+  }
 }
 
 export const enderecoController = new EnderecoController();

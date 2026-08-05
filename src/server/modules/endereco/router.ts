@@ -9,5 +9,6 @@ router.post(`${baseUrl}`, enderecoController.create);
 router.get(`${baseUrl}/:id`, enderecoController.findById);
 router.patch(`${baseUrl}/:id`, enderecoController.update);
 router.delete(`${baseUrl}/:id`, enderecoController.delete);
+router.patch(`${baseUrl}/:id/select`, enderecoController.selectPrincipal);
 
 export const enderecoRouter = router;

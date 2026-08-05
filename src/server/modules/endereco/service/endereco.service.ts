@@ -39,6 +39,9 @@ class EnderecoService {
         throw new Error(EStatusErrors.E404);
       }
 
+      const existingCount = await prisma.enderecos.count({ where: { clienteId } });
+      const isPrincipal = existingCount === 0 ? true : (payload.principal ?? false);
+
       const data = await prisma.enderecos.create({
         data: {
           cep: payload.cep,
@@ -48,7 +51,7 @@ class EnderecoService {
           bairro: payload.bairro,
           cidade: payload.cidade,
           estado: payload.estado,
-          principal: payload.principal ?? false,
+          principal: isPrincipal,
           clienteId,
         },
       });
@@ -135,6 +138,35 @@ class EnderecoService {
       }
 
       return await prisma.enderecos.delete({ where: { id } });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
+  public async selectPrincipal(clienteId: string, id: string) {
+    try {
+      const cliente = await prisma.cliente.findUnique({ where: { id: clienteId } });
+      if (!cliente) {
+        throw new Error(EStatusErrors.E404);
+      }
+
+      const endereco = await prisma.enderecos.findUnique({ where: { id } });
+      if (!endereco || endereco.clienteId !== clienteId) {
+        throw new Error(EStatusErrors.E404);
+      }
+
+      const data = await prisma.$transaction([
+        prisma.enderecos.updateMany({
+          where: { clienteId },
+          data: { principal: false },
+        }),
+        prisma.enderecos.update({
+          where: { id },
+          data: { principal: true },
+        }),
+      ]);
+
+      return data[1];
     } catch (error: any) {
       throw new Error(error.message);
     }
