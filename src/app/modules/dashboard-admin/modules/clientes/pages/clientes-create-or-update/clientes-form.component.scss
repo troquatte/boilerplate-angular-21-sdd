@@ -5,4 +5,12 @@
     justify-content: flex-end;
     margin-top: 2rem;
   }
+
+  &__historico-vazio {
+    background-color: var(--secondary);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: left;
+  }
 }
