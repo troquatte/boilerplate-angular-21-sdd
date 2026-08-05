@@ -1,11 +1,13 @@
-import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { debounceTime, distinctUntilChanged, filter, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ClientesService } from '../../services/clientes.service';
 import { EnderecoService } from '../../services/endereco.service';
+import { ViaCepService } from '../../../../../../services/viacep/viacep.service';
 import { IClientes } from '../../interfaces/clientes.interface';
 import { IEndereco } from '../../interfaces/endereco.interface';
 
@@ -16,13 +18,15 @@ import { IEndereco } from '../../interfaces/endereco.interface';
   templateUrl: './clientes-form.component.html',
   styleUrl: './clientes-form.component.scss',
 })
-export class ClientesFormComponent implements OnInit {
+export class ClientesFormComponent implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly clientesService = inject(ClientesService);
   private readonly enderecoService = inject(EnderecoService);
+  private readonly viaCepService = inject(ViaCepService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly subscriptions: Subscription[] = [];
 
   readonly isLoading = signal(false);
   readonly clienteId = signal<string | null>(null);
@@ -80,11 +84,44 @@ export class ClientesFormComponent implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
+    this.setupCepAutocomplete(this.formEndereco);
+    this.setupCepAutocomplete(this.formEnderecoEdit);
+
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.clienteId.set(id);
       this.loadCliente(id);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  private setupCepAutocomplete(form: FormGroup): void {
+    const sub = form.controls['cep'].valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        filter((cep: string | null) => !!cep && cep.replace(/\D/g, '').length === 8),
+      )
+      .subscribe((cep: string | null) => {
+        if (!cep) return;
+        this.viaCepService.buscarCep(cep).subscribe({
+          next: (response) => {
+            form.patchValue({
+              logradouro: response.logradouro || '',
+              bairro: response.bairro || '',
+              cidade: response.localidade || '',
+              estado: response.uf || '',
+            });
+          },
+          error: () => {
+            // Silencioso: não preenche nada em caso de erro
+          },
+        });
+      });
+    this.subscriptions.push(sub);
   }
 
   private loadCliente(id: string): void {
