@@ -7,9 +7,9 @@ Content-Type: application/json
 
 {
   "name": "João da Silva",
-  "email": "joao1.silva@example.com",
-  "password": "senhaSegura123",
-  "role": "CLIENT"
+  "email": "dener@vidafullstack.com.br",
+  "password": "dener@vidafullstack.com.br",
+  "role": "ADMIN"
 }
 
 ### 2. Cadastro com E-mail Duplicado (Erro)

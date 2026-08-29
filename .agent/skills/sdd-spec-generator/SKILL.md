@@ -311,7 +311,6 @@ Não inclua múltiplas alterações independentes na mesma tarefa.
 
 Sempre que a especificação envolver regras de negócio, endpoints ou integrações, inclua tarefas de teste compatíveis com a natureza da mudança:
 
-- regras de domínio e casos de uso: testes unitários;
 - persistência, controllers e endpoints: testes de integração automatizados;
 - fluxos completos críticos: testes end-to-end, quando aplicável;
 - APIs HTTP: arquivo REST Client complementar para validação manual e documentação executável, quando útil.
@@ -330,7 +329,7 @@ Os cenários devem listar explicitamente, quando aplicável:
 - idempotência e repetição de requisições;
 - limites e condições de contorno.
 
-O arquivo REST Client não substitui testes automatizados quando estes forem exigidos pelo projeto, pelos critérios de aceite ou pela natureza da mudança.
+O arquivo REST Client pode substituir testes automatizados quando a spec ou o contexto da mudança assim permitir.
 
 Não force a criação de um arquivo HTTP para funcionalidades que não possuam interface HTTP, como:
 
@@ -438,7 +437,6 @@ Inclua, quando aplicável:
 - autorização;
 - tratamento de erros;
 - integração com casos de uso;
-- testes unitários;
 - testes de integração HTTP.
 
 ### Tasks — Front-end
@@ -476,7 +474,6 @@ Inclua, quando aplicável:
 ### Tasks — Validação
 
 Inclua, quando aplicável:
-- testes unitários;
 - testes de integração automatizados;
 - testes end-to-end;
 - arquivos REST Client complementares para APIs HTTP;
@@ -485,7 +482,7 @@ Inclua, quando aplicável:
 - build;
 - validação manual de fluxos relevantes.
 
-Diferencie claramente testes automatizados de validações manuais. Não trate a execução de um arquivo REST Client como evidência automática de aprovação dos cenários.
+Diferencie claramente testes automatizados de validações manuais. A execução de um arquivo REST Client pode ser considerada evidência de aprovação quando a spec ou o contexto da mudança assim permitir.
 
 ## 11. Ordem das tarefas
 

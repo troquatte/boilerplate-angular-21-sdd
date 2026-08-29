@@ -11,6 +11,24 @@
     text-decoration: none;
     cursor: pointer;
 
+    &.theme-btn__primary {
+      background-color: var(--primary);
+      color: var(--white);
+
+      &:hover:not(:disabled) {
+        background-color: var(--primary-010);
+      }
+    }
+
+    &.theme-btn__secondary {
+      background-color: var(--secondary);
+      color: var(--white);
+
+      &:hover {
+        background-color: var(--secondary-010);
+      }
+    }
+
     &.theme-btn__danger-line {
       color: var(--danger);
       background-color: transparent;
@@ -33,6 +51,11 @@
       background-color: transparent;
 
       border: fn.rem-calc(1) solid var(--green);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 }

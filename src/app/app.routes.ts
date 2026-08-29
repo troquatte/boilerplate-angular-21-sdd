@@ -15,9 +15,9 @@ export const routes: Routes = [
     path: 'admin/dashboard',
     canActivate: [authGuard, adminGuard],
     loadComponent: () =>
-      import('./modules/auth/pages/admin-dashboard/admin-dashboard.component').then(
-        (m) => m.AdminDashboardComponent,
-      ),
+      import(
+        './modules/auth/pages/admin-dashboard/admin-dashboard.component'
+      ).then((m) => m.AdminDashboardComponent),
   },
   {
     path: 'client/home',
@@ -40,4 +40,3 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-

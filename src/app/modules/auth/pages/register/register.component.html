@@ -1,95 +1,164 @@
-<main class="page-auth">
-  <div class="page-auth__container">
-
-    <div class="page-auth__logo">
-      <img [src]="logoUrl" alt="Logo" />
+<main class="theme-page-auth">
+  <div class="theme-page-auth__container">
+    <div class="theme-page-auth__logo">
+      <img [src]="logoUrl" alt="Logo do sistema" />
     </div>
 
-    <div class="page-auth__card">
-      <h1 class="page-auth__title">Criar conta</h1>
-      <p class="page-auth__subtitle">Preencha os dados para se cadastrar.</p>
-
-      @if (apiError()) {
-        <div class="page-auth__api-error" role="alert">
-          {{ apiError() }}
-        </div>
-      }
-
-      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-
-        <div class="page-auth__field">
-          <label for="register-name">Nome completo</label>
-          <input
-            id="register-name"
-            type="text"
-            formControlName="name"
-            placeholder="Seu nome"
-            autocomplete="name"
-            [class.is-invalid]="name.invalid && name.touched"
-            aria-describedby="register-name-error"
-          />
-          @if (name.invalid && name.touched) {
-            <span id="register-name-error" class="page-auth__error-msg">Nome obrigatório.</span>
-          }
-        </div>
-
-        <div class="page-auth__field">
-          <label for="register-email">E-mail</label>
-          <input
-            id="register-email"
-            type="email"
-            formControlName="email"
-            placeholder="seu@email.com"
-            autocomplete="email"
-            [class.is-invalid]="email.invalid && email.touched"
-            aria-describedby="register-email-error"
-          />
-          @if (email.invalid && email.touched) {
-            <span id="register-email-error" class="page-auth__error-msg">
-              @if (email.hasError('required')) { E-mail obrigatório. }
-              @else { E-mail inválido. }
-            </span>
-          }
-        </div>
-
-        <div class="page-auth__field">
-          <label for="register-password">Senha</label>
-          <input
-            id="register-password"
-            type="password"
-            formControlName="password"
-            placeholder="••••••••"
-            autocomplete="new-password"
-            [class.is-invalid]="password.invalid && password.touched"
-            aria-describedby="register-password-error"
-          />
-          @if (password.invalid && password.touched) {
-            <span id="register-password-error" class="page-auth__error-msg">
-              @if (password.hasError('required')) { Senha obrigatória. }
-              @else { Mínimo de 6 caracteres. }
-            </span>
-          }
-        </div>
-
-        <button
-          id="register-submit"
-          type="submit"
-          class="page-auth__btn-primary"
-          [disabled]="form.invalid || isLoading()"
-          aria-label="Criar conta"
-        >
-          @if (isLoading()) {
-            <mat-spinner diameter="20" color="accent" />
-          } @else {
+    <section
+      class="card theme-page-auth__card"
+      aria-labelledby="register-title"
+    >
+      <div class="card-body theme-page-auth__card-body">
+        <header class="theme-page-auth__header">
+          <h1 id="register-title" class="theme-page-auth__title">
             Criar conta
-          }
-        </button>
+          </h1>
 
-      </form>
+          <p class="theme-page-auth__subtitle">
+            Preencha os dados para se cadastrar.
+          </p>
+        </header>
 
-      <div class="page-auth__links">
-        <p>Já tem conta? <a routerLink="/auth/login">Entrar</a></p>
+        @if (apiError()) {
+          <div class="alert theme-alert theme-alert__danger" role="alert">
+            {{ apiError() }}
+          </div>
+        }
+
+        <form
+          class="theme-page-auth__form"
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          novalidate
+        >
+          <!-- Nome Completo -->
+          <div class="theme-form-field">
+            <label
+              for="register-name"
+              class="form-label theme-form-field__label"
+            >
+              Nome completo
+            </label>
+
+            <input
+              id="register-name"
+              class="form-control theme-form-field__input"
+              type="text"
+              formControlName="name"
+              placeholder="Seu nome completo"
+              autocomplete="name"
+              [class.is-invalid]="name.invalid && name.touched"
+              [attr.aria-invalid]="name.invalid && name.touched"
+              [attr.aria-describedby]="
+                name.invalid && name.touched ? 'register-name-error' : null
+              "
+            />
+
+            @if (name.invalid && name.touched) {
+              <div id="register-name-error" class="theme-form-field__error">
+                Nome completo obrigatório.
+              </div>
+            }
+          </div>
+
+          <!-- E-mail -->
+          <div class="theme-form-field">
+            <label
+              for="register-email"
+              class="form-label theme-form-field__label"
+            >
+              E-mail
+            </label>
+
+            <input
+              id="register-email"
+              class="form-control theme-form-field__input"
+              type="email"
+              formControlName="email"
+              placeholder="seu@email.com"
+              autocomplete="email"
+              [class.is-invalid]="email.invalid && email.touched"
+              [attr.aria-invalid]="email.invalid && email.touched"
+              [attr.aria-describedby]="
+                email.invalid && email.touched ? 'register-email-error' : null
+              "
+            />
+
+            @if (email.invalid && email.touched) {
+              <div id="register-email-error" class="theme-form-field__error">
+                @if (email.hasError("required")) {
+                  E-mail obrigatório.
+                } @else {
+                  Informe um e-mail válido.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Senha -->
+          <div class="theme-form-field">
+            <label
+              for="register-password"
+              class="form-label theme-form-field__label"
+            >
+              Senha
+            </label>
+
+            <input
+              id="register-password"
+              class="form-control theme-form-field__input"
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              [class.is-invalid]="password.invalid && password.touched"
+              [attr.aria-invalid]="password.invalid && password.touched"
+              [attr.aria-describedby]="
+                password.invalid && password.touched
+                  ? 'register-password-error'
+                  : null
+              "
+            />
+
+            @if (password.invalid && password.touched) {
+              <div id="register-password-error" class="theme-form-field__error">
+                @if (password.hasError("required")) {
+                  Senha obrigatória.
+                } @else {
+                  A senha deve possuir no mínimo 6 caracteres.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Botão Cadastrar -->
+          <button
+            id="register-submit"
+            type="submit"
+            class="btn theme-btn theme-btn__secondary w-100"
+            [disabled]="form.invalid || isLoading()"
+            [attr.aria-busy]="isLoading()"
+          >
+            @if (isLoading()) {
+              <span
+                class="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+
+              <span>Criando conta...</span>
+            } @else {
+              <span>Criar conta</span>
+            }
+          </button>
+        </form>
+
+        <div class="theme-page-auth__links">
+          <p>
+            Já tem uma conta?
+            <a routerLink="/auth/login">Entrar</a>
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </main>
