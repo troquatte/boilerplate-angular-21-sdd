@@ -1,11 +1,6 @@
 @if (routerPath().startsWith(routerPathDashboardAdmin)) {
-  <div class="d-flex justify-content-between">
-    <app-menu-dashboard-admin />
-    <main class="container">
-      <router-outlet />
-    </main>
-  </div>
-} @else if (routerPath().startsWith('/design-system')) {
+  <router-outlet />
+} @else if (routerPath().startsWith("/design-system")) {
   <div class="d-flex justify-content-between">
     <app-menu-design-system />
     <main class="container">

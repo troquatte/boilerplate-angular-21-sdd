@@ -10,16 +10,11 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ERouters } from '@enums/routes';
 
 import { filter } from 'rxjs';
-import MenuDashboardAdminComponent from './modules/dashboard-admin/components/menu-dashboard-admin/menu-dashboard-admin.component';
 import MenuDesignSystemComponent from './modules/design-system/components/menu-design-system/menu-design-system.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    MenuDashboardAdminComponent,
-    MenuDesignSystemComponent,
-    RouterOutlet,
-  ],
+  imports: [MenuDesignSystemComponent, RouterOutlet],
   templateUrl: 'app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
